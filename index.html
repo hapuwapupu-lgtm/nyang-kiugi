@@ -1,0 +1,1374 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="고양이를 돌보고, 산책하다 냥줍하고, 캣타워를 꾸미고, 친구 집에 놀러 가는 고양이 라이프 시뮬레이션">
+<meta name="theme-color" content="#e8f1ee">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="냥이 키우기">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0;font-size:14px;-webkit-text-size-adjust:100%}img{max-width:100%}[hidden]{display:none!important}</style>
+<!-- Trystero 0.26.0 (MIT, https://github.com/dmotz/trystero) — serverless WebRTC over public Nostr relays -->
+<script>
+var Trystero=(()=>{var gn=Object.defineProperty;var uo=Object.getOwnPropertyDescriptor;var mo=Object.getOwnPropertyNames;var yo=Object.prototype.hasOwnProperty;var go=(e,n,t)=>n in e?gn(e,n,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[n]=t;var po=(e,n)=>{for(var t in n)gn(e,t,{get:n[t],enumerable:!0})},ho=(e,n,t,o)=>{if(n&&typeof n=="object"||typeof n=="function")for(let s of mo(n))!yo.call(e,s)&&s!==t&&gn(e,s,{get:()=>n[s],enumerable:!(o=uo(n,s))||o.enumerable});return e};var wo=e=>ho(gn({},"__esModule",{value:!0}),e);var ae=(e,n,t)=>go(e,typeof n!="symbol"?n+"":n,t);var Ws={};po(Ws,{joinRoom:()=>lo,selfId:()=>te});var zn=Object.freeze,He=0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2fn,Ye=0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n,Lt=0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798n,xt=0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8n,vo=zn({p:He,n:Ye,h:1n,a:0n,b:7n,Gx:Lt,Gy:xt}),Pe=32,At=e=>e instanceof Uint8Array||ArrayBuffer.isView(e)&&e.constructor.name==="Uint8Array"&&e.BYTES_PER_ELEMENT===1,ge=(e,n,t="")=>{if(At(e)&&(n===void 0||e.length===n))return e;let o=At(e),s=n!==void 0?` of length ${n}`:"",i=o?`length=${e.length}`:`type=${typeof e}`,r=(t?`"${t}" `:"")+"expected Uint8Array"+s+", got "+i;throw o?new RangeError(r):new TypeError(r)},ko=e=>Uint8Array.from(e),Po=(e,n,t)=>ko(ge(e,t,n)),Ut=(e,n)=>e.toString(16).padStart(n,"0"),Ht=e=>{let n="";for(let t of ge(e))n+=Ut(t,2);return n},It=e=>{let n="hex invalid";if(typeof e!="string")throw new TypeError(n);if(e.length%2||!/^[\da-f]*$/i.test(e))throw new RangeError(n);let t=new Uint8Array(e.length/2);for(let o=0,s=0;o<t.length;o++,s+=2){let i=e.charCodeAt(s),r=e.charCodeAt(s+1);t[o]=((i&15)+(i>>6)*9)*16+(r&15)+(r>>6)*9}return t},Rt=()=>{let e=globalThis?.crypto?.subtle;if(e)return e;throw new Error("crypto.subtle must be defined, consider polyfill")},Ve=(...e)=>{let n=0;for(let s of e)n+=ge(s).length;let t=new Uint8Array(n),o=0;for(let s of e)t.set(s,o),o+=s.length;return t},jn=(e=Pe)=>{let n=globalThis?.crypto;if(typeof n?.getRandomValues!="function")throw new Error("crypto.getRandomValues must be defined, consider polyfill");return n.getRandomValues(new Uint8Array(e))},bo=BigInt,Qe=(e,n,t,o="bad number: out of range")=>{if(typeof e!="bigint")throw new TypeError(o);if(n<=e&&e<t)return e;throw new RangeError(o)},O=(e,n=He)=>(e%=n)>=0n?e:n+e,hn=e=>O(e,Ye),So=(e,n)=>{if(e===0n)throw new Error("invert: expected non-zero number");if(n<=1n)throw new Error("invert: expected modulus > 1, got "+n);let t=O(e,n),o=n,s=0n,i=1n;for(;t!==0n;){let f=o/t,c=o-t*f,d=s-i*f;o=t,t=c,s=i,i=d}if(o!==1n)throw new Error("invert: does not exist");return O(s,n)},qt=e=>{let n=Eo[e];if(typeof n!="function")throw new Error("hashes."+e+" not set");return n},Et=(e,n,t)=>ge(qt(e)(n,t),Pe,"digest"),Mt=async(e,n,t)=>ge(await qt(e)(n,t),Pe,"digest");var In=e=>{if(e instanceof Ie)return e;throw new TypeError("Point expected")},qn="bad point: not on curve",Nt=e=>O(O(e*e)*e+7n),Dt=e=>Qe(e,0n,He),Ze=e=>Qe(e,1n,He),_t=e=>Qe(e,1n,Ye),wn=e=>!(e&1n),To=e=>Uint8Array.of(wn(e)?2:3),zt=e=>{let n=Nt(Ze(e)),t=1n;for(let o=n,s=(He+1n)/4n;s>0n;s>>=1n)s&1n&&(t=t*o%He),o=o*o%He;if(O(t*t)!==n)throw new Error("sqrt invalid");return new Ie(e,wn(t)?t:O(-t),1n)},De=class De{constructor(n,t,o){ae(this,"X");ae(this,"Y");ae(this,"Z");this.X=Dt(n),this.Y=Ze(t),this.Z=Dt(o),zn(this)}static CURVE(){return vo}static fromAffine(n){let{x:t,y:o}=n;return t===0n&&o===0n?Xe:new De(t,o,1n)}static fromBytes(n){ge(n);let t=n.length,o=n[0],s=pn(n,1,33);try{if(t===33&&(o===2||o===3)){let i=zt(s);return o===3?i.negate():i}if(t===65&&o===4)return new De(s,pn(n,33,65),1n).assertValidity()}catch{throw new Error(qn)}throw new Error(qn)}static fromHex(n){return De.fromBytes(It(n))}get x(){return this.toAffine().x}get y(){return this.toAffine().y}equals(n){let{X:t,Y:o,Z:s}=this,{X:i,Y:r,Z:f}=In(n);return O(t*f)===O(i*s)&&O(o*f)===O(r*s)}is0(){return this.Z===0n}negate(){return new De(this.X,O(-this.Y),this.Z)}double(){return this.add(this)}add(n){let{X:t,Y:o,Z:s}=this,{X:i,Y:r,Z:f}=In(n),c=0n,d=7n,v=0n,y=0n,h=0n,R=O(d*3n),b=O(t*i),S=O(o*r),u=O(s*f),m=O(t+o),l=O(i+r);m=O(m*l),l=O(b+S),m=O(m-l),l=O(t+s);let w=O(i+f);return l=O(l*w),w=O(b+u),l=O(l-w),w=O(o+s),v=O(r+f),w=O(w*v),v=O(S+u),w=O(w-v),h=O(c*l),v=O(R*u),h=O(v+h),v=O(S-h),h=O(S+h),y=O(v*h),S=O(b+b),S=O(S+b),u=O(c*u),l=O(R*l),S=O(S+u),u=O(b-u),u=O(c*u),l=O(l+u),b=O(S*l),y=O(y+b),b=O(w*l),v=O(m*v),v=O(v-b),b=O(m*S),h=O(w*h),h=O(h+b),new De(v,y,h)}subtract(n){return this.add(In(n).negate())}multiply(n,t=!0){if(!t&&n===0n)return Xe;if(_t(n),n===1n)return this;if(this.equals(Fe))return Uo(n).p;let o=Xe,s=Fe,i=this;for(let r=0;t?r<256:n>0n;r++)n&1n?o=o.add(i):t&&(s=s.add(i)),i=i.double(),n>>=1n;return o}multiplyUnsafe(n){return this.multiply(n,!1)}toAffine(){let{X:n,Y:t,Z:o}=this;if(o===0n)return{x:0n,y:0n};if(o===1n)return{x:n,y:t};let s=So(o,He);if(O(o*s)!==1n)throw new Error("inverse invalid");return{x:O(n*s),y:O(t*s)}}assertValidity(){let{x:n,y:t}=this.toAffine();if(Ze(n),Ze(t),O(t*t)!==Nt(n))throw new Error(qn);return this}toBytes(n=!0){let{x:t,y:o}=this.assertValidity().toAffine(),s=Be(t);return n?Ve(To(o),s):Ve(Uint8Array.of(4),s,Be(o))}toHex(n){return Ht(this.toBytes(n))}};ae(De,"BASE"),ae(De,"ZERO");var Ie=De,Fe=new Ie(Lt,xt,1n),Xe=new Ie(0n,1n,0n);Ie.BASE=Fe;Ie.ZERO=Xe;var Ao=(e,n,t)=>Fe.multiply(n,!1).add(e.multiply(t,!1)).assertValidity(),We=e=>bo("0x"+(Ht(e)||"0")),pn=(e,n,t)=>We(e.subarray(n,t)),Be=e=>It(Ut(Qe(e,0n,2n**256n),Pe*2)),Ro=e=>{let n=We(ge(e,Pe,"secret key"));return Qe(n,1n,Ye,"invalid secret key: outside of range")};var Bt="SHA-256",Eo={hmacSha256Async:async(e,n)=>{let t=Rt(),o=await t.importKey("raw",e,{name:"HMAC",hash:Bt},!1,["sign"]);return new Uint8Array(await t.sign("HMAC",o,n))},hmacSha256:void 0,sha256Async:async e=>new Uint8Array(await Rt().digest(Bt,e)),sha256:void 0};var Mo=e=>{if(e=e===void 0?jn(48):e,ge(e),e.length<48||e.length>1024)throw new RangeError("expected 48-1024b");let n=O(We(e),Ye-1n);return Be(n+1n)},Do=e=>n=>{let t=Mo(n);return{secretKey:t,publicKey:e(t)}};var jt=e=>Uint8Array.from("BIP0340/"+e,n=>n.charCodeAt(0)),Nn=(e,...n)=>{let t=Et("sha256",jt(e));return Et("sha256",Ve(t,t,...n))},_n=(e,...n)=>Mt("sha256Async",jt(e)).then(t=>Mt("sha256Async",Ve(t,t,...n))),$n=e=>{let n=Ro(e),t=Fe.multiply(n),{x:o,y:s}=t.assertValidity().toAffine(),i=wn(s)?n:hn(-n),r=Be(o);return{d:i,px:r}},Fn=e=>hn(We(e)),$t=(...e)=>Fn(Nn("challenge",...e)),Ft=async(...e)=>Fn(await _n("challenge",...e)),Wt=e=>$n(e).px,Bo=Do(Wt),Kt=(e,n,t)=>{let o=Po(e,"message"),{px:s,d:i}=$n(n);return{m:o,px:s,d:i,a:ge(t,Pe)}},Jt=e=>{let n=Fn(e);if(n===0n)throw new Error("sign failed: k is zero");let{px:t,d:o}=$n(Be(n));return{rx:t,k:o}},Vt=(e,n,t,o)=>Ve(n,Be(hn(e+t*o))),Gt="invalid signature produced",Co=(e,n,t=jn(Pe))=>{let{m:o,px:s,d:i,a:r}=Kt(e,n,t),f=Be(i^We(Nn("aux",r))),{rx:c,k:d}=Jt(Nn("nonce",f,s,o)),v=Vt(d,c,$t(c,s,o),i);if(!Xt(v,o,s))throw new Error(Gt);return v},Oo=async(e,n,t=jn(Pe))=>{let{m:o,px:s,d:i,a:r}=Kt(e,n,t),f=Be(i^We(await _n("aux",r))),{rx:c,k:d}=Jt(await _n("nonce",f,s,o)),v=Vt(d,c,await Ft(c,s,o),i);if(!await Yt(v,o,s))throw new Error(Gt);return v},Lo=(e,n)=>e instanceof Promise?e.then(n):n(e),Zt=(e,n,t,o)=>{let s=ge(e,64,"signature"),i=ge(n,void 0,"message"),r=ge(t,Pe,"publicKey"),f,c,d,v;try{let y=We(r);f=zt(y),c=Ze(pn(s,0,Pe)),d=_t(pn(s,Pe,64)),v=Ve(Be(c),r,i)}catch{return!1}return Lo(o(v),y=>{try{let{x:h,y:R}=Ao(f,d,hn(-y)).toAffine();return!(!wn(R)||h!==c)}catch{return!1}})},Xt=(e,n,t)=>Zt(e,n,t,$t),Yt=async(e,n,t)=>Zt(e,n,t,Ft),Wn=zn({keygen:Bo,getPublicKey:Wt,sign:Co,verify:Xt,signAsync:Oo,verifyAsync:Yt}),xo=()=>{let e=[],n=Fe,t=n;for(let o=0;o<33;o++){t=n,e.push(t);for(let s=1;s<128;s++)t=t.add(n),e.push(t);n=t.double()}return e},Ct,Ot=(e,n)=>{let t=n.negate();return e?t:n},Uo=e=>{let n=Ct||(Ct=xo()),t=Xe,o=Fe;for(let s=0;s<33;s++){let i=Number(e&255n);e>>=8n,i>128&&(i-=256,e+=1n);let r=s*128,f=r+Math.abs(i)-1,c=s%2!==0,d=i<0;i===0?o=o.add(Ot(c,n[r])):t=t.add(Ot(d,n[f]))}if(e!==0n)throw new Error("invalid wnaf");return{p:t,f:o}};var{floor:Kn,min:Ho,sin:Io}=Math,Z="Trystero",tn=(e,n)=>Array(e).fill(void 0).map(n),qo="0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",de=e=>tn(e,()=>qo[Kn(Math.random()*62)]??"").join(""),te=de(20),le=Promise.all.bind(Promise),Vn=typeof window<"u",{entries:Se,fromEntries:Gn,keys:ce,values:pe}=Object,X=()=>{},vn="candidate",H=e=>(e!==null&&clearTimeout(e),null),x=e=>new Error(`${Z}: ${e}`),Ce=(e,n)=>e instanceof Error&&e.message?e.message:typeof e=="string"&&e?e:re(e??n),he=(e,n)=>e instanceof Error?e:x(Ce(e,n)),No=new TextEncoder,_o=new TextDecoder,ue=e=>No.encode(e),we=e=>_o.decode(e),Oe=e=>e.reduce((n,t)=>n+t.toString(16).padStart(2,"0"),""),qe=(...e)=>e.join("@"),zo=(e,n)=>{let t=[...e],o=()=>{let i=Io(n++)*1e4;return i-Kn(i)},s=t.length;for(;s;){let i=Kn(o()*s--),r=t[s];t[s]=t[i],t[i]=r}return t},Zn=(e,n,t,o=!1)=>e.relayConfig?.urls||(o?zo(n,kn(e.appId)):n).slice(0,e.relayConfig?.redundancy??t),re=JSON.stringify,Te=e=>{try{return JSON.parse(e)}catch{throw x(`failed to parse JSON: ${e}`)}},kn=(e,n=Number.MAX_SAFE_INTEGER)=>e.split("").reduce((t,o)=>t+o.charCodeAt(0),0)%n,Qt=3333,jo=6e4,en={},nn=null,Jn=null,Xn=()=>{nn||(nn=new Promise(e=>{Jn=e}).finally(()=>{Jn=null,nn=null}))},Yn=()=>{Jn?.()},Qn=(e,n,t)=>{let o={},s=!1,i=!1,r,f=X;o.isClosed=!1,o.ready=new Promise(d=>f=d);let c=()=>{if(o.isClosed)return;r=void 0,i=!1;let d=new WebSocket(e);d.onclose=()=>{if(o.isClosed||i)return;if(i=!0,nn){nn.then(c);return}let v=en[e]??(en[e]=Qt);r=setTimeout(c,Math.random()*v),en[e]=Ho(v*2,jo)},d.onmessage=v=>n(String(v.data)),o.socket=d,o.url=d.url,d.onopen=()=>{let v=s;s=!0,f(o),en[e]=Qt,v&&t?.()},o.send=v=>{d.readyState===1&&d.send(v)}};return o.close=()=>{o.isClosed=!0,r!==void 0&&(clearTimeout(r),r=void 0),o.socket.close()},c(),o};var et=e=>{let n={},t=new WeakMap,o=r=>{let f=t.get(r);if(!f)throw x("relay bookkeeping missing registration for relay client");return f},s=()=>{let r={},f=c=>r[c]??(r[c]={});return{forKey:f,forRelay:c=>f(o(c))}},i=(r,f)=>(n[r]=f,t.set(f,r),f);return{register:(r,f)=>{let c=n[r];return c||i(r,f())},keyOf:o,scoped:s,getSockets:()=>Gn(Se(n).flatMap(([r,f])=>{let c=e(f);return c?[[r,c]]:[]}))}},er=()=>{if(Vn){let e=new AbortController;return addEventListener("online",Yn,{signal:e.signal}),addEventListener("offline",Xn,{signal:e.signal}),()=>e.abort()}return X};var tt="AES-GCM",nt={},$o=e=>btoa(String.fromCharCode.apply(null,Array.from(new Uint8Array(e)))),Fo=e=>{let n=atob(e);return new Uint8Array(n.length).map((t,o)=>n.charCodeAt(o)).buffer},Ke=async(e,n)=>new Uint8Array(await crypto.subtle.digest(e,ue(n))),Le=async e=>nt[e]??(nt[e]=Array.from(await Ke("SHA-1",e)).map(n=>n.toString(36)).join("")),nr=async(e,n,t)=>crypto.subtle.importKey("raw",await crypto.subtle.digest({name:"SHA-256"},ue(`${e}:${n}:${t}`)),{name:tt},!1,["encrypt","decrypt"]),tr=async(e,n)=>Oe(await Ke("SHA-256",`${Z}:${e}:${n}`)),rr="$",or=",",sr=async(e,n)=>{let t=crypto.getRandomValues(new Uint8Array(16));return t.join(or)+rr+$o(await crypto.subtle.encrypt({name:tt,iv:t},await e,ue(n)))},ir=async(e,n)=>{let[t,o]=n.split(rr);return we(await crypto.subtle.decrypt({name:tt,iv:new Uint8Array(t?.split(or).map(Number)??[])},await e,Fo(o??"")))};var Wo=18e4,ar=class{constructor(e){ae(this,"makeOffer");ae(this,"leased",new Map);ae(this,"destroyed",!1);this.makeOffer=e}claimLeased(e){let n=this.leased.get(e);n&&(H(n),this.leased.delete(e))}reclaimLeased(e){this.leased.has(e)&&(this.claimLeased(e),e.destroy())}checkout(e,n,t){let o=async(s=!1)=>{if(this.destroyed)throw x("room left while preparing offer");let i=this.makeOffer();try{let r=await t(i);if(this.destroyed)throw x("room left while preparing offer");return n?(this.leased.set(i,setTimeout(()=>{this.leased.delete(i),i.destroy()},Wo)),{peer:i,offer:r,claim:()=>this.claimLeased(i),reclaim:()=>this.reclaimLeased(i)}):{peer:i,offer:r}}catch(r){if(i.destroy(),!s&&!this.destroyed)return o(!0);throw r}};return le(tn(e,()=>o()))}getOffers(e,n){return this.checkout(e,!0,n)}destroy(){this.destroyed=!0,this.leased.forEach((e,n)=>{H(e),n.destroy()}),this.leased.clear()}};var rt=x("incorrect password for overlapping room"),cr=(e,n,t)=>{let o=r=>Ke("SHA-256",`${r}:${e}:${n}:${t}`).then(Oe),s=async(r,f,c)=>{if(!e)return;if(c){let v=de(36);await r({__trystero_pw:"challenge",c:v});let{data:y}=await f();if(!y||typeof y!="object"||y.__trystero_pw!=="response"||typeof y.h!="string")throw rt;let h=await o(v);if(y.h!==h)throw rt;return}let{data:d}=await f();if(!d||typeof d!="object"||d.__trystero_pw!=="challenge"||typeof d.c!="string")throw rt;await r({__trystero_pw:"response",h:await o(d.c)})};return{run:s,compose:r=>e||r?async(f,c,d,v)=>{await s(c,d,v),await r?.(f,c,d,v)}:void 0}},Ko=e=>{let n=Ce(e,"unknown error");return n.startsWith("handshake ")?n:`handshake failed: ${n}`},lr=({onPeerHandshake:e,onHandshakeError:n,handshakeTimeoutMs:t,sendHandshakeData:o,sendHandshakeReady:s,onActivate:i,onFailure:r})=>{let f={},c=(y,h)=>{let R=f[y];!R||h&&R.peer!==h||R.isActive||!R.didLocalHandshakePass||!R.didReceiveRemoteReady||(R.isActive=!0,R.handshakeTimer=H(R.handshakeTimer),i(y,R.peer))},d=(y,h,R)=>{let b=f[y];if(!b||b.peer!==h)return;let S=Ko(R);n?.(y,S),r(y,h,x(S))},v=(y,h)=>{let R=f[y];!R||R.peer!==h||R.isActive||(R.didLocalHandshakePass=!0,s("",y).catch(b=>d(y,h,x(`failed sending handshake readiness: ${Ce(b,"unknown send failure")}`))),c(y,h))};return{addPeer:(y,h)=>{f[y]={peer:h,isActive:!1,didLocalHandshakePass:!1,didReceiveRemoteReady:!1,handshakeTimer:null,pendingHandshakePayloads:[],handshakeWaiters:[]}},clearPeer:(y,h)=>{let R=f[y];R&&(R.handshakeTimer=H(R.handshakeTimer),R.pendingHandshakePayloads.length=0,R.handshakeWaiters.splice(0).forEach(b=>b.reject(h)),delete f[y])},canReceiveFromPeer:(y,h)=>{let R=f[y];return!!(R&&(R.isActive||h))},start:(y,h)=>{let R=f[y];if(!R||R.peer!==h)return;R.handshakeTimer=setTimeout(()=>d(y,h,x(`handshake timed out after ${t}ms`)),t);let b=async(m,l)=>{await o(m,y,l)},S=()=>new Promise((m,l)=>{let w=f[y];if(!w||w.peer!==h){l(x("peer disconnected during handshake"));return}let D=w.pendingHandshakePayloads.shift();if(D){m(D);return}w.handshakeWaiters.push({resolve:m,reject:E=>l(E)})}),u=te<y;Promise.resolve(e?.(y,b,S,u)).then(()=>v(y,h)).catch(m=>d(y,h,he(m,"handshake failed")))},receiveHandshakeData:(y,h,R)=>{let b=f[h];if(!b||b.isActive)return;let S=R===void 0?{data:y}:{data:y,metadata:R},u=b.handshakeWaiters.shift();if(u){u.resolve(S);return}if(b.pendingHandshakePayloads.length>=16){d(h,b.peer,x("too many pending handshake messages"));return}b.pendingHandshakePayloads.push(S)},receiveHandshakeReady:y=>{let h=f[y];!h||h.isActive||(h.didReceiveRemoteReady=!0,c(y))}}};var Jo=15e3,Vo=150,Go=5e3,fr="icecandidate",dr="icegatheringstatechange",Zo="iceconnectionstatechange",rn="offer",Xo="answer",Yo=/out of range/i,Qo=128,es=8192,ur=e=>e.replace(/ (\S+\.local) (\d+) typ host/g," 127.0.0.1 $2 typ host"),ot=(e,{trickleIce:n,rtcConfig:t,rtcPolyfill:o,turnConfig:s,_test_only_mdnsHostFallbackToLoopback:i})=>{let r=new(o??RTCPeerConnection)({iceServers:mr.concat(s??[]),...t}),f={},c=new Set,d=[],v=[],y=null,h=n!==!1,R=[],b=[],S,u=!1,m=!1,l=null,w=null,D=!1,E=P=>{S&&(S(P),S=void 0)},U=()=>w=H(w),$=()=>{D||(D=!0,c.forEach(P=>P()),y=H(y),v.length=0,U(),f.close?.())},N=P=>{P.type===rn&&(E(P),!f.signal&&!r.remoteDescription)||(f.signal?f.signal(P):d.push(P))},K=P=>{let B=f.signal;f.signal=q=>{B?.(q),P(q)},d.length>0&&d.splice(0).forEach(q=>f.signal?.(q))},G=P=>i?ur(P):P,Y=P=>{if(!i||typeof P.candidate!="string")return P;let B=ur(P.candidate);return B===P.candidate?P:{...P,candidate:B}},oe=P=>({type:P.localDescription?.type??rn,sdp:G(P.localDescription?.sdp??"")}),a=()=>{let P=r.remoteDescription?.sdp;return P?P.match(/a=ice-ufrag:([^\s]+)/)?.[1]??null:null},k=()=>(r.remoteDescription?.sdp?.match(/^m=/gm)??[]).length,A=P=>{if(!r.remoteDescription)return!1;let B=k();if(typeof P.sdpMLineIndex=="number"&&B>0&&P.sdpMLineIndex>=B)return!1;let q=a();return!(q&&P.usernameFragment&&P.usernameFragment!==q)},T=async P=>{try{return await r.addIceCandidate(P),!0}catch(B){if(B instanceof Error&&Yo.test(B.message)&&typeof P.sdpMLineIndex=="number")return!1;throw B}},L=P=>{R.length>=Qo&&R.shift(),R.push(P)},M=async()=>{if(!r.remoteDescription||R.length===0)return;let P=a(),B=R.splice(0),q=[];for(let F of B)if(!(P&&F.usernameFragment&&F.usernameFragment!==P)){if(!A(F)){q.push(F);continue}await T(F)||q.push(F)}q.forEach(L)},p=async P=>{if(A(P)){await T(P)||L(P);return}L(P)},g=P=>{P.binaryType="arraybuffer",P.bufferedAmountLowThreshold=65535;let B=()=>{console.warn(`${Z}: invalid or excessive data before handler registration; disconnecting peer`),P.close(),r.close(),$()};P.onmessage=q=>{let F=q.data;if(!D){if(!(F instanceof ArrayBuffer)&&!ArrayBuffer.isView(F)||F.byteLength>16515){B();return}if(f.data)f.data(F);else{if(v.length>=64){B();return}y||(y=setTimeout(B,1e4)),v.push(F)}}},P.onopen=()=>f.connect?.(),P.onclose=$,P.onerror=({error:q})=>{D||q?.errorDetail==="sctp-failure"&&(q.sctpCauseCode===12||/^User-Initiated Abort\b/.test(q.message))||f.error?.(he(q,"data channel error"))}},C=t?.iceServers??mr.concat(s??[]),_=P=>C.some(({urls:B})=>(Array.isArray(B)?B:[B]).some(q=>P.test(q))),W=_(/^turns?:/i),I=!W&&_(/^stuns?:/i),se=W?/\btyp relay\b/:I?/\btyp (?:srflx|relay|prflx)\b/:/\btyp (?:host|srflx|relay|prflx)\b/,ee=async P=>(await new Promise(B=>{let q=null,F=null,ne=()=>{H(q),H(F),P.removeEventListener(dr,Ue),P.removeEventListener(fr,Me),c.delete(ne),B()},Ee=(J="")=>{let Q=`${P.localDescription?.sdp??""}
+${J}`;se.test(Q)&&(H(F),F=setTimeout(ne,Vo))},Ue=()=>{P.iceGatheringState==="complete"||D?ne():Ee()},Me=J=>{let{candidate:Q}=J;Q?Ee(Q.candidate):ne()};c.add(ne),q=setTimeout(ne,Jo),P.addEventListener(dr,Ue),P.addEventListener(fr,Me),Ue()}),oe(P)),fe=async()=>{let P=h?oe(r):await ee(r);return D||N(P),P};e?(l=r.createDataChannel("data"),g(l)):r.ondatachannel=({channel:P})=>{l=P,g(P)};let Ae=async(P=!1)=>{if(r.connectionState==="closed"||!P&&(u||r.signalingState!=="stable")){r.connectionState==="closed"&&E();return}try{return u=!0,P&&(r.remoteDescription&&r.signalingState!=="stable"&&r.signalingState!=="closed"&&r.localDescription?.type===rn&&await r.setLocalDescription({type:"rollback"}),typeof r.restartIce=="function"&&r.restartIce()),await r.setLocalDescription(P?await r.createOffer({iceRestart:!0}):void 0),await fe()}catch(B){P||E(),f.error?.(he(B,"failed to create local offer"))}finally{u=!1}};r.onnegotiationneeded=async()=>Ae(!1),r.onicecandidate=({candidate:P})=>{if(!h||!P)return;let B=Y(typeof P.toJSON=="function"?P.toJSON():{candidate:P.candidate,sdpMid:P.sdpMid,sdpMLineIndex:P.sdpMLineIndex,usernameFragment:P.usernameFragment});N({type:vn,sdp:JSON.stringify(B)})};let Re=()=>{if(r.connectionState==="failed"||r.connectionState==="closed"||r.iceConnectionState==="failed"||r.iceConnectionState==="closed"){$();return}if(r.connectionState==="connected"||r.connectionState==="connecting"||r.iceConnectionState==="connected"||r.iceConnectionState==="completed"||r.iceConnectionState==="checking"){U();return}if(r.connectionState==="disconnected"||r.iceConnectionState==="disconnected"){w||(w=setTimeout(()=>{w=null,(r.connectionState==="disconnected"||r.iceConnectionState==="disconnected")&&$()},Go));return}};r.onconnectionstatechange=Re,r.addEventListener(Zo,Re),r.ontrack=P=>{let B=P.streams[0];if(B){if(!f.track&&!f.stream){b.push({track:P.track,stream:B});return}f.track?.(P.track,B),f.stream?.(B)}};let ye=e?new Promise(P=>{S=P}):Promise.resolve();return e&&queueMicrotask(()=>{!u&&r.signalingState==="stable"&&!r.localDescription&&r.connectionState!=="closed"&&r.onnegotiationneeded?.(new Event("negotiationneeded"))}),{connection:r,get channel(){return l},get isDead(){return r.connectionState==="closed"},getOffer:async(P=!1)=>{if(e)return P?Ae(!0):S?ye:r.localDescription?.type===rn?h?oe(r):ee(r):ye},async signal(P){if(P.type==="candidate"){if(P.sdp.length>es)return;try{let B=JSON.parse(P.sdp);B&&typeof B=="object"&&await p(Y(B))}catch(B){f.error?.(he(B,"failed to parse remote candidate"))}return}if(!(l?.readyState==="open"&&!P.sdp?.includes("a=rtpmap")))try{let B={...P,sdp:G(P.sdp)};if(P.type===rn){let q=u||r.signalingState!=="stable"&&!m;return q&&e?void 0:(q&&r.signalingState!=="stable"?await le([r.setLocalDescription({type:"rollback"}),r.setRemoteDescription(B)]):await r.setRemoteDescription(B),await M(),await r.setLocalDescription(),await fe())}if(P.type===Xo){m=!0;try{await r.setRemoteDescription(B),await M()}finally{m=!1}}}catch(B){f.error?.(he(B,"failed to apply remote signal"))}},sendData:P=>l?.send(P),destroy:()=>{U(),E(),l?.close(),r.close(),u=!1,m=!1,$()},setHandlers:P=>{let{signal:B,...q}=P;Object.assign(f,q),f.data&&v.length>0&&(y=H(y),v.splice(0).forEach(F=>f.data?.(F))),B&&K(B),(f.track||f.stream)&&b.length>0&&b.splice(0).forEach(({track:F,stream:ne})=>{f.track?.(F,ne),f.stream?.(ne)})},addStream:P=>P.getTracks().forEach(B=>r.addTrack(B,P)),removeStream:P=>r.getSenders().filter(B=>B.track&&P.getTracks().includes(B.track)).forEach(B=>r.removeTrack(B)),addTrack:(P,B)=>r.addTrack(P,B),removeTrack:P=>{let B=r.getSenders().find(q=>q.track===P);B&&r.removeTrack(B)},replaceTrack:(P,B)=>{let q=r.getSenders().find(F=>F.track===P);if(q)return q.replaceTrack(B)}}},mr=[...tn(3,(e,n)=>`stun:stun${n||""}.l.google.com:19302`),"stun:stun.cloudflare.com:3478"].map(e=>({urls:e}));var ns=1024,ts=64,rs=128,os=8,ss=new Uint8Array,is=(e,n)=>{let t;try{t=e()}catch{return n(!1)}return typeof t=="boolean"?n(t):Promise.resolve(t).then(o=>n(o===!0),()=>n(!1))},yr=(e,n,t)=>n===2?t?e.slice():e:n===1?Te(we(e)):we(e),pr=(e,n,t,o)=>{try{e.progress(n,t,o)}catch(s){console.error(`${Z} progress handler error:`,s)}},gr=(e,n,t,o)=>{pr(e,1,t,o);try{e.receiver?.(n,t,o)}catch(s){console.error(`${Z} action handler error:`,s)}},hr=({fail:e,accept:n,refuse:t,maxReceiveBytes:o,chunkSize:s})=>{let i=new Map,r=new Map,f=new Set,c=new Map,d=0,v=0,y=0,h=!1,R=!1,b=a=>a.phase!=="released",S=a=>Math.min(o,a?.maxPayloadBytes??o),u=(a,k,A,T)=>{A?.reject(k),i.get(a.type)?.reject?.(a.peerId,a.metadata,k),T!==void 0&&t(a.peerId,T,k)},m=a=>{for(let k of Array.from(f))k.peerId===a&&(f.delete(k),f.add(k))},l=a=>{if(!b(a))return;a.phase="released",a.removeAbortListener?.(),a.timer=H(a.timer);let k=r.get(a.peerId);if(a.kind==="inline"){let A=k.inline.get(a.key);A.splice(A.indexOf(a),1),A.length||k.inline.delete(a.key),a.data=ss}else k.bulk.delete(a.id),f.delete(a),a.data=null,a.transfer==="receiving"&&(y-=a.size,k.active===a&&(k.active=null,m(a.peerId)),R=!0);k.count--,d--,k.count||r.delete(a.peerId),a.controller?.abort()},w=(a,k)=>{b(a)&&(l(a),u(a,k,a.scope,a.kind==="bulk"?a.id:void 0))},D=(a,k)=>{if(a.phase!=="pending")return a.phase==="ready";if(a.size>S(k))return w(a,"payload exceeds receiver size limit"),!1;let A=a.scope?a.scope.receive:k.receive;if(!A)return k.receiver?(a.phase="ready",!0):!1;if(v>=rs||(c.get(a.peerId)??0)>=os)return w(a,"too many pending receive decisions"),!1;a.phase="deciding";let T=new AbortController;a.controller=T,v++,c.set(a.peerId,(c.get(a.peerId)??0)+1);let L=is(()=>A({byteLength:a.size,peerId:a.peerId,signal:T.signal,...a.metadata===void 0?{}:{metadata:a.metadata}}),M=>{v--;let p=c.get(a.peerId)-1;return p?c.set(a.peerId,p):c.delete(a.peerId),b(a)?(M?a.phase="ready":w(a,"payload rejected by receiver"),M):!1});return typeof L=="boolean"?L:(L.then(()=>K()),!1)},E=(a,k,A)=>{let T;try{T=yr(A,a.format,a.kind==="inline")}catch{l(a),e(a.peerId,"invalid action payload");return}l(a),gr(k,T,a.peerId,a.metadata)},U=a=>{let k=i.get(a.type);b(a)&&k&&D(a,k)&&k.receiver&&E(a,k,a.data)},$=a=>{let k=i.get(a.type);if(!b(a)||!k||!D(a,k)||!k.receiver)return;if(a.transfer==="receiving"){a.offset===a.size&&E(a,k,a.data);return}let A=r.get(a.peerId);!A.active&&y+a.size<=o&&(A.active=a,a.transfer="receiving",y+=a.size,a.lastSeen=Date.now(),f.delete(a),n(a.peerId,a.id))},N=(a,k)=>{let A=r.get(a)?.inline.get(k);for(;A?.[0];){let T=A[0];if(U(T),b(T))break}},K=()=>{if(h){R=!0;return}h=!0;try{do{R=!1;for(let a of f)$(a);for(let[a,k]of r){for(let A of k.bulk.values())A.offset===A.size&&$(A);for(let A of k.inline.keys())N(a,A)}}while(R)}finally{h=!1}},G=a=>{let k=r.get(a.peerId);if(d>=ns||(k?.count??0)>=ts)return u(a,"too many pending transfers",a.scope,a.kind==="bulk"?a.id:void 0),!1;if(k||(k={bulk:new Map,inline:new Map,active:null,count:0},r.set(a.peerId,k)),k.count++,d++,a.kind==="inline"){let T=k.inline.get(a.key)??[];T.push(a),k.inline.set(a.key,T)}else k.bulk.set(a.id,a),f.add(a);let A=()=>{let T=12e4-(Date.now()-a.lastSeen);T>0?a.timer=setTimeout(A,T):(w(a,"action transfer timed out"),K())};if(a.timer=setTimeout(A,12e4),a.scope){let{signal:T}=a.scope,L=()=>{w(a,"receive cancelled"),K()};if(T.addEventListener("abort",L,{once:!0}),a.removeAbortListener=()=>T.removeEventListener("abort",L),T.aborted)return L(),!1}return!0},Y=(a,k)=>{let A=i.get(a.type),T=A?.receiveScope?.(a.peerId,a.metadata);return T===null||T?.signal.aborted?(k!==void 0&&t(a.peerId,k,"unexpected response"),null):a.size>S(A)?(u(a,"payload exceeds receiver size limit",T,k),null):{action:A,scope:T}},oe=(a,k)=>({...a,...k?{scope:k}:{},phase:"pending",controller:null,lastSeen:Date.now(),timer:null});return{register:(a,k={})=>{let A={...k,receiver:null,receive:null,reject:null,progress:X};return i.set(a,A),{onMessage:T=>{A.receiver=T,K()},onReceive:T=>{A.receive=T,K()},onReject:T=>{A.reject=T},onProgress:T=>{A.progress=T}}},receiveInline:(a,k)=>{let A=Y(a);if(!A)return;let{action:T,scope:L}=A,M=L?`${a.type}\0${L.key}`:a.type;if(T?.receiver&&!(L?L.receive:T.receive)&&!r.get(a.peerId)?.inline.has(M)){let g;try{g=yr(k,a.format,!0)}catch{e(a.peerId,"invalid action payload");return}gr(T,g,a.peerId,a.metadata);return}let p={...oe(a,L),kind:"inline",key:M,data:k};G(p)&&N(a.peerId,M)},receiveOffer:(a,k)=>{if(r.get(a.peerId)?.bulk.has(k)){e(a.peerId,"duplicate action offer");return}let A=Y(a,k);if(!A)return;let T={...oe(a,A.scope),kind:"bulk",id:k,transfer:"waiting",offset:0,data:null};G(T)&&K()},receiveChunk:(a,k,A,T)=>{let L=r.get(a),M=L?.bulk.get(k);if(!M)return;if(M.transfer!=="receiving"||A!==M.offset||!T.length||T.length!==Math.min(s,M.size-M.offset)){e(a,"invalid action chunk offset or length");return}try{M.data??(M.data=new Uint8Array(M.size))}catch{w(M,"unable to allocate receive buffer"),K();return}M.data.set(T,M.offset),M.offset+=T.length;let p=Date.now();M.lastSeen=p;for(let g of f)g.phase==="ready"&&i.get(g.type)?.receiver&&(g.lastSeen=p);M.offset===M.size?($(M),b(M)&&L?.active===M&&(L.active=null,m(a)),K()):pr(i.get(M.type),M.offset/M.size,a,M.metadata)},cancel:(a,k)=>{let A=r.get(a)?.bulk.get(k);A&&(l(A),A.scope?.reject("response cancelled by sender")),K()},clearPeer:a=>{let k=r.get(a);if(k){for(let A of k.bulk.values())l(A);for(let A of k.inline.values()){let T=[...A];for(let L of T)l(L)}}K()}}};var lt=2,bn=0,Sn=1,wr=2,st=3,it=4,Tn=5,at=36,vr=48,Ne=6,sn=14,ct=16384-sn,as=256*1024**2,kr=1024**2,Pr="bufferedamountlow",br="close",Sr="error",cs=1e4,xe=(e,n)=>{let t=x(n);return t.kind=e,t.name=e==="aborted"?"AbortError":t.name,t},An=e=>{if(e?.aborted)throw xe("aborted","operation aborted")},Tr=(e,n,t=Ne)=>{let o=new Uint8Array(t);return o[0]=lt,o[1]=e,new DataView(o.buffer).setUint32(2,n),o},Ge=xe,ls=(e,n,t=cs)=>e.readyState!=="open"||e.bufferedAmount<=e.bufferedAmountLowThreshold?Promise.resolve(e.readyState==="open"):new Promise(o=>{let s=!1,i=null,r=d=>{s||(s=!0,e.removeEventListener(Pr,f),e.removeEventListener(br,c),e.removeEventListener(Sr,c),n?.removeEventListener("abort",c),H(i),o(d))},f=()=>r(!0),c=()=>r(!1);if(e.addEventListener(Pr,f),e.addEventListener(br,c),e.addEventListener(Sr,c),n?.addEventListener("abort",c,{once:!0}),i=setTimeout(()=>r(!1),t),e.readyState!=="open"||n?.aborted){r(!1);return}e.bufferedAmount<=e.bufferedAmountLowThreshold&&r(!0)}),Rr=({getPeer:e,getPeerIds:n,canReceiveFromPeer:t,onPeerError:o,throwIfAborted:s=An,maxReceiveBytes:i=as})=>{if(!Number.isSafeInteger(i)||i<=0)throw x("maxReceiveBytes must be a positive safe integer");let r=new Map,f=new Map,c=new WeakSet,d=0,v=hr({fail:(u,m)=>h(u,m),accept:(u,m)=>R(u,m,st),refuse:(u,m,l)=>R(u,m,it,l),maxReceiveBytes:i,chunkSize:ct}),y=u=>{for(let m of f.get(u)?.values()??[])m.fail(Ge("disconnected","peer disconnected"));f.delete(u),v.clearPeer(u)},h=(u,m)=>{let l=e(u,!0);l&&!c.has(l)&&(c.add(l),console.warn(`${Z}: ${m}; disconnecting peer ${u}`),o(u,x(m)))},R=(u,m,l,w="")=>{let D=e(u,!0);if(!D)return;let E=ue(w).subarray(0,200),U=Tr(l,m,Ne+E.length);U.set(E,Ne);try{if((D.channel?.bufferedAmount??0)>kr)throw x("control send buffer is full");D.sendData(U)}catch{h(u,"unable to send action control")}};return{makeInternalAction:(u,m={})=>{let l={sendToPending:!!m.sendToPending,receiveWhilePending:!!m.receiveWhilePending,...m.maxPayloadBytes===void 0?{}:{maxPayloadBytes:m.maxPayloadBytes},...m.receiveScope?{receiveScope:m.receiveScope}:{}},w=r.get(u);if(w){if(w.options.sendToPending!==l.sendToPending||w.options.receiveWhilePending!==l.receiveWhilePending||w.options.receiveScope!==l.receiveScope||w.options.maxPayloadBytes!==l.maxPayloadBytes)throw x(`action type "${u}" cannot be redefined`);return w.action}let D=ue(u);if(!u||u.includes("\0")||D.length>32)throw x("action type must contain 1\u201332 UTF-8 bytes and no null characters");let E={options:l,action:{...v.register(u,l),send:async(U,$,N,K,G)=>{if(s(G),U===void 0)throw x("action data cannot be undefined");let Y=U instanceof Blob,oe=Y||U instanceof ArrayBuffer||ArrayBuffer.isView(U),a=oe?2:typeof U=="string"?0:1,k=Y?U:U instanceof ArrayBuffer?new Uint8Array(U):ArrayBuffer.isView(U)?new Uint8Array(U.buffer,U.byteOffset,U.byteLength):ue(a===0?U:re(U)),A=k instanceof Blob?k.size:k.byteLength,T=N===void 0?new Uint8Array:ue(re(N));if(T.length>16336)throw x("action metadata is too large");let L=at+T.length+A<=16384;!L&&oe&&!(k instanceof Blob)&&(k=k.slice());let M=L?0:d++>>>0,p=L?at:vr,g=new Uint8Array(p+T.length+(L?A:0));g[0]=lt,g[1]=(L?bn:Sn)|a<<4,g.set(D,2);let C=new DataView(g.buffer);C.setUint16(34,T.length),L||(C.setUint32(36,M),C.setFloat64(40,A)),g.set(T,p),L&&g.set(k instanceof Blob?new Uint8Array(await k.arrayBuffer()):k,p+T.length);let _=$?Array.isArray($)?$:[$]:n(l.sendToPending);await le([...new Set(_)].map(async W=>{let I=e(W,l.sendToPending);if(!I){console.warn(`${Z}: no peer with id ${W} found`);return}let se=null,ee=()=>{if(se)throw se;if(s(G),e(W,l.sendToPending)!==I||I.channel?.readyState==="closed")throw Ge("disconnected","peer disconnected")},fe=async J=>{ee();let Q=I.channel;if(Q&&(Q.readyState!=="open"||Q.bufferedAmount>Q.bufferedAmountLowThreshold)){if(!await ls(Q,G))throw s(G),Ge("disconnected","data channel stopped draining");ee()}try{I.sendData(J)}catch{throw Ge("disconnected","peer disconnected")}};if(L){await fe(g),K?.(1,W,N);return}let Ae=!1,Re=!1,ye=Date.now(),P,B,q=new Promise((J,Q)=>{P=J,B=Q});q.catch(X);let F=f.get(W)??new Map;if(F.has(M))throw x("action transmission id is still in use");f.set(W,F);let ne=null,Ee={accept:()=>!ne||se?!1:(ne=H(ne),P(),!0),fail:(J,Q=!1)=>{Q&&(Re=!0),se=J,B(J)},touch:()=>{ne&&(ye=Date.now())}};F.set(M,Ee);let Ue=()=>{let J=12e4-(Date.now()-ye);J>0?ne=setTimeout(Ue,J):Ee.fail(Ge("timeout","action offer timed out"))};ne=setTimeout(Ue,12e4);let Me=()=>{try{s(G)}catch(J){Ee.fail(J)}};G?.addEventListener("abort",Me,{once:!0});try{await fe(g),Ae=!0,await q;for(let J=0;J<A;J+=ct){ee();let Q=Math.min(ct,A-J),be=Tr(wr,M,sn+Q);new DataView(be.buffer).setFloat64(Ne,J),be.set(k instanceof Blob?new Uint8Array(await k.slice(J,J+Q).arrayBuffer()):k.subarray(J,J+Q),sn),await fe(be);for(let z of F.values())z.touch();K?.((J+Q)/A,W,N)}ee()}catch(J){throw Ae&&!Re&&e(W,!0)===I&&(!I.channel||I.channel.readyState==="open"&&(I.channel.bufferedAmount??0)<=kr)&&R(W,M,Tn),J}finally{ne=H(ne),G?.removeEventListener("abort",Me),F.delete(M),!F.size&&f.get(W)===F&&f.delete(W)}}))}}};return r.set(u,E),E.action},handleData:(u,m)=>{if(m.byteLength<2||m.byteLength>16384){h(u,"invalid action frame");return}let l=new Uint8Array(m);if(l[0]!==lt){h(u,"incompatible action protocol version");return}let w=l[1]&15,D=l[1]>>>4,E=new DataView(l.buffer,l.byteOffset,l.byteLength);if(w>Tn||D>2||w>Sn&&D!==0){h(u,"invalid action frame");return}if(w>=wr){if(l.length<Ne||(w===st||w===Tn)&&l.length!==Ne||w===it&&l.length>206){h(u,"invalid action control");return}let A=E.getUint32(2);if(w===st){let T=f.get(u);if(T?.get(A)?.accept())for(let L of T.values())L.touch();return}if(w===it){f.get(u)?.get(A)?.fail(Ge("rejected",we(l.subarray(Ne))),!0);return}w===Tn?v.cancel(u,A):v.receiveChunk(u,A,l.length>=sn?E.getFloat64(Ne):NaN,l.subarray(sn));return}let U=w===bn?at:vr;if(l.length<U){h(u,"invalid action header");return}let $=we(l.subarray(2,34)).replaceAll("\0",""),N=r.get($);if(!t(u,!!N?.options.receiveWhilePending))return;let K=E.getUint16(34),G=U+K,Y=w===bn?l.length-G:E.getFloat64(40),oe=w===Sn?E.getUint32(36):0;if(!$||G>l.length||!Number.isSafeInteger(Y)||Y<0||w===Sn&&(Y===0||G!==l.length)){h(u,"invalid action proposal");return}let a;try{K&&(a=Te(we(l.subarray(U,G))))}catch{h(u,"invalid action metadata");return}let k={peerId:u,type:$,format:D,size:Y,...a===void 0?{}:{metadata:a}};w===bn?v.receiveInline(k,l.subarray(G)):v.receiveOffer(k,oe)},clearPeer:y}};var Er=e=>e&&typeof e=="object"&&!Array.isArray(e)&&typeof e.r=="string"?e:null,Rn=e=>{let n=Er(e);return n?{r:n.r,...Object.hasOwn(n,"m")?{m:n.m}:{}}:null},ft=e=>{let n=Er(e);return n?{r:n.r,...typeof n.e=="string"?{e:n.e}:{}}:null},an=(e,n)=>n===void 0?e:{...e,metadata:n},Mr=({getPeer:e,getPeerIds:n,canReceiveFromPeer:t,onPeerError:o,maxReceiveBytes:s})=>{let i=Object.create(null),r={},f=new Map,c=Rr({getPeer:e,getPeerIds:n,canReceiveFromPeer:t,onPeerError:o,...s===void 0?{}:{maxReceiveBytes:s}}),d=c.makeInternalAction,v=c.handleData,y=u=>{let m=r[u];m&&(H(m.timer),m.signal&&m.abortHandler&&m.signal.removeEventListener("abort",m.abortHandler),delete r[u],m.controller.abort())},h=(u,m)=>{Se(r).forEach(([l,w])=>{w.peerId===u&&(y(l),w.reject(m))})},R=(u,m)=>{c.clearPeer(u);let l=f.get(u);l&&(f.delete(u),l.forEach(w=>w.abort())),h(u,xe("disconnected",Ce(m,"peer disconnected")))},b=d("@_response",{receiveScope:(u,m)=>{let l=ft(m),w=l&&r[l.r];if(!l||!w||w.peerId!==u)return null;let D=l.e===void 0?w.getReceive():null;return{key:l.r,signal:w.controller.signal,receive:D?E=>D({byteLength:E.byteLength,peerId:E.peerId,kind:"response",signal:E.signal}):null,reject:E=>{r[l.r]===w&&(y(l.r),w.reject(xe("rejected",E)))}}}});return b.onProgress((u,m,l)=>{let w=ft(l),D=w&&r[w.r];D&&D.peerId===m&&w?.e===void 0&&D.getReceiveProgress()?.(u,{peerId:m})}),b.onMessage((u,m,l)=>{let w=ft(l);if(!w)return;let D=r[w.r];if(!(!D||D.peerId!==m)){if(y(w.r),w.e!==void 0){D.reject(xe("rejected",w.e));return}D.resolve(u)}}),{makeAction:(u,m)=>{if(m&&"onRequest"in m&&m.kind!=="request")throw x('request actions must use kind: "request"');let l=m?.kind??"message",w=d(u),D=i[u];if(D){if(D.kind!==l)throw x(`action type "${u}" cannot be redefined`);return D.action}let E={kind:l,action:null,onReceive:m?.onReceive??null,onReceiveProgress:m?.onReceiveProgress??null},U=(a,k)=>a?(A,T)=>a(A,an({peerId:T},k)):void 0,$=(a,k,A)=>{let T=E.kind==="request"?Rn(A):null;E.onReceiveProgress?.(a,an({peerId:k},T?T.m:A))},N=a=>{E.onReceive=a,w.onReceive(a?k=>{let A=l==="request"?Rn(k.metadata):null;return a(an({byteLength:k.byteLength,peerId:k.peerId,signal:k.signal,kind:l},A?A.m:k.metadata))}:null)};if(N(E.onReceive),w.onProgress($),l==="message"){let a=m?.onMessage??null,k=(T,L,M)=>{let p=a;Promise.resolve().then(()=>p(T,an({peerId:L},M))).catch(g=>console.error(`${Z} action handler error:`,g))},A={send:async(T,L={})=>{await w.send(T,L.target,L.metadata,U(L.onProgress,L.metadata),L.signal)},get onMessage(){return a},set onMessage(T){a=T,w.onMessage(T?k:null)},get onReceive(){return E.onReceive},set onReceive(T){N(T)},get onReceiveProgress(){return E.onReceiveProgress},set onReceiveProgress(T){E.onReceiveProgress=T}};return E.action=A,i[u]=E,w.onMessage(a?k:null),A}w.onReject((a,k,A)=>{let T=Rn(k);T&&b.send(null,a,{r:T.r,e:A}).catch(X)});let K=m?.onRequest??null,G=(a,k,A)=>{let T=Rn(A);if(!T)return;let L=K,M=new AbortController,p=f.get(k);p||(p=new Set,f.set(k,p)),p.add(M),Promise.resolve().then(async()=>{let g=await L(a,{...an({peerId:k},T.m),signal:M.signal});if(g===void 0)throw x("request handler returned undefined");return g}).then(g=>b.send(g,k,{r:T.r}),g=>b.send(null,k,{r:T.r,e:Ce(g,"request failed").slice(0,512)})).catch(X).finally(()=>{let g=f.get(k);g?.delete(M),g&&!g.size&&f.delete(k),M.abort()})},Y=async(a,k)=>{let{target:A,metadata:T,onProgress:L,signal:M,timeoutMs:p}=k;if(An(M),!e(A,!1))throw xe("disconnected",`no active peer with id ${A}`);let g=de(20),C=new AbortController,_=new Promise((W,I)=>{let se={controller:C,getReceive:()=>E.onReceive,getReceiveProgress:()=>E.onReceiveProgress,peerId:A,resolve:W,reject:I,timer:null,...M===void 0?{}:{signal:M}},ee=()=>{y(g),I(xe("aborted","operation aborted"))};M&&(se.abortHandler=ee,M.addEventListener("abort",ee,{once:!0})),r[g]=se,p!==void 0&&(se.timer=setTimeout(()=>{y(g),se.reject(xe("timeout","request timed out"))},p))});try{let W=w.send(a,A,T===void 0?{r:g}:{r:g,m:T},U(L,T),C.signal);return await Promise.race([_,W.then(()=>_)])}finally{y(g)}},oe={request:Y,requestMany:async(a,k)=>{let{targets:A,onResult:T,...L}=k;return An(L.signal),await le(A.map(async M=>{try{let p={peerId:M,status:"fulfilled",value:await Y(a,{...L,target:M})};return T?.(p),p}catch(p){let g=he(p,"request failed");if(g.kind==="aborted"||!g.kind)throw g;let C=g.kind==="timeout"?{peerId:M,status:"timeout"}:g.kind==="disconnected"?{peerId:M,status:"disconnected"}:{peerId:M,status:"rejected",error:g};return T?.(C),C}}))},get onRequest(){return K},set onRequest(a){K=a,w.onMessage(a?G:null)},get onReceive(){return E.onReceive},set onReceive(a){N(a)},get onReceiveProgress(){return E.onReceiveProgress},set onReceiveProgress(a){E.onReceiveProgress=a}};return E.action=oe,i[u]=E,w.onMessage(K?G:null),oe},makeInternalAction:d,handleData:v,clearPeer:R}};var Dr=e=>e&&typeof e=="object"&&!Array.isArray(e)&&typeof e.k=="string"?{key:e.k,...typeof e.s=="string"?{streamId:e.s}:{},...typeof e.t=="string"?{trackId:e.t}:{},...Object.hasOwn(e,"m")?{metadata:e.m}:{}}:null,Br=e=>n=>{let t=e.get(n);return t||(t=de(20),e.set(n,t)),t},En=()=>{let e=new WeakMap,n=new WeakMap,t=new Map,o=new Map,s=new Map,i=new Map,r=new WeakMap,f=new WeakMap;return{getStreamKey:Br(e),getTrackKey:Br(n),rememberRemoteStream:(c,d,v)=>{let y=r.get(d);y!==void 0&&t.get(y)===d&&t.delete(y),r.set(d,c),t.set(c,d),v&&o.set(v,d),d.getTracks?.().forEach(h=>{typeof h.id=="string"&&i.set(h.id,{track:h,stream:d})})},getRemoteStream:(c,d)=>t.get(c)??(d?o.get(d):void 0),rememberRemoteTrack:(c,d,v,y,h)=>{let R={track:d,stream:v},b=f.get(d);b!==void 0&&s.get(b)?.track===d&&s.delete(b),f.set(d,c),s.set(c,R),y&&i.set(y,R),h&&o.set(h,v)},getRemoteTrack:(c,d)=>s.get(c)??(d?i.get(d):void 0),hasRemoteMedia:()=>t.size>0||s.size>0,clearRemote:()=>{t.clear(),o.clear(),s.clear(),i.clear()}}},Cr=({iterate:e,isActive:n,getSharedMediaPeer:t,onPeerError:o})=>{let s={},i={},r={},f=En(),c=S=>t(S)?.__trysteroMedia??r[S]??(r[S]=En()),d=(S,u,m,l)=>{let w=S[u]??(S[u]=[]);if(w.length>=64){console.warn(`${Z}: too many pending ${l} metadata messages`),o(u,x("too many pending media metadata messages"));return}w.push(m)},v=(S,u,m)=>{if(!S?.length)return;let l=u?S.findIndex(w=>{let D=m(w);return!D||D===u}):0;return l>=0?S.splice(l,1)[0]:void 0},y=(S,u,m,l)=>{n(S)&&(c(S).rememberRemoteStream(u,m,typeof m.id=="string"?m.id:void 0),b.onPeerStream?.(m,S,l))},h=(S,u,m,l,w)=>{n(S)&&(c(S).rememberRemoteTrack(u,m,l,typeof m.id=="string"?m.id:void 0,typeof l.id=="string"?l.id:void 0),b.onPeerTrack?.(m,l,S,w))},R=(S,u,m,l,w,D={})=>{let E={k:u,...D,...m===void 0?{}:{m}};return e(S,async(U,$)=>{await l(E,U),await w($)})},b={addStream:(S,u,m)=>R(u.target,f.getStreamKey(S),u.metadata,m,l=>l.addStream(S),{s:S.id}),removeStream:(S,u)=>{e(u,(m,l)=>l.removeStream(S))},addTrack:(S,u,m,l)=>R(m.target,f.getTrackKey(S),m.metadata,l,w=>w.addTrack(S,u),{s:u.id,t:S.id}),removeTrack:(S,u)=>{e(u,(m,l)=>l.removeTrack(S))},replaceTrack:(S,u,m,l)=>R(m.target,f.getTrackKey(u),m.metadata,l,w=>w.replaceTrack(S,u),{t:S.id}),receiveStreamMeta:(S,u)=>{if(!n(u))return;let m=Dr(S);if(!m)return;let l=c(u).getRemoteStream(m.key,m.streamId);if(l?.getTracks().length){y(u,m.key,l,m.metadata);return}d(s,u,m,"stream")},receiveTrackMeta:(S,u)=>{if(!n(u))return;let m=Dr(S);if(!m)return;let l=c(u).getRemoteTrack(m.key,m.trackId);if(l&&l.track.readyState!=="ended"&&(!l.stream.getTracks||l.stream.getTracks().includes(l.track))){h(u,m.key,l.track,l.stream,m.metadata);return}d(i,u,m,"track")},receiveRemoteStream:(S,u)=>{if(!n(S))return;let m=v(s[S],typeof u.id=="string"?u.id:void 0,l=>l.streamId);m&&y(S,m.key,u,m.metadata)},receiveRemoteTrack:(S,u,m)=>{if(!n(S))return;let l=i[S],w=typeof u.id=="string"?u.id:void 0,D=typeof m.id=="string"?m.id:void 0,E=l&&w?l.findIndex($=>$.trackId===w):-1,U=E>=0?l?.splice(E,1)[0]:v(l,D,$=>$.streamId);U&&h(S,U.key,u,m,U.metadata)},clearPeer:S=>{delete s[S],delete i[S],delete r[S]},onPeerStream:null,onPeerTrack:null};return b};var Or="beforeunload",fs=1e4,_e=e=>"@_"+e,cn=new Set,Lr=()=>cn.forEach(e=>e()),ds=e=>(cn.add(e),cn.size===1&&addEventListener(Or,Lr),()=>{cn.delete(e),cn.size||removeEventListener(Or,Lr)}),xr=(e,n,t,{onPeerHandshake:o,onHandshakeError:s,handshakeTimeoutMs:i=fs,maxReceiveBytes:r,isPassive:f=!1,onBeforeLeave:c}={})=>{let d={},v={},y={},h={onPeerJoin:null,onPeerLeave:null},R=X,b=null,S=(p,g)=>(p?Array.isArray(p)?p:[p]:ce(v)).flatMap(C=>{let _=v[C];return _?[Promise.resolve(g(C,_))]:(console.warn(`${Z}: no peer with id ${C} found`),[])}),u=(p,g,C)=>{let _=d[p];!_||g&&_!==g||(A.send("",p).catch(X),N(p,_,C))},m=(p,g)=>u(p,void 0,g),l=Cr({onPeerError:m,iterate:(p,g)=>S(p,(C,_)=>g(C,_)),isActive:p=>!!v[p],getSharedMediaPeer:p=>d[p]??null}),w=Mr({onPeerError:m,...r===void 0?{}:{maxReceiveBytes:r},getPeer:(p,g)=>(g?d:v)[p],getPeerIds:p=>ce(p?d:v),canReceiveFromPeer:(p,g)=>M.canReceiveFromPeer(p,g)}),D=w.makeInternalAction,E=w.handleData,U=w.makeAction,$=(p,g=x("peer disconnected"))=>{let C=he(g,"peer disconnected");M.clearPeer(p,C),delete d[p],delete v[p],w.clearPeer(p,C),y[p]?.splice(0).forEach(_=>_.reject(C)),delete y[p],l.clearPeer(p)},N=(p,g,C)=>{let _=d[p];if(!_||g&&_!==g)return;let W=!!v[p];$(p,C),_.destroy(),W&&h.onPeerLeave?.(p),n(p)},K=()=>b??(b=(async()=>{c?.();let p=new AbortController;A.send("",void 0,void 0,void 0,p.signal).catch(X),await new Promise(g=>setTimeout(g,99)),p.abort();try{Se(d).forEach(([g,C])=>{C.destroy(),$(g,x("room left"))})}finally{try{R()}finally{t()}}})()),G=D(_e("ping")),Y=D(_e("pong")),oe=D(_e("signal")),a=D(_e("stream"),{maxPayloadBytes:65536}),k=D(_e("track"),{maxPayloadBytes:65536}),A=D(_e("leave"),{sendToPending:!0,receiveWhilePending:!0}),T=D(_e("hsdata"),{sendToPending:!0,receiveWhilePending:!0,maxPayloadBytes:65536}),L=D(_e("hsready"),{sendToPending:!0,receiveWhilePending:!0}),M=lr({...o===void 0?{}:{onPeerHandshake:o},...s===void 0?{}:{onHandshakeError:s},handshakeTimeoutMs:i,sendHandshakeData:T.send,sendHandshakeReady:L.send,onActivate:(p,g)=>{v[p]=g,g.setHandlers({signal:C=>{v[p]===g&&oe.send(C,p).catch(X)}}),h.onPeerJoin?.(p)},onFailure:(p,g,C)=>u(p,g,C)});return G.onMessage((p,g)=>{Y.send("",g).catch(X)}),Y.onMessage((p,g)=>{let C=y[g];C?.shift()?.resolve(),C&&!C.length&&delete y[g]}),oe.onMessage((p,g)=>{v[g]?.signal(p)}),a.onMessage((p,g)=>l.receiveStreamMeta(p,g)),k.onMessage((p,g)=>l.receiveTrackMeta(p,g)),A.onMessage((p,g)=>N(g,void 0,x("peer left room"))),T.onMessage((p,g,C)=>M.receiveHandshakeData(p,g,C)),L.onMessage((p,g)=>M.receiveHandshakeReady(g)),e((p,g)=>{let C=d[g];if(C){if(C===p)return;C.destroy(),$(g,x("peer replaced"))}d[g]=p,M.addPeer(g,p),p.setHandlers({data:_=>{d[g]===p&&E(g,_)},stream:_=>l.receiveRemoteStream(g,_),track:(_,W)=>l.receiveRemoteTrack(g,_,W),close:()=>N(g,p,x("peer disconnected")),error:_=>{console.error(`${Z} peer error:`,_),N(g,p,_)}}),M.start(g,p)}),Vn&&(R=ds(()=>K().catch(X))),{makeAction:U,leave:K,ping:async p=>{if(!v[p])throw x(`no active peer with id ${p}`);let g=Date.now();return await new Promise((C,_)=>{let W=y[p]??(y[p]=[]),I=()=>{let ee=y[p];if(!ee)return;let fe=ee.indexOf(se);fe>-1&&ee.splice(fe,1),ee.length||delete y[p]},se={resolve:()=>{I(),C()},reject:ee=>{I(),_(ee)}};W.push(se),G.send("",p).catch(ee=>se.reject(he(ee,"peer disconnected")))}),Date.now()-g},isPassive:()=>f,getPeers:()=>Gn(Se(v).map(([p,g])=>[p,g.connection])),addStream:(p,g={})=>l.addStream(p,g,a.send),removeStream:(p,g={})=>{l.removeStream(p,g.target)},addTrack:(p,g,C={})=>l.addTrack(p,g,C,k.send),removeTrack:(p,g={})=>{l.removeTrack(p,g.target)},replaceTrack:(p,g,C={})=>l.replaceTrack(p,g,C,k.send),get onPeerJoin(){return h.onPeerJoin},set onPeerJoin(p){h.onPeerJoin=p,p&&ce(v).forEach(g=>p(g))},get onPeerLeave(){return h.onPeerLeave},set onPeerLeave(p){h.onPeerLeave=p},get onPeerStream(){return l.onPeerStream},set onPeerStream(p){l.onPeerStream=p},get onPeerTrack(){return l.onPeerTrack},set onPeerTrack(p){l.onPeerTrack=p}}};var Ir=1,qr=2,Ur=(e,n)=>{let t=ue(e),o=new Uint8Array(3+t.byteLength+n.byteLength);return o[0]=Ir,o[1]=t.byteLength>>>8&255,o[2]=t.byteLength&255,o.set(t,3),o.set(n,3+t.byteLength),o},us=(e,n)=>{let t=ue(e),o=new Uint8Array(4+t.byteLength);return o[0]=qr,o[1]=Number(n),o[2]=t.byteLength>>>8&255,o[3]=t.byteLength&255,o.set(t,4),o},Hr=(e,n)=>{if(e.byteLength<n+2)return null;let t=(e[n]??0)<<8|(e[n+1]??0),o=n+2+t;return t<=0||t>128||e.byteLength<o?null:{roomToken:we(e.subarray(n+2,o)),headerSize:o}},ms=e=>{let n=new Uint8Array(e);if(n.byteLength<3||n.byteLength>16515)return null;if(n[0]===Ir){let t=Hr(n,1);return t?{type:"room",roomToken:t.roomToken,payload:n.subarray(t.headerSize).slice().buffer}:null}if(n[0]===qr){let t=Hr(n,2);return t?{type:"presence",roomToken:t.roomToken,isPresent:n[1]===1}:null}return null},Mn=e=>{let{connection:n,channel:t}=e;return e.isDead||n.connectionState==="closed"||n.connectionState==="failed"||n.iceConnectionState==="closed"||n.iceConnectionState==="failed"||t?.readyState==="closing"||t?.readyState==="closed"},Nr=e=>{if(Mn(e))return"stale";let{channel:n}=e;return!n||n.readyState!=="open"?"transient":"live"},_r=class{constructor(){ae(this,"rooms",new Map);ae(this,"unclaimedDataTimers",new WeakMap);ae(this,"pendingDataTimers",new WeakMap);ae(this,"byApp",{})}registerRoom(e,n,t,o){let s=this.rooms.get(e)??new Map;if(s.has(n))throw x("room membership already registered");let i={token:null,tokenPromise:t,...o};s.set(n,i),this.rooms.set(e,s);let r=()=>this.rooms.get(e)?.get(n)===i,f=c=>{if(i.token)for(let d of pe(this.byApp[e]??{}))try{this.sendRoomPresence(d,i.token,c)}catch{}};return t.then(c=>{if(r()){i.token=c;for(let d of pe(this.byApp[e]??{}))d.remoteRoomTokens.has(c)&&this.attachRoom(e,n,i,d),this.discardUnboundData(d);r()&&i.active&&f(!0)}}),{connect:(c,d,v)=>{if(!r()){d.destroy();return}let y=this.reusable(e,c);y&&y.peer!==d&&d.destroy();let h=y??this.register(e,c,d,v);if(this.attachRoom(e,n,i,h),!y)for(let R of s.values())R.active&&R.token&&this.sendRoomPresence(h,R.token,!0)},reuse:c=>{if(!r())return!1;let d=this.reusable(e,c);return d?(this.attachRoom(e,n,i,d),!0):!1},setActive:c=>{!r()||i.active===c||(i.active=c,f(c))},leave:()=>{if(r()){s.delete(n),s.size||this.rooms.delete(e),f(!1);for(let c of pe(this.byApp[e]??{})){let d=c.bindings[n];d?.handlers.close?.(),d?.detach(),this.discardUnboundData(c)}}}}}owns(e,n,t){return this.byApp[e]?.[n]?.peer===t}reusable(e,n){let t=this.byApp[e]?.[n];if(t&&Mn(t.peer)){this.clear(e,n,{destroyPeer:!0});return}return t}attachRoom(e,n,t,o){if(this.rooms.get(e)?.get(n)!==t||o.isClosing||this.get(e,o.peerId)!==o)return;let{proxy:s,isNew:i}=this.bind(n,t.tokenPromise,o,{onDetach:()=>t.onDetach(o.peerId,o.peer)});i&&t.onPeer(s,o.peerId,o.peer)}get(e,n){return this.byApp[e]?.[n]}sendRoomPresence(e,n,t){e.isClosing||Mn(e.peer)||e.peer.sendData(us(n,t))}clear(e,n,{destroyPeer:t}){let o=this.byApp[e],s=o?.[n];if(!s||s.isClosing)return;s.idleTimer=H(s.idleTimer),this.clearDataTimers(s),s.isClosing=!0,t&&!s.peer.isDead&&s.peer.destroy();let i=pe(s.bindings);s.bindings={},s.bindingsByToken={},s.controlRoomId=null,delete o[n],i.forEach(r=>{r.handlers.close?.(),r.pendingData.length=0,r.pendingSendData.length=0,r.pendingTracks.length=0}),s.media.clearRemote(),s.pendingDataByToken.clear(),s.remoteRoomTokens.clear(),ce(o).length===0&&delete this.byApp[e]}register(e,n,t,o){var f;let s=this.byApp[e]?.[n];if(s){if(s.idleTimer=H(s.idleTimer),s.peer===t)return s;this.clear(e,n,{destroyPeer:!0})}let i={appId:e,peerId:n,peer:t,bindings:{},bindingsByToken:{},pendingDataByToken:new Map,remoteRoomTokens:new Set,idleTimer:null,controlRoomId:null,streamOwners:new Map,trackOwners:new Map,media:En(),idleMs:o,isClosing:!1};((f=this.byApp)[e]??(f[e]={}))[n]=i;let r=()=>{this.owns(e,n,t)&&this.clear(e,n,{destroyPeer:!0})};return t.setHandlers({data:c=>this.dispatchData(i,c),signal:c=>this.dispatchSignal(i,c),close:r,error:c=>{console.error(`${Z} peer error:`,c),r()},track:(c,d)=>this.dispatchTrack(i,c,d)}),i}bind(e,n,t,{onDetach:o}){let s=t.bindings[e];if(s)return t.idleTimer=H(t.idleTimer),{proxy:s.proxy,isNew:!1};let i={roomId:e,roomToken:null,roomTokenPromise:n,handlers:{},pendingData:[],pendingSendData:[],pendingTracks:[],detach:X,proxy:{}},r=()=>{if(t.bindings[e]!==i)return;let c=ce(t.bindings).length===1&&(t.streamOwners.size>0||t.trackOwners.size>0||t.media.hasRemoteMedia());c||this.pruneRoomOwnership(t,e),delete t.bindings[e],i.roomToken&&t.bindingsByToken[i.roomToken]===i&&delete t.bindingsByToken[i.roomToken],t.controlRoomId===e&&(t.controlRoomId=ce(t.bindings)[0]??null),this.discardUnboundData(t),o(),c?this.clear(t.appId,t.peerId,{destroyPeer:!0}):this.scheduleIdleTimer(t)},f={get connection(){return t.peer.connection},get channel(){return t.peer.channel},get isDead(){return t.peer.isDead},getOffer:c=>t.peer.getOffer(c),signal:c=>t.peer.signal(c),sendData:c=>{if(!i.roomToken){i.pendingSendData.push(c);return}t.peer.sendData(Ur(i.roomToken,c))},destroy:()=>r(),setHandlers:c=>{Object.assign(i.handlers,c),this.flushBindingQueues(t,i)},addStream:c=>{let d=t.streamOwners.get(c)??new Set,v=d.size===0;d.add(e),t.streamOwners.set(c,d),v&&t.peer.addStream(c)},removeStream:c=>this.releaseStreamOwner(t,c,e),addTrack:(c,d)=>{let v=t.trackOwners.get(c)??{stream:d,rooms:new Set},y=v.rooms.size===0;return v.stream=d,v.rooms.add(e),t.trackOwners.set(c,v),y?t.peer.addTrack(c,d):t.peer.connection.getSenders().find(h=>h.track===c)??t.peer.addTrack(c,d)},removeTrack:c=>this.releaseTrackOwner(t,c,e),replaceTrack:async(c,d)=>{let v=t.trackOwners.get(c);if(await t.peer.replaceTrack(c,d),v&&t.trackOwners.get(c)===v){t.trackOwners.delete(c);let y=t.trackOwners.get(d)??{stream:v.stream,rooms:new Set};v.rooms.forEach(h=>y.rooms.add(h)),t.trackOwners.set(d,y)}},__trysteroMedia:t.media};return i.proxy=f,i.detach=r,t.bindings[e]=i,t.controlRoomId??(t.controlRoomId=e),t.idleTimer=H(t.idleTimer),n.then(c=>{if(t.isClosing||t.bindings[e]!==i)return;i.roomToken=c,t.bindingsByToken[c]=i;let d=t.pendingDataByToken.get(c);d?.length&&(i.pendingData.push(...d),t.pendingDataByToken.delete(c));let v=i.pendingSendData.splice(0);Mn(t.peer)||v.forEach(y=>{try{t.peer.sendData(Ur(c,y))}catch{}}),this.flushBindingQueues(t,i),this.discardUnboundData(t)}),{proxy:f,isNew:!0}}releaseStreamOwner(e,n,t){let o=e.streamOwners.get(n);o&&(o.delete(t),o.size===0&&(e.streamOwners.delete(n),e.peer.removeStream(n)))}releaseTrackOwner(e,n,t){let o=e.trackOwners.get(n);o&&(o.rooms.delete(t),o.rooms.size===0&&(e.trackOwners.delete(n),e.peer.removeTrack(n)))}pruneRoomOwnership(e,n){e.streamOwners.forEach((t,o)=>this.releaseStreamOwner(e,o,n)),e.trackOwners.forEach((t,o)=>this.releaseTrackOwner(e,o,n))}scheduleIdleTimer(e){e.isClosing||ce(e.bindings).length>0||(e.idleTimer=H(e.idleTimer),e.idleTimer=setTimeout(()=>{let n=this.byApp[e.appId]?.[e.peerId];!n||ce(n.bindings).length>0||this.clear(e.appId,e.peerId,{destroyPeer:!0})},e.idleMs))}getSignalBinding(e){if(e.controlRoomId){let t=e.bindings[e.controlRoomId];if(t?.handlers.signal)return t}let n=pe(e.bindings).find(t=>!!t.handlers.signal);return n?(e.controlRoomId=n.roomId,n):null}flushBindingQueues(e,n){let{handlers:t}=n;if(t.data&&n.pendingData.length>0){let o=n.pendingData.splice(0);this.syncDataTimers(e),o.forEach(s=>t.data?.(s))}else this.syncDataTimers(e);(t.track||t.stream)&&n.pendingTracks.length&&n.pendingTracks.splice(0).forEach(({track:o,stream:s})=>{t.track?.(o,s),t.stream?.(s)})}unclaimedBufferedFrameCount(e){let n=0;for(let t of e.pendingDataByToken.values())n+=t.length;return n}boundBufferedFrameCount(e){let n=0;for(let t of pe(e.bindings))n+=t.pendingData.length;return n}bufferedFrameCount(e){return this.unclaimedBufferedFrameCount(e)+this.boundBufferedFrameCount(e)}clearDataTimers(e){H(this.unclaimedDataTimers.get(e)),this.unclaimedDataTimers.delete(e),H(this.pendingDataTimers.get(e)),this.pendingDataTimers.delete(e)}syncDataTimers(e){if(e.isClosing){this.clearDataTimers(e);return}this.unclaimedBufferedFrameCount(e)===0?(H(this.unclaimedDataTimers.get(e)),this.unclaimedDataTimers.delete(e)):this.unclaimedDataTimers.has(e)||this.unclaimedDataTimers.set(e,setTimeout(()=>{this.unclaimedDataTimers.delete(e),e.pendingDataByToken.clear()},1e4)),this.boundBufferedFrameCount(e)===0?(H(this.pendingDataTimers.get(e)),this.pendingDataTimers.delete(e)):this.pendingDataTimers.has(e)||this.pendingDataTimers.set(e,setTimeout(()=>{this.pendingDataTimers.delete(e),this.boundBufferedFrameCount(e)>0&&this.failData(e,"room data handler timed out")},1e4))}canBindRoomToken(e,n){return pe(e.bindings).some(t=>!t.roomToken)||[...this.rooms.get(e.appId)?.values()??[]].some(t=>!t.token||t.token===n)}discardUnboundData(e){for(let n of e.pendingDataByToken.keys())this.canBindRoomToken(e,n)||e.pendingDataByToken.delete(n);this.syncDataTimers(e)}failData(e,n){console.warn(`${Z}: ${n}; disconnecting peer ${e.peerId}`),this.clear(e.appId,e.peerId,{destroyPeer:!0})}dispatchData(e,n){if(e.isClosing)return;let t=ms(n);if(!t){this.failData(e,"invalid or incompatible room frame");return}if(t.type==="presence"){if(t.isPresent){if(!e.remoteRoomTokens.has(t.roomToken)&&e.remoteRoomTokens.size>=64){this.failData(e,"too many advertised rooms");return}e.remoteRoomTokens.add(t.roomToken);for(let[s,i]of this.rooms.get(e.appId)??[])i.token===t.roomToken&&this.attachRoom(e.appId,s,i,e)}else{e.remoteRoomTokens.delete(t.roomToken),e.pendingDataByToken.delete(t.roomToken);let s=e.bindingsByToken[t.roomToken];s?.handlers.close?.(),s?.detach(),this.syncDataTimers(e)}return}let o=e.bindingsByToken[t.roomToken];if(!o){if(!this.canBindRoomToken(e,t.roomToken)||this.bufferedFrameCount(e)>=64)return;let s=e.pendingDataByToken.get(t.roomToken)??[];s.push(t.payload),e.pendingDataByToken.set(t.roomToken,s),this.syncDataTimers(e);return}if(o.handlers.data)o.handlers.data(t.payload);else{if(this.bufferedFrameCount(e)>=64){this.failData(e,"too much data waiting for a room handler");return}o.pendingData.push(t.payload),this.syncDataTimers(e)}}dispatchSignal(e,n){let t=this.getSignalBinding(e);t?t.handlers.signal?.(n):n.type==="offer"&&this.clear(e.appId,e.peerId,{destroyPeer:!0})}dispatchTrack(e,n,t){pe(e.bindings).forEach(o=>{if(o.handlers.track||o.handlers.stream){o.handlers.track?.(n,t),o.handlers.stream?.(t);return}o.pendingTracks.push({track:n,stream:t})})}};var zr=23333,ys=57333,gs=12,ps=7533,hs=23333,ln="offer-placeholder",ws=["offer","answer","candidate"],jr=e=>{if(typeof e=="string")try{let n=Te(e);return n&&typeof n=="object"&&!Array.isArray(n)?n:null}catch{return null}return e&&typeof e=="object"&&!Array.isArray(e)?e:null},ze=(e,n)=>typeof e[n]=="string"&&e[n]?e[n]:void 0,$r=e=>!!(e&&typeof e=="object"&&typeof e.signal=="function"&&typeof e.destroy=="function"&&typeof e.setHandlers=="function"),Fr=(e,n=!1)=>ws.some(t=>t in e&&(typeof e[t]!="string"||e[t]===""))||"peer"in e&&(n||e.peer!==void 0&&!$r(e.peer)),Wr=e=>{let n=jr(e);if(!n||Fr(n,typeof e=="string"))return!1;let t=ze(n,"peerId");return!!(t&&t!==te&&n.passive!==!0&&!ze(n,"answer")&&!ze(n,"candidate"))},vs=(e,n,t,o,s,i)=>{e.toCipher(n).then(r=>{e.isLeaving()||!i()||o(t,re(s(r.sdp)))})},ks=()=>({offerPeer:null,offerId:null,offerSdp:null,offerInitPromise:null,offerAnswered:!1,offerRelays:[],offerSignalRelays:[],offerSignalBacklog:[],offerRelayTimers:[],offerExpiryTimer:null,connectedPeer:null,connectedPeerUnhealthySinceMs:null,answeringExpiryTimer:null,answeringPeer:null,answerSent:!1,answerReplay:null,connectionErrorReported:!1}),Ps=e=>[...e.turnConfig??[],...e.rtcConfig?.iceServers??[]].some(({urls:n})=>(Array.isArray(n)?n:[n]).some(t=>/^turns?:/i.test(t))),bs=(e,n)=>`could not connect to peer ${e} after exchanging SDP; ${Ps(n)?"check that your TURN server URLs and credentials are reachable by both peers":"configure TURN servers with turnConfig or rtcConfig.iceServers"}`,Cn=(e,n,t)=>{e.isLeaving()||n.connectedPeer||n.connectionErrorReported||(n.connectionErrorReported=!0,e.onJoinError?.({error:bs(t,e.config),appId:e.appId,peerId:t,roomId:e.roomId}))},dn=(e,n)=>e[n]??(e[n]=ks()),Dn=new WeakMap,On=e=>{Dn.delete(e),e.answeringExpiryTimer=H(e.answeringExpiryTimer),e.answeringPeer=null,e.answerSent=!1,e.answerReplay=null},fn=(e,n)=>{e.answeringPeer===n&&(On(e),e.connectedPeer!==n&&!n.isDead&&n.destroy())},Kr=(e,n)=>{e.answeringPeer&&e.answeringPeer!==n&&!e.answeringPeer.isDead&&e.answeringPeer.destroy(),On(e),e.connectedPeer=n,e.connectedPeerUnhealthySinceMs=null},mt=(e,n)=>{e?.connectedPeer===n&&(e.connectedPeer=null,e.connectedPeerUnhealthySinceMs=null)},Bn=(e,n,t)=>{e.connectedPeer&&(e.connectedPeer.isDead||e.connectedPeer.destroy(),e.connectedPeer=null,e.connectedPeerUnhealthySinceMs=null)},yt=(e,n)=>{e.offerRelayTimers[n]=H(e.offerRelayTimers[n]),e.offerRelays[n]&&(e.offerRelays[n]=void 0)},dt=(e,n)=>{e?.offerRelays[n]===ln&&yt(e,n)},je=e=>{Dn.delete(e),e.offerExpiryTimer=H(e.offerExpiryTimer),e.offerInitPromise=null,e.offerRelays.forEach((n,t)=>yt(e,t)),e.offerRelays=[],e.offerSignalRelays=[],e.offerRelayTimers=[],e.offerSignalBacklog=[],e.offerPeer&&e.offerPeer!==e.connectedPeer&&(e.offerPeer.isDead||e.offerPeer.destroy()),e.offerPeer=null,e.offerId=null,e.offerSdp=null,e.offerAnswered=!1,e.connectionErrorReported=!1},Ss=(e,n,t,o)=>{H(n.answeringExpiryTimer),n.answeringExpiryTimer=setTimeout(()=>{let s=e.peerStates[t];!s||s.connectedPeer||s.answeringPeer!==o||(s.answerSent&&Cn(e,s,t),fn(s,o),e.checkDeactivate())},hs)},ut=(e,n,t,o=ys)=>{H(n.offerExpiryTimer);let s=n.offerId;n.offerExpiryTimer=setTimeout(()=>{let i=e.peerStates[t];!i||i.connectedPeer||i.offerId!==s||(i.offerAnswered&&Cn(e,i,t),je(i),e.checkDeactivate())},o)},Jr=(e,n,t,o,s)=>{let i=()=>{n.offerPeer===o&&!n.connectedPeer&&(n.offerAnswered&&Cn(e,n,t),je(n)),e.disconnectPeer(o,t),e.checkDeactivate()};o.setHandlers({connect:()=>e.connectPeer(o,t),...s?{signal:s}:{},close:i,error:i})},Ts=(e,n,t)=>{if(n.offerPeer&&n.offerId&&n.offerSdp)return Promise.resolve({peer:n.offerPeer,offer:n.offerSdp,offerId:n.offerId});if(n.offerInitPromise)return n.offerInitPromise;let s=(async()=>{let i;try{i=(await e.offerManager.checkout(1,!1,e.encryptOffer))[0]}catch(c){if(e.isLeaving()||n.offerInitPromise!==s)return null;throw c}if(!i)throw x("failed to allocate offer peer");let{peer:r,offer:f}=i;return e.isLeaving()||n.offerInitPromise!==s?(r.destroy(),null):(n.offerPeer=r,n.offerId=de(gs),n.offerSdp=f,n.offerAnswered=!1,n.connectionErrorReported=!1,n.offerSignalBacklog=[],Jr(e,n,t,r,c=>{n.offerPeer===r&&(n.offerSignalBacklog.push(c),n.offerSignalRelays.forEach(d=>d?.(c)))}),ut(e,n,t),{peer:r,offer:f,offerId:n.offerId})})().finally(()=>{n.offerInitPromise===s&&(n.offerInitPromise=null)});return n.offerInitPromise=s},Vr=async(e,n,t,o,s=0)=>{let i=e.peerStates[t];if(!i||i.connectedPeer||i.answeringPeer||i.offerAnswered){dt(i,n);return}if(i.offerRelays[n]!==ln)return;let[r,f]=await le([Le(qe(e.rootTopicPlaintext,t)),Ts(e,i,t)]);if(!f){dt(i,n);return}if(e.isLeaving()){je(i);return}if(i.connectedPeer||i.answeringPeer||i.offerAnswered||i.offerRelays[n]!==ln){dt(i,n);return}i.offerRelayTimers[n]=H(i.offerRelayTimers[n]),i.offerRelays[n]=!0,i.offerRelayTimers[n]=setTimeout(()=>{if(s>=2||e.isLeaving()||i.connectedPeer||i.answeringPeer||i.offerAnswered||i.offerPeer!==f.peer||i.offerId!==f.offerId){Ms(e,t,n);return}i.offerRelays[n]=ln,Vr(e,n,t,o,s+1)},s===0&&e.announceIntervals[n]===void 0?2e3:(e.announceIntervals[n]??e.announceIntervalMs)*.9);let c=!1;i.offerSignalRelays[n]=d=>{c&&(e.isLeaving()||i.connectedPeer||i.offerPeer!==f.peer||i.offerId!==f.offerId||d.type!=="candidate"||vs(e,d,r,o,v=>({peerId:te,offerId:f.offerId,candidate:v,...e.isPassive?{passive:!0}:{}}),()=>!i.connectedPeer&&i.offerPeer===f.peer&&i.offerId===f.offerId))},o(r,re({peerId:te,offerId:f.offerId,offer:f.offer,...e.isPassive?{passive:!0}:{}})),c=!0,i.offerSignalBacklog.forEach(d=>i.offerSignalRelays[n]?.(d))},As=async(e,n,t,o,s,i)=>{let r=dn(e.peerStates,t);if(r.answeringPeer||r.offerAnswered){let u=r.answerReplay,m=u?.lastSentAt[n];if(r.answeringPeer&&!r.answeringPeer.isDead&&u&&u.offer===o&&u.offerId===s&&(m===void 0||Date.now()-m>=1e3)){u.lastSentAt[n]=Date.now();let l=await Le(qe(e.rootTopicPlaintext,t));if(!e.isLeaving()&&r.answerReplay===u&&!r.connectedPeer){let w=D=>i(l,D);u.relays[n]=w,u.messages.forEach(w)}}return}let f=!!(r.offerPeer||r.offerRelays.some(Boolean));if(f&&te<t)return;f&&je(r);let c=e.initPeer(!1,e.config),d={offer:o,offerId:s,messages:[],lastSentAt:[],relays:[]};d.lastSentAt[n]=Date.now(),r.answeringPeer=c,r.answerSent=!1,r.answerReplay=d,r.connectionErrorReported=!1,Ss(e,r,t,c);let v=()=>{r.answeringPeer===c&&!r.connectedPeer&&r.answerSent&&Cn(e,r,t),fn(r,c),e.disconnectPeer(c,t),e.checkDeactivate()};c.setHandlers({connect:()=>e.connectPeer(c,t),close:v,error:v});let y;try{y=await e.toPlain({type:"offer",sdp:o})}catch{fn(r,c),e.onJoinError?.({error:"incorrect room password when decrypting offer",appId:e.appId,peerId:t,roomId:e.roomId});return}if(c.isDead){fn(r,c);return}let h=await Le(qe(e.rootTopicPlaintext,t));if(e.isLeaving()||r.answerReplay!==d)return;d.relays[n]=u=>i(h,u);let R=[],b=!1,S=u=>{e.toCipher(u).then(m=>{if(e.isLeaving()||r.answeringPeer!==c||c.isDead)return;let l={peerId:te};u.type==="answer"?(r.answerSent=!0,l.answer=m.sdp):l.candidate=m.sdp,s&&(l.offerId=s),e.isPassive&&(l.passive=!0);let w=re(l),D=Date.now();d.messages.push(w),d.relays.forEach((E,U)=>{E&&(d.lastSentAt[U]=D,E(w))}),u.type==="answer"&&!b&&(b=!0,R.splice(0).forEach(S))})};c.setHandlers({signal:u=>{if(!(e.isLeaving()||r.answeringPeer!==c||c.isDead)&&!(u.type!=="answer"&&u.type!=="candidate")){if(u.type==="candidate"&&!b){R.push(u);return}S(u)}}}),await c.signal(y)},Rs=async(e,n,t,o,s)=>{let i;try{i=await e.toPlain({type:vn,sdp:t})}catch{return}let r=e.peerStates[n],f=o&&r?.offerPeer&&r.offerId===o?r.offerPeer:null,c=!o||r?.answerReplay?.offerId===o?r?.answeringPeer:null,d=!o&&r?.offerPeer?r.offerPeer:null,v=s&&!s.isDead?s:f??c??d;v&&!v.isDead&&v.signal(i)},Es=async(e,n,t,o,s)=>{let i;try{i=await e.toPlain({type:"answer",sdp:t})}catch{s&&(e.offerManager.reclaimLeased(s),s.isDead||s.destroy()),e.onJoinError?.({error:"incorrect room password when decrypting answer",appId:e.appId,peerId:n,roomId:e.roomId});return}if(s){let r=dn(e.peerStates,n);if(e.offerManager.claimLeased(s),r.connectedPeer||r.offerAnswered||r.answeringPeer&&!r.answeringPeer.isDead&&te>n){s.destroy();return}if(r.answeringPeer){let f=r.answeringPeer;fn(r,f)}je(r),r.offerPeer=s,r.offerId=o??null,r.offerAnswered=!0,ut(e,r,n,zr),Jr(e,r,n,s),s.signal(i)}else{let r=e.peerStates[n];if(!r||!r.offerPeer||r.offerAnswered||o&&r.offerId&&o!==r.offerId||r.offerPeer.isDead)return;r.offerAnswered=!0,ut(e,r,n,zr),r.offerPeer.signal(i)}},Ms=(e,n,t)=>{let o=e.peerStates[n];!o||o.connectedPeer||o.offerRelays[t]&&(yt(o,t),e.checkDeactivate())},Gr=e=>n=>async(t,o,s)=>{if(e.isLeaving())return;let i=jr(o);if(!i||Fr(i,typeof o=="string"))return;let r=ze(i,"peerId")??"",f=ze(i,"offer"),c=ze(i,"answer"),d=ze(i,"candidate"),v=ze(i,"offerId"),y=$r(i.peer)?i.peer:void 0,h=i.passive===!0;if(!r||r===te)return;let[R,b]=await le([e.rootTopicP,e.selfTopicP]);if(e.isLeaving()||t!==R&&t!==b||e.isPassive&&h||(e.isPassive&&!e.isActive&&!c&&!d&&(e.isActive=!0,e.requeueAnnounce?.()),e.isPassive&&!e.isActive))return;let S=e.peerStates[r],u=S?.connectedPeer;if(u&&S){let m=Nr(u);if(m==="live"){S.connectedPeerUnhealthySinceMs=null;return}if(m==="stale")Bn(S,r,"message-from-stale-peer");else{let l=Date.now(),w=S.connectedPeerUnhealthySinceMs??l;if(S.connectedPeerUnhealthySinceMs=w,l-w<ps)return;Bn(S,r,"message-from-prolonged-disconnect")}}if(!e.reusePeer(r)){if(r&&!f&&!c&&!d){let m=dn(e.peerStates,r),l=te<r;if(m.answeringPeer||m.connectedPeer||m.offerAnswered)return;if(!l&&!m.offerPeer){let w=Dn.get(m);w||(w=[],Dn.set(m,w));let D=w[n];if(D!==void 0&&Date.now()-D<1e3)return;w[n]=Date.now();let E=await Le(qe(e.rootTopicPlaintext,r));!e.isLeaving()&&!m.connectedPeer&&!m.answeringPeer&&!m.offerAnswered&&s(E,re({peerId:te}));return}return m.offerRelays[n]?void 0:(m.offerRelays[n]=ln,Vr(e,n,r,s))}if(f)return As(e,n,r,f,v,s);if(d)return Rs(e,r,d,v,y);if(c)return Es(e,r,c,v,y)}};var Ln=5333,Ds=[233,533,1333],Zr=7533,Bs=123333,gt=({init:e,subscribe:n,announce:t,deactivate:o})=>{let s={},i={},r=new _r,f=()=>pe(s).some(y=>ce(y).length>0),c=!1,d=[],v=X;return(y,h,R)=>{if(!y)throw x("requires a config map as the first argument");if(R&&typeof R!="object")throw x("third argument must be a callbacks object");let{appId:b}=y,S=R?.onJoinError,u=R?.onPeerHandshake,m=R?.handshakeTimeoutMs;if(!b)throw x("config map is missing appId field");if(!h)throw x("roomId argument required");if(y.maxReceiveBytes!==void 0&&(!Number.isSafeInteger(y.maxReceiveBytes)||y.maxReceiveBytes<=0))throw x("maxReceiveBytes must be a positive safe integer");if(m!==void 0&&(!Number.isFinite(m)||m<=0))throw x("handshakeTimeoutMs must be a positive number");if(s[b]?.[h])return s[b][h];i[b]?.[h]?.(!0);let l=qe(Z,b,h),w=Le(l),D=Le(qe(l,te)),E=nr(y.password??"",b,h),U=tr(b,h),$=y._test_only_sharedPeerIdleMs??Bs,N=!1,K=z=>async j=>({type:j.type,sdp:await z(E,j.sdp)}),G=K(ir),Y=K(sr),oe=()=>ot(!0,y),a=!1,k=new ar(oe),A=async z=>{let j=await z.getOffer();if(!j||j.type!=="offer")throw x("failed to get offer for peer");return(await Y(j)).sdp},T=(z,j)=>{be.connect(j,z,$)},L=!1,M=()=>{g||!a||L||(L=!0,queueMicrotask(()=>{L=!1,N||I.requeueAnnounce?.()}))},p=(z,j)=>{if(N)return;let V=I.peerStates[j];V?.connectedPeer===z&&(Bn(V,j,"close-event"),W(),M())},g=!!y.passive,C,_=X,W=()=>{if(!g||!I.isActive)return;let z=!1;Se(I.peerStates).forEach(([j,V])=>{V.connectedPeer||V.answeringPeer||V.offerInitPromise||V.offerPeer||V.offerRelays.some(Boolean)?z=!0:delete I.peerStates[j]}),z||(I.isActive=!1,C=H(C),ye.forEach(H),ye.length=0,_(),be.setActive(!1))},I={appId:b,roomId:h,config:y,peerStates:{},rootTopicPlaintext:l,rootTopicP:w,selfTopicP:D,toPlain:G,toCipher:Y,isLeaving:()=>N,isPassive:g,isActive:!g,onJoinError:S,offerManager:k,encryptOffer:A,initPeer:ot,connectPeer:T,disconnectPeer:p,reusePeer:z=>be.reuse(z),checkDeactivate:W,announceIntervals:[],announceIntervalMs:Ln},se={config:y,appId:b,roomId:h,isPassive:g},ee=Gr(I);if(!c){let z=e(y);d=(Array.isArray(z)?z:[z]).map(j=>Promise.resolve(j)),c=!0,v=y.relayConfig?.manualReconnection?X:er()}let fe=d.map(()=>Ln),Ae=d.map(()=>0),Re=d.map(()=>0),ye=[],P=d.map(async(z,j)=>n(await z,await w,await D,ee(j),V=>k.getOffers(V,A),se));le([w,D]).then(([z,j])=>{if(N)return;let V=async(ve,ie)=>{if(N||g&&!I.isActive)return;let $e=g?{passive:!0}:void 0,ke;try{ke=await t(ve,z,j,$e,se),Re[ie]=0}catch(fo){if(N)return;let Tt=Re[ie]??0;Tt===0&&y.relayConfig?.warnOnRelayFailure!==!1&&console.warn(`${Z}: announce failed - ${Ce(fo,"")}`),Re[ie]=Tt+1}if(N||g&&!I.isActive||ke&&typeof ke!="number"&&"stopAnnouncing"in ke)return;typeof ke=="number"?(I.announceIntervals[ie]=ke,fe[ie]=ke):ke&&(fe[ie]=ke.nextAnnounceMs,a||(a=ke.reannounceOnDisconnect===!0));let Hn=Ae[ie]??0;Ae[ie]=Hn+1;let bt=fe[ie]??Ln,St=Ds[Hn]??(Hn===3&&typeof ke=="object"?Ln:void 0);ye[ie]=setTimeout(()=>{V(ve,ie)},typeof St=="number"?Math.min(bt,St):bt)};_=()=>{o&&d.forEach(async ve=>{let ie=await ve;N||o(ie,z,j,se)})},I.requeueAnnounce=()=>{ye.forEach(H),ye.length=0,C=H(C),be.setActive(!0),C=setTimeout(W,Zr),d.forEach(async(ve,ie)=>{let $e=await ve;$e&&!N&&(Ae[ie]=0,V($e,ie))})},P.forEach(async(ve,ie)=>{if(await ve,N)return;let $e=await d[ie];$e&&!N&&(!g||I.isActive)&&V($e,ie)})});let B=X,q=y.password??"",{compose:F}=cr(q,b,h),ne=F(u),Ee=()=>{s[b]?.[h]===Q&&(delete s[b][h],ce(s[b]).length===0&&delete s[b])},Ue=()=>{i[b]?.[h]===Me&&(delete i[b][h],ce(i[b]).length===0&&delete i[b])},Me=(z=!1)=>{N||(N=!0,B=X,Ee(),Ue(),be.leave(),Se(I.peerStates).forEach(([j,V])=>{V.connectedPeer&&!V.connectedPeer.isDead&&(r.owns(b,j,V.connectedPeer)||V.connectedPeer.destroy()),V.answeringPeer&&!V.answeringPeer.isDead&&V.answeringPeer.destroy(),je(V),On(V),V.connectedPeer=null,V.connectedPeerUnhealthySinceMs=null}),ye.forEach(H),C=H(C),P.forEach(async j=>{(await j)()}),k.destroy(),!(z||f())&&(c=!1,v()))},J={...y.maxReceiveBytes===void 0?{}:{maxReceiveBytes:y.maxReceiveBytes},...ne?{onPeerHandshake:ne}:{},...m===void 0?{}:{handshakeTimeoutMs:m},isPassive:g,onBeforeLeave:()=>{Ee(),(i[b]??(i[b]={}))[h]=Me},onHandshakeError:(z,j)=>S?.({error:j.replace(/^handshake failed: /,""),appId:b,peerId:z,roomId:h})};s[b]??(s[b]={});let Q=xr(z=>B=z,z=>{if(N)return;let j=I.peerStates[z];j?.connectedPeer&&mt(j,j.connectedPeer),W(),M()},()=>Me(!1),J),be=r.registerRoom(b,h,U,{active:!g||I.isActive,onPeer:(z,j,V)=>{let ve=dn(I.peerStates,j);Kr(ve,V),g&&!I.isActive&&(I.isActive=!0,be.setActive(!0),I.requeueAnnounce?I.requeueAnnounce():(C=H(C),C=setTimeout(W,Zr))),B(z,j),je(ve)},onDetach:(z,j)=>{mt(I.peerStates[z],j),W()}});return s[b][h]=Q}};var Cs=6e4,pt=e=>{if(!e)throw x("topic strategy missing room context");return e},un=(e,n,t,o)=>({kind:n,appId:e.appId,roomId:e.roomId,rootTopic:t,selfTopic:o}),ht=({steadyAnnounceIntervalMs:e=Cs,reannounceOnDisconnect:n=!0,init:t,subscribeTopic:o,publishTopic:s,unpublishTopic:i})=>gt({init:t,subscribe:async(r,f,c,d,v,y)=>{let h=pt(y),R=(E,U)=>void s(r,E,U,un(h,"signal",f,c)),b=null,S=!1,u=null,m=!1,l=E=>{S||(S=!0,E())},w=()=>(u||(u=Promise.resolve(o(r,c,(E,U)=>{m||d(E,U,R)},un(h,"self",f,c))).then(E=>{b=E,m&&l(E)})),u);h.isPassive||await w();let D=await o(r,f,async(E,U)=>{m||(h.isPassive&&Wr(U)&&await w(),m||await d(E,U,R))},un(h,"root",f,c));return()=>{m=!0,b&&l(b),D()}},announce:async(r,f,c,d,v)=>{let y=pt(v),h=await s(r,f,re({peerId:te,...d}),un(y,"announce",f,c));return typeof h=="number"||h!==void 0&&"stopAnnouncing"in h?h:{nextAnnounceMs:h?.nextAnnounceMs??e,reannounceOnDisconnect:h?.reannounceOnDisconnect??n}},...i?{deactivate:(r,f,c,d)=>{let v=pt(d);return i(r,f,un(v,"announce",f,c))}}:{}});var kt=et(e=>e.socket),Os=5,Yr="x",Qr="EVENT",{secretKey:Ls,publicKey:xs}=Wn.keygen(),Us=Oe(xs),wt={},Xr=250,Je=6e4,Hs=9e5,Pt=5333,mn=new WeakMap,Un=kt.scoped(),vt=new WeakSet,Is=e=>{let n=mn.get(e),t=Math.min(n?.delayMs?Math.max(Je,n.delayMs*2):Je,Hs);return mn.set(e,{delayMs:t,untilMs:Date.now()+t}),t},yn=e=>{let n=mn.get(e);if(!n)return 0;let t=n.untilMs-Date.now();return t>0?t:0},xn=e=>({nextAnnounceMs:e}),qs={stopAnnouncing:!0},Ns=e=>vt.has(e)?!1:(vt.add(e),mn.delete(e),e.close?.(),!0),eo=()=>Math.floor(Date.now()/1e3),no=e=>wt[e]??(wt[e]=kn(e,1e4)+2e4),_s=async(e,n)=>{let t={kind:no(e),tags:[[Yr,e]],created_at:eo(),content:n,pubkey:Us},o=await Ke("SHA-256",re([0,t.pubkey,t.created_at,t.kind,t.tags,t.content]));return re([Qr,{...t,id:Oe(o),sig:Oe(await Wn.signAsync(o,Ls))}])};var me={},to=e=>{e.flushWaiters.forEach(n=>n()),e.flushWaiters.clear()},zs=(e,n,t)=>{var s;let o=me[s=e.url]??(me[s]={subIds:[],topics:new Map,updateTimer:null,flushWaiters:new Set,retryTimer:null,retryMs:Pt,pendingEose:new Set,requestedAt:0});o.topics.set(n,t),ro(e,o)},js=(e,n)=>{let t=me[e.url];t&&(t.topics.delete(n),delete Un.forRelay(e)[n],t.topics.size===0?(t.retryTimer!==null&&clearTimeout(t.retryTimer),t.updateTimer!==null&&(clearTimeout(t.updateTimer),t.updateTimer=null),to(t),t.subIds.forEach(o=>e.send(re(["CLOSE",o]))),delete me[e.url]):ro(e,t))},ro=(e,n)=>{n.updateTimer===null&&(n.updateTimer=setTimeout(()=>{n.updateTimer=null;try{oo(e)}finally{to(n)}},0))},$s=e=>{let n=me[e.url];return!n||n.updateTimer===null?Promise.resolve():new Promise(t=>n.flushWaiters.add(t))},oo=e=>{let n=me[e.url];if(!n||n.topics.size===0)return;let t=[...n.topics.keys()],o=[],s=eo();for(let i=0;i<t.length;i+=Xr)o.push(t.slice(i,i+Xr));for(;n.subIds.length>o.length;){let i=n.subIds.pop();i&&e.send(re(["CLOSE",i]))}n.pendingEose.clear(),n.requestedAt=Date.now(),o.forEach((i,r)=>{var c;let f=(c=n.subIds)[r]??(c[r]=de(64));n.pendingEose.add(f),e.send(re(["REQ",f,{kinds:[...new Set(i.map(no))],since:s,"#x":i}]))})},so=e=>{let n=me[e.url];if(n&&n.topics.size>0&&!e.isClosed){if(yn(e)>0){co(e,!0);return}n.retryTimer!==null&&(clearTimeout(n.retryTimer),n.retryTimer=null),oo(e),io(e)}},io=e=>{Object.entries(Un.forRelay(e)).forEach(([n,t])=>{ao(e,n,t,!0)})},ao=async(e,n,t,o)=>{if(vt.has(e)||e.isClosed)return o?qs:void 0;let s=yn(e);if(s>0||e.socket.readyState!==1)return o?xn(Math.max(Je,s)):void 0;let i=await _s(n,o?re({...Te(t),nonce:de(8)}):t);if(o&&!me[e.url]?.topics.has(n))return xn(Je);if(yn(e)>0||e.isClosed||e.socket.readyState!==1)return o?xn(Je):void 0;if(e.send(i),o)return xn(Je)},co=(e,n)=>{let t=me[e.url];if(!t||t.retryTimer!==null&&!n)return;t.retryTimer!==null&&clearTimeout(t.retryTimer);let o=n?yn(e):t.retryMs;t.retryMs=Math.min(t.retryMs*2,Je),t.retryTimer=setTimeout(()=>{t.retryTimer=null,so(e)},Math.max(o,Pt))},lo=ht({init:e=>Zn(e,Fs,Os,!0).map(n=>{let t=kt.register(n,()=>Qn(n,o=>{let[s,i,r,f]=Te(o);if(s!==Qr){let c=`${Z}: relay failure from ${t.url} - `,d=s==="CLOSED"&&typeof r=="string"?r:f,v=s==="OK"&&r===!1,y=(v||s==="CLOSED")&&d?.startsWith("rate-limited:"),h=v&&d?.startsWith("duplicate:"),R=d&&/^(blocked|restricted|auth-required|pow):/.test(d);if(s==="OK"&&r===!0&&yn(t)===0&&mn.delete(t),(v||s==="CLOSED")&&R&&!Ns(t))return;if(y)Is(t);else if(s==="EOSE"){let b=me[t.url];b?.pendingEose.delete(i)&&b.pendingEose.size===0&&(b.retryMs=Pt,b.retryTimer!==null&&(clearTimeout(b.retryTimer),b.retryTimer=null),Date.now()-b.requestedAt>=1e3&&io(t))}s==="CLOSED"&&!R&&co(t,!!y),!h&&e.relayConfig?.warnOnRelayFailure!==!1&&(s==="NOTICE"?console.warn(c+i):(v||s==="CLOSED")&&console.warn(c+d));return}if(r&&typeof r=="object"&&"content"in r){let c=me[t.url];if(c?.subIds.includes(i)&&r.tags){let d=r.tags.find(v=>v[0]===Yr);d?.[1]&&c.topics.get(d[1])?.(d[1],r.content)}}},()=>so(t)));return t.ready}),subscribeTopic:(e,n,t,o)=>{let s=(r,f)=>void t(r,f);zs(e,n,s);let i=()=>{me[e.url]?.topics.get(n)===s&&js(e,n)};return o.kind==="root"?$s(e).then(()=>i):i},publishTopic:(e,n,t,{kind:o})=>{let s=typeof t=="string"?t:re(t);return o==="announce"&&(Un.forRelay(e)[n]=s),ao(e,n,s,o==="announce")},unpublishTopic:(e,n)=>{delete Un.forRelay(e)[n]}}),ra=kt.getSockets,Fs=["0x-nostr-relay.fly.dev","bendernostur.duckdns.org:8443","cdn.satellite.earth","nos.lol","nostr.chaima.info","nostr.christiansass.de","nostr.rblb.it","nostr.red5d.dev","nostr.robosats.org","nostr.stakey.net","nostrcity-club.fly.dev","relay-dev.gulugulu.moe","relay.aarpia.com","relay.agentry.com","relay.bitmacro.cloud","relay.bullishbounty.com","relay.degmods.com","relay.flashapp.me","relay.grigic.org","relay.hackshed.dev","relay.kaleidoswap.com","relay.layer.systems","relay.nostr.blockhenge.com","relay.nostr.dev.br","relay.nostrmap.net","relay.novospes.com","relay.piazza.today","relay.routstr.com","testr.nymble.world"].map(e=>"wss://"+e);return wo(Ws);})();
+/*! Bundled license information:
+
+@noble/secp256k1/index.js:
+  (*! noble-secp256k1 - MIT License (c) 2019 Paul Miller (paulmillr.com) *)
+*/
+
+</script>
+</head>
+<body>
+<title>냥이 키우기</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<style>
+/* Layout: phone-first life sim — household roster, selected cat's needs, room/outdoor stage, action pad, bottom sheets for interactions */
+:root{
+  --bg:#e8f1ee; --room:#f7efe0; --wall2:#efe3cd; --floor:#d9c3a0; --ink:#2f3a3a; --muted:#6c7b78;
+  --card:#ffffff; --line:#d6e2de; --accent:#f2a93b; --accent-ink:#3b2a0a; --sel:#3fb27f;
+  --sky:#bfe3f5; --sky2:#e6f4fb; --path:#c9b48d; --grass:#9fd08a; --bad:#d9534f;
+  --hunger:#ef8a5b; --fun:#e86aa0; --clean:#4fb3c9; --energy:#8a7bd8; --social:#5dbb63;
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif; --body:"Gowun Dodum",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#161d24; --room:#2a3442; --wall2:#25303c; --floor:#433a2d; --ink:#eef2f1; --muted:#9fb0b6;
+  --card:#1f2832; --line:#33404c; --accent:#f2b04a; --accent-ink:#2a1d05; --sel:#4fc68f;
+  --sky:#2f4470; --sky2:#3b5585; --path:#5b4e38; --grass:#3f6b3a; --bad:#ef6f6a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#161d24; --room:#2a3442; --wall2:#25303c; --floor:#433a2d; --ink:#eef2f1; --muted:#9fb0b6;
+  --card:#1f2832; --line:#33404c; --accent:#f2b04a; --accent-ink:#2a1d05; --sel:#4fc68f;
+  --sky:#2f4470; --sky2:#3b5585; --path:#5b4e38; --grass:#3f6b3a; --bad:#ef6f6a; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;justify-content:center;-webkit-user-select:none;user-select:none}
+button{font:inherit;color:inherit}
+.app{width:100%;max-width:460px;display:flex;flex-direction:column;gap:10px;padding-block:12px 20px}
+h1{font-family:var(--display);font-weight:400;font-size:24px;margin:0;line-height:1;white-space:nowrap}
+@media (max-width:420px){h1{font-size:20px}.chips{gap:4px;font-size:12px}.chips span{padding:3px 7px}.savebtn{padding:3px 8px}}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chips{display:flex;gap:6px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.chips span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px 9px;white-space:nowrap}
+.chips b{font-family:var(--display);font-weight:400;color:var(--ink)}
+/* roster */
+.roster{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.roster::-webkit-scrollbar{display:none}
+.rc{flex:0 0 auto;width:58px;border:2px solid transparent;background:var(--card);border-radius:12px;padding:2px 2px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;position:relative}
+.rc.on{border-color:var(--sel)}
+.rc svg{width:50px;height:45px}
+.rc small{font-size:11px;max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc .badge{position:absolute;top:-4px;right:-3px;font-size:13px}
+.rc.away{opacity:.45}
+/* needs */
+.needs{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.nh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.nh .nm{font-family:var(--display);font-size:18px}
+.nh .sub{font-size:12px;color:var(--muted);text-align:right}
+.mood{font-family:var(--display);font-size:13px;padding:1px 8px;border-radius:99px;color:#fff}
+.bars{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.stat{display:flex;flex-direction:column;gap:3px;min-width:0}
+.stat .lab{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:8px;transition:width .4s}
+.bar i.low{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.35}}
+/* stage */
+.stage{position:relative;height:330px;border-radius:18px;overflow:hidden;background:var(--room);border:1px solid var(--line)}
+.wallpaper{position:absolute;inset:0 0 36% 0;background:repeating-linear-gradient(90deg,var(--room) 0 26px,var(--wall2) 26px 52px)}
+.floor{position:absolute;left:0;right:0;bottom:0;height:36%;background:var(--floor)}
+.window{position:absolute;top:20px;left:20px;width:80px;height:66px;border-radius:8px;border:5px solid var(--card);background:var(--sky)}
+.window::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;margin-left:-2px;background:var(--card)}
+.window .moon{position:absolute;top:8px;right:8px;width:16px;height:16px;border-radius:50%;background:#f8e7a0}
+.furni{position:absolute;font-size:34px}
+.cat{position:absolute;transform:translateX(-50%);cursor:pointer;transition:left 2.4s ease-in-out,bottom .7s cubic-bezier(.3,1.6,.5,1)}
+.cat svg{display:block;width:100%;height:auto;overflow:visible}
+.cat.sel::before{content:"";position:absolute;left:18%;right:18%;bottom:-4px;height:10px;border-radius:50%;background:var(--sel);opacity:.55}
+.cat.bounce svg{animation:bounce .5s}
+@keyframes bounce{30%{transform:translateY(-20px)}60%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+.tail{transform-box:fill-box;transform-origin:0% 100%;animation:sway 2.4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(12deg)}}
+.zzz .tail{animation:none}
+.think,.say{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);white-space:nowrap;pointer-events:none}
+.think{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:1px 6px;font-size:16px;margin-bottom:-2px}
+.say{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:4px 9px;font-family:var(--display);font-size:13.5px;margin-bottom:18px;z-index:5;opacity:0;transition:opacity .25s}
+.say.show{opacity:1}
+.fx{position:absolute;pointer-events:none;font-size:22px;animation:float 1.3s ease-out forwards;z-index:200}
+@keyframes float{to{transform:translateY(-80px) scale(1.3);opacity:0}}
+.poop{position:absolute;font-size:24px;cursor:pointer;z-index:150}
+.logline{position:absolute;left:10px;right:10px;bottom:8px;font-size:12.5px;background:color-mix(in srgb,var(--card) 85%,transparent);border-radius:10px;padding:5px 9px;z-index:180;pointer-events:none;transition:opacity .3s}
+/* walk */
+#walk{position:absolute;inset:0;background:linear-gradient(var(--sky),var(--sky2) 60%)}
+#walk .grass{position:absolute;left:0;right:0;bottom:0;height:34%;background:var(--grass)}
+#walk .road{position:absolute;left:0;right:0;bottom:10%;height:13%;background:var(--path)}
+.layer{position:absolute;left:0;white-space:nowrap;will-change:transform}
+.layer span{display:inline-block}
+.far{bottom:33%;font-size:40px;opacity:.85}
+.far span{margin-right:38px}
+.near{bottom:21%;font-size:30px}
+.near span{margin-right:64px}
+.walker,.npc{position:absolute;bottom:9%;width:120px;transform:translateX(-50%)}
+.npc{transition:left 1.6s ease-out}
+.walker svg,.npc svg{display:block;width:100%;height:auto}
+.flip svg{transform:scaleX(-1)}
+.leg{transform-box:fill-box;transform-origin:50% 0}
+.moving .leg.a{animation:step .38s ease-in-out infinite alternate}
+.moving .leg.b{animation:step .38s ease-in-out infinite alternate-reverse}
+@keyframes step{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+.moving svg{animation:bob .38s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-3px)}}
+.flip.moving svg{animation:bobf .38s ease-in-out infinite alternate}
+@keyframes bobf{from{transform:scaleX(-1)}to{transform:scaleX(-1) translateY(-3px)}}
+.dist{position:absolute;top:10px;right:10px;font-family:var(--display);background:var(--card);border-radius:99px;padding:3px 10px;font-size:14px;font-variant-numeric:tabular-nums}
+.ecard{position:absolute;left:10px;right:10px;bottom:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;z-index:190}
+.ecard h3{margin:0;font-family:var(--display);font-weight:400;font-size:17px}
+.ecard p{margin:0;font-size:13.5px;color:var(--muted)}
+.ecard .row{display:flex;gap:8px}
+.btn{flex:1;font-family:var(--display);font-size:15px;border:1px solid var(--line);background:var(--bg);border-radius:11px;padding:9px 6px;cursor:pointer}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:default}
+/* pad */
+.pad{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pad button{font-family:var(--display);font-size:13.5px;border:1px solid var(--line);background:var(--card);border-radius:13px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;transition:transform .1s}
+.pad button span{font-size:22px;line-height:1.15}
+.pad button:active{transform:scale(.94)}
+.pad button:disabled{opacity:.4;cursor:default}
+.pad button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hint{color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:8px}
+.hint button{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0;font-size:12px}
+.pad{grid-template-columns:repeat(6,1fr)}
+.pad button{font-size:12.5px}
+.savebtn{font-family:var(--display);font-size:13px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:99px;padding:3px 10px;cursor:pointer;white-space:nowrap}
+.deco{position:absolute;transform:translateX(-50%);touch-action:none}
+.deco svg{display:block;width:100%;height:100%;overflow:visible}
+.deco.flip svg{transform:scaleX(-1)}
+.decomode .cat,.decomode .poop{pointer-events:none;opacity:.75}
+.decomode .deco{cursor:grab}
+.decomode .deco:hover{outline:1px dashed var(--muted);outline-offset:3px}
+.deco.dsel{outline:2px dashed var(--accent)!important;outline-offset:3px}
+.decomode .wallpaper::after{content:"꾸미기 모드 · 가구를 끌어서 옮겨요";position:absolute;top:8px;right:10px;font-family:var(--display);font-size:13px;background:var(--accent);color:var(--accent-ink);border-radius:99px;padding:3px 10px}
+.decopad{display:flex;flex-direction:column;gap:8px}
+.dtool{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.dtool .nm{flex:1 1 120px;font-family:var(--display);font-size:15px;min-width:0}
+.dtool .btn{flex:0 0 auto;padding:7px 12px;font-size:14px}
+.dshop{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ditem{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:6px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px}
+.ditem .th{height:44px;width:100%;display:flex;align-items:center;justify-content:center}
+.ditem .th svg{max-height:44px;max-width:56px}
+.ditem .pr{color:var(--muted);font-variant-numeric:tabular-nums}
+.ditem:disabled{opacity:.45;cursor:default}
+input,textarea{-webkit-user-select:text;user-select:text}
+textarea.txt{font-size:12px;font-family:ui-monospace,monospace;resize:vertical}
+.cat .tag{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:0 7px;margin-top:2px;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.cat.remote{pointer-events:none}
+.vwall{background:repeating-linear-gradient(0deg,var(--room) 0 22px,var(--wall2) 22px 44px)}
+.vtitle{position:absolute;top:10px;right:10px;font-family:var(--display);font-size:14px;background:var(--accent);color:var(--accent-ink);border-radius:99px;padding:3px 11px;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;z-index:190}
+.townbtn{font-family:var(--display);font-size:15px;border:none;background:var(--sel);color:#fff;border-radius:13px;padding:11px;cursor:pointer}
+.townbtn:disabled{opacity:.45;cursor:default}
+.visitpad{display:flex;flex-direction:column;gap:8px}
+.chatrow{display:flex;gap:6px}
+.chatrow .txt{flex:1;min-width:0;font-size:15px;padding:8px 10px}
+.chatrow .btn{flex:0 0 auto}
+.hcard{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px 10px;background:var(--bg)}
+.hcard .faces{display:flex}
+.hcard .faces svg{width:34px;height:31px;margin-right:-8px}
+.hcard .hn{font-family:var(--display);font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hcard .hm{font-size:12px;color:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--sel);margin-right:4px}
+.hlist{display:flex;flex-direction:column;gap:8px}
+.note{border-left:3px solid var(--accent);padding:4px 10px;font-size:14px;display:flex;flex-direction:column;gap:2px}
+.note small{color:var(--muted);font-size:11.5px;display:flex;justify-content:space-between;gap:8px}
+.note small button{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0;font-size:11.5px}
+.notice{font-size:13px;color:var(--muted);background:var(--bg);border-radius:12px;padding:10px 12px}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(10,15,20,.45);z-index:500;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:460px;max-height:82vh;overflow-y:auto;background:var(--card);border-radius:20px 20px 0 0;
+  padding:16px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  display:flex;flex-direction:column;gap:12px;box-sizing:border-box}
+.sheet h2{margin:0;font-family:var(--display);font-weight:400;font-size:20px}
+.sheet .sub{color:var(--muted);font-size:13px;margin-top:-6px}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.act{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:10px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.act b{font-family:var(--display);font-weight:400;font-size:15px}
+.act small{color:var(--muted);font-size:11.5px}
+.act:disabled{opacity:.45;cursor:default}
+.act.love{border-color:var(--fun)}
+.rel{display:flex;flex-direction:column;gap:6px}
+.relrow{display:grid;grid-template-columns:70px 1fr 64px;gap:8px;align-items:center;font-size:13px}
+.relbar{height:8px;border-radius:8px;background:var(--line);position:relative;overflow:hidden}
+.relbar i{position:absolute;top:0;bottom:0;border-radius:8px}
+.relrow .lb{font-size:12px;color:var(--muted);text-align:right}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px}
+.kv dt{color:var(--muted)} .kv dd{margin:0}
+input.txt{font:inherit;font-size:17px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+/* setup */
+.setup{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.setup h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
+.setup label{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
+.furs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.seg{display:flex;gap:8px}
+.pick{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:6px 2px 8px;cursor:pointer;font-size:13px}
+.pick.sel{border-color:var(--accent)}
+.pick svg{width:100%;height:auto}
+.seg .pick{flex:1;padding:9px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:370px){.bars{grid-template-columns:repeat(3,1fr)}.stage{height:300px}}
+</style>
+
+<div class="app" id="app">
+  <div class="top">
+    <h1>냥이 키우기</h1>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div id="setup" class="setup" hidden>
+    <h2>첫 고양이를 데려왔어요</h2>
+    <div><label for="nameIn">이름</label><input id="nameIn" class="txt" maxlength="8" value="치즈" autocomplete="off"></div>
+    <div><label>털 색</label><div class="furs" id="furs"></div></div>
+    <div><label>성별</label><div class="seg" id="sexes"></div></div>
+    <button class="btn pri" id="goBtn">함께 살기 시작</button>
+  </div>
+
+  <div id="game" hidden style="display:flex;flex-direction:column;gap:10px">
+    <div class="roster" id="roster"></div>
+    <div class="needs" id="needs"></div>
+    <div class="stage" id="stage">
+      <div id="room">
+        <div class="wallpaper"></div>
+        <div class="window" id="win"></div>
+        <div class="floor"></div>
+        <div id="decos"></div>
+        <div id="cats"></div>
+        <div id="guests"></div>
+      </div>
+      <div id="visit" hidden>
+        <div class="wallpaper vwall"></div>
+        <div class="window"></div>
+        <div class="floor"></div>
+        <div id="vdecos"></div>
+        <div id="vcats"></div>
+        <div class="vtitle" id="vtitle"></div>
+      </div>
+      <div id="walk" hidden>
+        <div class="layer far" id="far"></div>
+        <div class="grass"></div>
+        <div class="road"></div>
+        <div class="layer near" id="near"></div>
+        <div class="dist" id="dist">0m</div>
+        <div id="npcs"></div>
+        <div class="walker moving" id="walker"></div>
+      </div>
+      <div class="logline" id="logline"></div>
+    </div>
+    <div class="pad" id="pad">
+      <button id="bFeed"><span>🐟</span>밥</button>
+      <button id="bPlay"><span>🧶</span>놀기</button>
+      <button id="bWash"><span>🫧</span>씻기</button>
+      <button id="bSleep"><span>🌙</span>재우기</button>
+      <button id="bWalk"><span>🐾</span>산책</button>
+      <button id="bDeco"><span>🏗️</span>꾸미기</button>
+    </div>
+    <div id="decopad" class="decopad" hidden>
+      <div class="dtool" id="dtool"></div>
+      <div class="dshop" id="dshop"></div>
+    </div>
+    <div class="pad" id="walkpad" hidden style="grid-template-columns:1fr 1fr">
+      <button id="bChuruW"><span>🍬</span>츄르 주기</button>
+      <button id="bHome"><span>🏠</span>집으로</button>
+    </div>
+    <div id="visitpad" class="visitpad" hidden>
+      <div class="chatrow"><input id="vSay" class="txt" maxlength="40" placeholder="친구에게 할 말" autocomplete="off"><button class="btn pri" id="vSayBtn">말하기</button></div>
+      <div class="pad" style="grid-template-columns:repeat(5,1fr)">
+        <button data-emo="❤️"><span>❤️</span>하트</button>
+        <button data-emo="😹"><span>😹</span>웃기</button>
+        <button data-emo="🐾"><span>🐾</span>꾹</button>
+        <button id="vBook"><span>📝</span>방명록</button>
+        <button id="vHome"><span>🏠</span>집으로</button>
+      </div>
+    </div>
+    <div id="hostchat" class="chatrow" hidden><input id="hSay" class="txt" maxlength="40" placeholder="놀러 온 손님에게 할 말" autocomplete="off"><button class="btn pri" id="hSayBtn">말하기</button></div>
+    <button class="townbtn" id="townBtn">🏘️ 냥이 마을 · 친구 집 놀러가기 <span id="onlineN"></span></button>
+    <div class="hint"><span>고양이를 탭하면 쓰다듬기·교류 메뉴가 열려요</span><span id="resetWrap"><button id="resetBtn">새로 시작</button></span></div>
+  </div>
+</div>
+<div id="sheetRoot"></div>
+
+<script>
+/* ===== data ===== */
+const KEY="nyang-town-v2", OLD="nyang-game-v1", MAX=12, GROW=4*60*1000, PREG=15*1000;
+const NEEDS=[
+  {k:"hunger",n:"배부름",c:"var(--hunger)",r:.06,i:"🐟"},
+  {k:"fun",n:"즐거움",c:"var(--fun)",r:.05,i:"🧶"},
+  {k:"clean",n:"청결",c:"var(--clean)",r:.03,i:"🫧"},
+  {k:"energy",n:"기운",c:"var(--energy)",r:.04,i:"💤"},
+  {k:"social",n:"사교",c:"var(--social)",r:.04,i:"💬"},
+];
+const TRAITS={
+  "먹보":{d:"배가 금방 고파요",m:{hunger:1.5}},
+  "장난꾸러기":{d:"심심함을 못 참아요",m:{fun:1.5}},
+  "깔끔쟁이":{d:"더러운 건 질색이에요",m:{clean:1.6}},
+  "잠꾸러기":{d:"자주 졸려 해요",m:{energy:1.5}},
+  "애교쟁이":{d:"친구를 잘 사귀어요",m:{social:1.3}},
+  "새침데기":{d:"마음을 쉽게 안 열어요",m:{social:.7}},
+};
+const NAMES=["나비","보리","콩이","두부","모찌","까미","호떡","망고","라떼","율무","찹쌀","밤톨","도토리","구름","별이","쿠키","감자","루루","순대","젤리","토리","단추","후추","깨비","솜이","만두","치치","호두"];
+const BODIES=["#f0a64a","#8f9aa3","#2d2a2e","#f6f3ee","#e9d3b0","#8a5a3b","#c3c9cf","#d98a3d"];
+const EYES=["#e8b33a","#7cc26b","#6fb4e6","#c98a3a"];
+const PATTERNS=["solid","tabby","tabby","tuxedo","socks","calico"];
+const PAT_NAME={solid:"단색",tabby:"줄무늬",tuxedo:"턱시도",socks:"양말",calico:"얼룩"};
+const PRESETS=[
+  {name:"치즈",fur:{body:"#f0a64a",pattern:"tabby",eye:"#7cc26b"}},
+  {name:"고등어",fur:{body:"#8f9aa3",pattern:"tabby",eye:"#e8b33a"}},
+  {name:"까망",fur:{body:"#2d2a2e",pattern:"tuxedo",eye:"#e8b33a"}},
+  {name:"하양",fur:{body:"#f6f3ee",pattern:"solid",eye:"#6fb4e6"}},
+];
+
+/* ===== helpers ===== */
+const $=id=>document.getElementById(id);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=v=>Math.max(0,Math.min(100,v));
+const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const hex=a=>"#"+a.map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,"0")).join("");
+const mix=(a,b,t)=>{const x=rgb(a),y=rgb(b);return hex(x.map((v,i)=>v+(y[i]-v)*t));};
+const lum=h=>{const [r,g,b]=rgb(h);return (r*.3+g*.59+b*.11)/255;};
+function jo(w,a,b){const c=w.charCodeAt(w.length-1);if(c<0xAC00||c>0xD7A3)return w+b;return w+((c-0xAC00)%28?a:b);}
+const ga=w=>jo(w,"이","가"), wa=w=>jo(w,"과","와"), eul=w=>jo(w,"을","를"), neun=w=>jo(w,"은","는");
+function fullFur(f){
+  const dark=mix(f.body,"#000000",lum(f.body)<.25?.45:.3);
+  const belly=mix(f.body,"#ffffff",lum(f.body)<.25?.18:.6);
+  return {...f,dark,belly,line:mix(f.body,"#000000",.45),spot:f.spot||"#2d2a2e"};
+}
+function randomFur(){
+  const pattern=pick(PATTERNS);
+  return {body:pick(BODIES),pattern,eye:pick(EYES),spot:pattern==="calico"?pick(["#2d2a2e","#f0a64a","#8a5a3b"]):undefined};
+}
+function babyFur(a,b){
+  const body=Math.random()<.55?pick([a.body,b.body]):hex(rgb(mix(a.body,b.body,.5)).map(v=>v+(Math.random()*30-15)));
+  const pattern=Math.random()<.8?pick([a.pattern,b.pattern]):pick(PATTERNS);
+  const f={body,pattern,eye:Math.random()<.85?pick([a.eye,b.eye]):pick(EYES)};
+  if(pattern==="calico") f.spot=a.body!==body?a.body:(b.body!==body?b.body:"#2d2a2e");
+  if(f.spot===body) f.spot="#2d2a2e";
+  return f;
+}
+function freeName(){const used=new Set(S?S.cats.map(c=>c.name):[]);const free=NAMES.filter(n=>!used.has(n));return free.length?pick(free):pick(NAMES)+(Math.floor(Math.random()*9)+2);}
+function newCat(o){
+  return {id:"c"+(S?S.nextId++:0)+"_"+Math.random().toString(36).slice(2,6),name:o.name,sex:o.sex||pick(["m","f"]),
+    fur:o.fur,trait:o.trait||pick(Object.keys(TRAITS)),needs:o.needs||{hunger:75,fun:70,clean:80,energy:80,social:60},
+    love:o.love||0,born:o.born||Date.now(),adult:!!o.adult,sleeping:false,x:o.x??(20+Math.random()*60),y:Math.random()*50,
+    partner:null,preg:null,pregBy:null,parents:o.parents||null};
+}
+
+/* ===== drawing ===== */
+function catFront(c,{mood="normal",sleep=false}={}){
+  const f=fullFur(c.fur), L=f.line;
+  const preg=c.preg?10:0;
+  let eyes;
+  if(sleep) eyes=`<path d="M70 82 q8 6 16 0 M114 82 q8 6 16 0" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else if(mood==="happy") eyes=`<path d="M70 84 q8 -9 16 0 M114 84 q8 -9 16 0" stroke="#222" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
+  else {
+    eyes=`<ellipse cx="78" cy="82" rx="8" ry="9.5" fill="${f.eye}" stroke="#222" stroke-width="1.5"/><ellipse cx="122" cy="82" rx="8" ry="9.5" fill="${f.eye}" stroke="#222" stroke-width="1.5"/>
+      <ellipse cx="78" cy="83" rx="3" ry="7" fill="#111"/><ellipse cx="122" cy="83" rx="3" ry="7" fill="#111"/>
+      <circle cx="80.5" cy="78" r="2.4" fill="#fff"/><circle cx="124.5" cy="78" r="2.4" fill="#fff"/>`;
+    if(mood==="sad") eyes+=`<path d="M68 69 l16 5 M132 69 l-16 5" stroke="#222" stroke-width="3" stroke-linecap="round"/><path d="M86 92 q-2 8 -4 10" stroke="#7cc6e8" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  }
+  const mouth=mood==="sad"?`<path d="M92 106 q8 -6 16 0" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
+    :`<path d="M92 101 q4 6 8 0 q4 6 8 0" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+  const p=f.pattern;
+  const headPat = p==="tabby"?`<path d="M88 46 l4 12 M100 42 v14 M112 46 l-4 12 M50 80 h10 M50 88 h8 M150 80 h-10 M150 88 h-8" stroke="${f.dark}" stroke-width="4" stroke-linecap="round"/>`
+    : p==="calico"?`<path d="M58 60 q8 -22 30 -18 q-6 14 -14 26 q-10 4 -16 -8z" fill="${f.spot}"/>`
+    : p==="tuxedo"?`<ellipse cx="100" cy="102" rx="22" ry="15" fill="#f6f3ee"/>`:"";
+  const bodyPat = p==="tabby"?`<path d="M64 128 q6 8 0 18 M136 128 q-6 8 0 18" stroke="${f.dark}" stroke-width="5" fill="none" stroke-linecap="round"/>`
+    : p==="calico"?`<ellipse cx="128" cy="134" rx="16" ry="11" fill="${f.spot}"/>`:"";
+  const belly = p==="tuxedo"?"#f6f3ee":f.belly;
+  const paw = (p==="socks"||p==="tuxedo")?"#f6f3ee":f.body;
+  const blush=mood==="happy"?`<ellipse cx="62" cy="98" rx="8" ry="5" fill="#f59ab0" opacity=".6"/><ellipse cx="138" cy="98" rx="8" ry="5" fill="#f59ab0" opacity=".6"/>`:"";
+  const tilt=sleep?30:0;
+  return `<svg viewBox="0 0 200 180" class="${sleep?"zzz":""}">
+  <path class="tail" d="M146 150 q40 -10 34 -50 q-2 -12 -10 -8" stroke="${f.body}" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <ellipse cx="100" cy="140" rx="${(sleep?62:48)+preg}" ry="${(sleep?28:34)+preg/2}" fill="${f.body}" stroke="${L}" stroke-width="2"/>
+  ${bodyPat}
+  <ellipse cx="100" cy="146" rx="${(sleep?36:28)+preg}" ry="${18+preg/2}" fill="${belly}"/>
+  ${sleep?"":`<ellipse cx="80" cy="170" rx="12" ry="7" fill="${paw}" stroke="${L}" stroke-width="2"/><ellipse cx="120" cy="170" rx="12" ry="7" fill="${paw}" stroke="${L}" stroke-width="2"/>`}
+  <g transform="translate(0 ${tilt})">
+    <path d="M52 66 L56 22 L86 46 Z" fill="${p==="calico"?f.spot:f.body}" stroke="${L}" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M148 66 L144 22 L114 46 Z" fill="${f.body}" stroke="${L}" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M60 58 L62 34 L78 47 Z" fill="#f4b6c2"/><path d="M140 58 L138 34 L122 47 Z" fill="#f4b6c2"/>
+    <ellipse cx="100" cy="82" rx="54" ry="44" fill="${f.body}" stroke="${L}" stroke-width="2"/>
+    ${headPat}${blush}${eyes}
+    <path d="M96 93 h8 l-4 5 z" fill="#e57a8c"/>${mouth}
+    <path d="M46 92 h-22 M46 100 l-20 6 M154 92 h22 M154 100 l20 6" stroke="${lum(f.body)<.25?"#999":"#555"}" stroke-width="1.5" stroke-linecap="round"/>
+  </g></svg>`;
+}
+function catSide(c){
+  const f=fullFur(c.fur), L=f.line, p=f.pattern;
+  const paw=(p==="socks"||p==="tuxedo")?"#f6f3ee":f.dark;
+  const leg=(x,cls)=>`<g class="leg ${cls}"><rect x="${x}" y="92" width="12" height="30" rx="6" fill="${f.body}" stroke="${L}" stroke-width="1.5"/><rect x="${x}" y="114" width="12" height="8" rx="4" fill="${paw}"/></g>`;
+  return `<svg viewBox="0 0 220 140">
+  <path class="tail" d="M50 78 q-30 -6 -26 -40 q2 -10 8 -6" stroke="${f.body}" stroke-width="12" fill="none" stroke-linecap="round"/>
+  ${leg(64,"b")}${leg(132,"a")}
+  <ellipse cx="100" cy="82" rx="56" ry="27" fill="${f.body}" stroke="${L}" stroke-width="2"/>
+  <ellipse cx="104" cy="96" rx="36" ry="10" fill="${p==="tuxedo"?"#f6f3ee":f.belly}"/>
+  ${p==="tabby"?`<path d="M80 58 q4 12 0 22 M98 56 q4 12 0 22 M116 58 q4 12 0 22" stroke="${f.dark}" stroke-width="5" fill="none" stroke-linecap="round"/>`:""}
+  ${p==="calico"?`<ellipse cx="86" cy="72" rx="18" ry="12" fill="${f.spot}"/>`:""}
+  ${leg(78,"a")}${leg(146,"b")}
+  <path d="M148 34 L152 8 L168 26 Z" fill="${f.body}" stroke="${L}" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M172 30 L182 6 L190 30 Z" fill="${p==="calico"?f.spot:f.body}" stroke="${L}" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="168" cy="56" r="30" fill="${f.body}" stroke="${L}" stroke-width="2"/>
+  ${p==="tuxedo"?`<ellipse cx="182" cy="70" rx="14" ry="11" fill="#f6f3ee"/>`:""}
+  ${p==="tabby"?`<path d="M156 30 l3 10 M166 28 v10" stroke="${f.dark}" stroke-width="3.5" stroke-linecap="round"/>`:""}
+  <ellipse cx="180" cy="52" rx="6" ry="7.5" fill="${f.eye}" stroke="#222" stroke-width="1.3"/><ellipse cx="182" cy="53" rx="2.4" ry="5.5" fill="#111"/>
+  <path d="M195 60 l3 3 l-4 2z" fill="#e57a8c"/>
+  <path d="M186 68 q4 3 8 0" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M188 64 h20 M188 68 l18 5" stroke="${lum(f.body)<.25?"#999":"#555"}" stroke-width="1.3" stroke-linecap="round"/>
+  </svg>`;
+}
+
+/* ===== state ===== */
+let S=null, W=null;
+function freshState(){return {v:2,cats:[],rel:{},sel:null,poops:[],churu:2,coins:150,deco:starterDeco(),last:Date.now(),nextId:1,savedAt:0};}
+function fixState(st){if(!st.book)st.book=[];if(!st.nick)st.nick=((st.cats[0]&&st.cats[0].name)||"냥이")+"네 집";if(st.coins==null)st.coins=150;if(!st.deco)st.deco=starterDeco();st.cats.forEach(c=>{if(c.perch===undefined)c.perch=null;});return st;}
+const say$={}; // id -> {t,until}
+function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
+function save(){if(!S)return;S.savedAt=Date.now();dirty=true;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function migrate(){
+  let o=null;try{o=JSON.parse(localStorage.getItem(OLD));}catch(e){}
+  if(!o||!o.name) return null;
+  const pre={cheese:PRESETS[0],gray:PRESETS[1],black:PRESETS[2],white:PRESETS[3]}[o.fur]||PRESETS[0];
+  const st=freshState();st.poops=o.poops||[];
+  S=st;
+  const c=newCat({name:o.name,sex:"f",fur:{...pre.fur},adult:true,born:o.born,love:o.love||0,
+    needs:{hunger:o.hunger,fun:o.fun,clean:o.clean,energy:o.energy,social:60}});
+  st.cats.push(c);st.sel=c.id;return st;
+}
+const byId=id=>S.cats.find(c=>c.id===id);
+const sel=()=>byId(S.sel)||S.cats[0];
+const rk=(a,b)=>[a.id,b.id].sort().join("|");
+const getRel=(a,b)=>S.rel[rk(a,b)]||0;
+const addRel=(a,b,d)=>{S.rel[rk(a,b)]=Math.max(-100,Math.min(100,getRel(a,b)+d));};
+const isKitten=c=>!c.adult&&Date.now()-c.born<GROW;
+const awayIds=()=>W?[W.id,...W.buddies]:[];
+function relLabel(a,b){
+  if(a.partner===b.id) return "연인 💞";
+  if(a.parents&&a.parents.includes(b.id)) return "엄마·아빠";
+  if(b.parents&&b.parents.includes(a.id)) return "아기";
+  const r=getRel(a,b);
+  return r<-20?"앙숙":r<10?"서먹함":r<35?"아는 사이":r<65?"친구":"절친";
+}
+function mood(c){
+  const v=NEEDS.map(n=>c.needs[n.k]);
+  if(Math.min(...v)<20) return "sad";
+  if(v.reduce((a,b)=>a+b)/v.length>68) return "happy";
+  return "normal";
+}
+const MOODTXT={happy:["행복해요","#3fb27f"],normal:["무난해요","#c79a2c"],sad:["우울해요","#d9534f"]};
+function level(c){return Math.floor(c.love/50)+1;}
+function ageText(c){
+  const m=(Date.now()-c.born)/60000;
+  if(isKitten(c)) return `아기 (어른까지 ${Math.max(1,Math.ceil((GROW-(Date.now()-c.born))/60000))}분)`;
+  const d=Math.floor(m/1440);return d>=1?`어른 · ${d+1}일째`:"어른";
+}
+
+/* ===== log & fx ===== */
+let logT;
+function log(t){const l=$("logline");l.textContent=t;l.style.opacity=1;clearTimeout(logT);logT=setTimeout(()=>l.style.opacity=0,5000);}
+function say(c,t){say$[c.id]={t,until:Date.now()+2600};paintSay(c);}
+function paintSay(c){
+  const el=document.querySelector(`[data-id="${c.id}"] .say`)||(W&&c.id===W.id?$("walker").querySelector(".say"):null);
+  if(!el) return;const s=say$[c.id];
+  if(s&&s.until>Date.now()){el.textContent=s.t;el.classList.add("show");}else el.classList.remove("show");
+}
+function fxAt(ch,el,n=1){
+  const st=$("stage"),r=st.getBoundingClientRect(),e=el.getBoundingClientRect();
+  for(let i=0;i<n;i++)setTimeout(()=>{const d=document.createElement("div");d.className="fx";d.textContent=ch;
+    d.style.left=(e.left-r.left+e.width*(.2+Math.random()*.6))+"px";d.style.top=(e.top-r.top+e.height*(.1+Math.random()*.4))+"px";
+    st.appendChild(d);setTimeout(()=>d.remove(),1400);},i*120);
+}
+const catEl=c=>W&&c.id===W.id?$("walker"):document.querySelector(`[data-id="${c.id}"]`);
+function fx(c,ch,n){const el=catEl(c);if(el)fxAt(ch,el,n);}
+function bounce(c){const el=catEl(c);if(!el)return;el.classList.remove("bounce");void el.offsetWidth;el.classList.add("bounce");}
+function addLove(c,n){const b=level(c);c.love+=n;if(level(c)>b){say(c,`애정 Lv.${level(c)}!`);fx(c,"💖",5);}}
+
+/* ===== render ===== */
+function renderChips(){
+  $("chips").innerHTML=`<span>🐱 <b>${S.cats.length}/${MAX}</b></span><span>🪙 <b>${S.coins}</b></span><span>🍬 <b>${S.churu}</b></span><button class="savebtn" id="saveBtn" aria-label="저장">💾 저장</button>`;
+  $("saveBtn").onclick=saveSheet;
+}
+function renderRoster(){
+  const away=awayIds();
+  $("roster").innerHTML=S.cats.map(c=>{
+    const badge=c.preg?"🍼":c.partner?"💞":isKitten(c)?"🍼":"";
+    return `<button class="rc ${c.id===S.sel?"on":""} ${away.includes(c.id)?"away":""}" data-r="${c.id}" aria-label="${c.name} 선택">
+      ${badge?`<span class="badge">${c.preg?"🤰":c.partner?"💞":"🐣"}</span>`:""}
+      ${catFront(c,{mood:mood(c),sleep:c.sleeping})}<small>${c.sex==="m"?"♂":"♀"} ${c.name}</small></button>`;
+  }).join("");
+  $("roster").querySelectorAll(".rc").forEach(b=>b.onclick=()=>{if(W)return;S.sel=b.dataset.r;if(V){sel().perch=null;sel().sleeping=false;visitPresence();}render();});
+}
+function renderNeeds(){
+  const c=sel(),m=mood(c),[mt,mc]=MOODTXT[m];
+  const partner=c.partner?byId(c.partner):null;
+  $("needs").innerHTML=`<div class="nh"><div><span class="nm">${c.name}</span> <span class="mood" style="background:${mc}">${c.sleeping?"쿨쿨 자는 중":mt}</span></div>
+    <div class="sub">${c.sex==="m"?"♂":"♀"} ${c.trait} · ${isKitten(c)?"아기":"어른"} · 애정 Lv.${level(c)}${partner?` · 💞 ${partner.name}`:""}${c.preg?` · 🤰 출산까지 ${Math.max(0,Math.ceil((c.preg-Date.now())/1000))}초`:""}</div></div>
+    <div class="bars">${NEEDS.map(n=>{const v=Math.round(c.needs[n.k]);return `<div class="stat"><div class="lab"><span>${n.n}</span><span>${v}</span></div><div class="bar"><i class="${v<20?"low":""}" style="width:${v}%;background:${n.c}"></i></div></div>`;}).join("")}</div>`;
+}
+function renderRoom(){
+  const box=$("cats"), away=awayIds(), seen=new Set();
+  const h=new Date().getHours(), night=h>=19||h<6;
+  $("win").innerHTML=night?`<div class="moon"></div>`:"";
+  $("win").style.background=night?"#22305a":"";
+  renderDecos();renderGuests();
+  S.cats.forEach(c=>{
+    if(away.includes(c.id)) return;
+    seen.add(c.id);
+    let el=box.querySelector(`[data-id="${c.id}"]`);
+    if(!el){el=document.createElement("div");el.className="cat";el.dataset.id=c.id;el.innerHTML=`<div class="think" hidden></div><div class="say"></div><div class="art"></div>`;el.onclick=()=>tapCat(c.id);box.appendChild(el);}
+    const kit=isKitten(c), w=kit?62:96;
+    const ps=catPos(c);el.style.width=w+"px";el.style.left=ps.left+"%";el.style.bottom=ps.bottom+"px";el.style.zIndex=ps.z;
+    el.classList.toggle("sel",c.id===S.sel);
+    const sig=[mood(c),c.sleeping,kit,!!c.preg,JSON.stringify(c.fur)].join();
+    if(el.dataset.sig!==sig){el.dataset.sig=sig;el.querySelector(".art").innerHTML=catFront(c,{mood:mood(c),sleep:c.sleeping});}
+    const th=el.querySelector(".think");
+    const low=NEEDS.filter(n=>c.needs[n.k]<25);
+    if(c.sleeping){th.hidden=false;th.textContent="💤";}
+    else if(low.length){th.hidden=false;th.textContent=low.map(n=>n.i).slice(0,2).join("");}
+    else if(c.preg){th.hidden=false;th.textContent="🍼";}
+    else th.hidden=true;
+    paintSay(c);
+  });
+  box.querySelectorAll(".cat").forEach(el=>{if(!seen.has(el.dataset.id))el.remove();});
+  // poops
+  document.querySelectorAll(".poop").forEach(p=>p.remove());
+  if(!W) S.poops.forEach((x,i)=>{
+    const p=document.createElement("div");p.className="poop";p.textContent="💩";p.style.left=x+"%";p.style.bottom="14px";
+    p.setAttribute("role","button");p.setAttribute("aria-label","똥 치우기");
+    p.onclick=e=>{e.stopPropagation();S.poops.splice(i,1);fxAt("✨",p,2);log("깨끗하게 치웠어요");save();render();};
+    $("room").appendChild(p);
+  });
+}
+function renderPad(){
+  const c=sel();
+  $("pad").hidden=!!W;$("walkpad").hidden=!W;
+  ["bFeed","bPlay","bWash","bWalk"].forEach(id=>$(id).disabled=c.sleeping);$("decopad").hidden=true;
+  $("bSleep").innerHTML=c.sleeping?"<span>☀️</span>깨우기":"<span>🌙</span>재우기";
+  $("bSleep").classList.toggle("on",c.sleeping);
+  $("bChuruW").disabled=!S.churu;
+}
+function render(){renderChips();renderRoster();renderNeeds();
+  $("visitpad").hidden=!V;$("townBtn").disabled=!!W;
+  if(V){$("pad").hidden=true;$("walkpad").hidden=true;$("decopad").hidden=true;$("hostchat").hidden=true;$("townBtn").hidden=true;renderVisit();return;}
+  $("townBtn").hidden=false;
+  if(W){renderGuests();return renderPad();}renderRoom();renderPad();$("pad").hidden=DM.on;$("decopad").hidden=!DM.on;if(DM.on)renderDecoPad();}
+
+/* ===== care actions ===== */
+function care(kind){
+  const c=sel();if(W) return;
+  if(c.sleeping&&kind!=="sleep") return;
+  const N=c.needs;
+  if(kind==="feed"){
+    if(N.hunger>95){say(c,"배불러서 못 먹어냥…");return;}
+    N.hunger=clamp(N.hunger+30);N.clean=clamp(N.clean-3);addLove(c,N.hunger<60?3:1);
+    fx(c,"🐟",3);say(c,pick(["냠냠 맛있다냥!","생선 최고야!","더 줘 냥~"]));
+    if(Math.random()<.3&&S.poops.length<4)setTimeout(()=>{if(S.poops.length<4&&!W){S.poops.push(8+Math.random()*80);log(`${ga(c.name)} 실수를 했어요… 똥을 치워 주세요`);save();render();}},7000);
+  }
+  if(kind==="play"){
+    if(N.energy<12){say(c,"너무 졸려서 못 놀겠다냥…");return;}
+    N.fun=clamp(N.fun+24);N.energy=clamp(N.energy-10);N.hunger=clamp(N.hunger-5);N.clean=clamp(N.clean-4);N.social=clamp(N.social+5);addLove(c,3);
+    fx(c,"🧶",2);bounce(c);say(c,pick(["잡았다냥!","한 번 더!","신난다냥~"]));c.perch=null;c.x=12+Math.random()*76;
+  }
+  if(kind==="wash"){
+    if(N.clean>95){say(c,"이미 반짝반짝하다냥");return;}
+    N.clean=clamp(N.clean+38);N.fun=clamp(N.fun-(c.trait==="깔끔쟁이"?0:6));addLove(c,c.trait==="깔끔쟁이"?4:1);
+    fx(c,"🫧",6);say(c,c.trait==="깔끔쟁이"?"상쾌하다냥~!":pick(["물은 싫지만 참는다냥","으으 차가워!","보송보송해졌다냥"]));
+  }
+  if(kind!=="sleep") S.coins+=2;
+  if(kind==="sleep"){c.sleeping=!c.sleeping;c.perch=null;say(c,c.sleeping?"잘 자 냥… zZ":"잘 잤다냥! 기지개~");}
+  save();render();
+}
+$("bFeed").onclick=()=>care("feed");$("bPlay").onclick=()=>care("play");
+$("bWash").onclick=()=>care("wash");$("bSleep").onclick=()=>care("sleep");
+$("bWalk").onclick=()=>startWalk();
+
+/* ===== sheets ===== */
+function sheet(html,bind){
+  const root=$("sheetRoot");
+  root.innerHTML=`<div class="scrim" id="scrim"><div class="sheet" role="dialog">${html}</div></div>`;
+  $("scrim").onclick=e=>{if(e.target.id==="scrim")closeSheet();};
+  root.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeSheet);
+  bind&&bind(root);
+}
+function closeSheet(){$("sheetRoot").innerHTML="";}
+function act(id,title,desc,ok=true,cls=""){return `<button class="act ${cls}" data-a="${id}" ${ok?"":"disabled"}><b>${title}</b><small>${desc}</small></button>`;}
+
+function tapCat(id){
+  const t=byId(id),s=sel();
+  if(!t) return;
+  if(t.id===s.id) return selfSheet(t);
+  socialSheet(s,t);
+}
+function selfSheet(c){
+  sheet(`<h2>${c.name}</h2><div class="sub">${c.sex==="m"?"♂ 수컷":"♀ 암컷"} · ${c.trait} · ${PAT_NAME[c.fur.pattern]}</div>
+    <div class="acts">
+      ${act("pet","쓰다듬기","사교 +, 애정 +",!c.sleeping)}
+      ${act("churu",`츄르 주기 (${S.churu})`,"배부름·즐거움 크게 +",S.churu>0&&!c.sleeping)}
+      ${act("info","정보·관계 보기","성격, 나이, 친구 관계")}
+      ${act("rename","이름 바꾸기","새 이름 지어주기")}
+    </div><button class="btn" data-close>닫기</button>`,root=>{
+    root.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{
+      const a=b.dataset.a;
+      if(a==="pet"){closeSheet();c.needs.social=clamp(c.needs.social+8);c.needs.fun=clamp(c.needs.fun+3);addLove(c,1);fx(c,"❤️",2);
+        say(c,mood(c)==="sad"?"기분이 별로다냥…":pick(["골골골…","거기 좋다냥~","냥!","더 쓰다듬어 줘"]));save();render();}
+      if(a==="churu"){closeSheet();useChuru(c);}
+      if(a==="info") infoSheet(c);
+      if(a==="rename") nameSheet(c,"이름 바꾸기","");
+    });
+  });
+}
+function useChuru(c){
+  if(!S.churu)return;S.churu--;c.needs.hunger=clamp(c.needs.hunger+30);c.needs.fun=clamp(c.needs.fun+15);addLove(c,5);
+  fx(c,"💛",4);say(c,"츄르다냥!!! 할짝할짝");save();render();
+}
+function infoSheet(c){
+  const others=S.cats.filter(o=>o.id!==c.id);
+  const kid=S.cats.filter(o=>o.parents&&o.parents.includes(c.id)).map(o=>o.name);
+  const par=c.parents?c.parents.map(byId).filter(Boolean).map(o=>o.name):[];
+  sheet(`<h2>${c.name}의 정보</h2>
+    <dl class="kv"><dt>성별</dt><dd>${c.sex==="m"?"♂ 수컷":"♀ 암컷"}</dd>
+    <dt>성격</dt><dd>${c.trait} — ${TRAITS[c.trait].d}</dd>
+    <dt>나이</dt><dd>${ageText(c)}</dd>
+    <dt>털·눈</dt><dd>${PAT_NAME[c.fur.pattern]} <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${c.fur.body};vertical-align:-1px;border:1px solid var(--line)"></span> · 눈 <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${c.fur.eye};vertical-align:-1px"></span></dd>
+    <dt>애정</dt><dd>Lv.${level(c)} (${Math.floor(c.love%50)}/50)</dd>
+    ${par.length?`<dt>부모</dt><dd>${par.join(", ")}</dd>`:""}
+    ${kid.length?`<dt>아기</dt><dd>${kid.join(", ")}</dd>`:""}</dl>
+    <div class="rel">${others.length?others.map(o=>{const r=getRel(c,o);const w=Math.abs(r)/2;
+      return `<div class="relrow"><span>${o.name}</span><div class="relbar"><i style="left:${r<0?50-w:50}%;width:${w}%;background:${r<0?"var(--bad)":"var(--social)"}"></i></div><span class="lb">${relLabel(c,o)}</span></div>`;}).join("")
+      :`<div class="sub" style="margin:0">아직 다른 고양이가 없어요. 산책하다 보면 길냥이를 만날 수 있어요.</div>`}</div>
+    <button class="btn" data-close>닫기</button>`);
+}
+function nameSheet(c,title,sub,after){
+  sheet(`<h2>${title}</h2>${sub?`<div class="sub">${sub}</div>`:""}
+    <div style="display:flex;justify-content:center"><div style="width:110px">${catFront(c,{mood:"happy"})}</div></div>
+    <input class="txt" id="nm" maxlength="8" value="${c.name}" autocomplete="off">
+    <button class="btn pri" id="nmOk">이 이름으로 할게요</button>`,()=>{
+    $("nmOk").onclick=()=>{const v=$("nm").value.trim();if(v)c.name=v.slice(0,8);closeSheet();save();render();after&&after();};
+  });
+}
+
+/* ===== social ===== */
+function socialSheet(a,b){
+  const r=getRel(a,b), sleeping=a.sleeping||b.sleeping;
+  const bothAdult=!isKitten(a)&&!isKitten(b);
+  const family=(a.parents&&a.parents.includes(b.id))||(b.parents&&b.parents.includes(a.id))||(a.parents&&b.parents&&a.parents.some(p=>b.parents.includes(p)));
+  const partners=a.partner===b.id;
+  let confess="", baby="";
+  if(!bothAdult) confess="아기 고양이는 아직 일러요";
+  else if(family) confess="가족이에요";
+  else if(partners) confess="이미 연인이에요";
+  else if(a.partner||b.partner) confess="둘 중 한 마리에게 연인이 있어요";
+  else if(r<30) confess=`관계 30 이상 필요 (지금 ${Math.round(r)})`;
+  if(!partners) baby="연인이 되어야 해요";
+  else if(a.sex===b.sex) baby="수컷과 암컷이어야 해요";
+  else if(a.preg||b.preg) baby="이미 아기를 기다리는 중이에요";
+  else if(S.cats.length>=MAX) baby=`집이 꽉 찼어요 (최대 ${MAX}마리)`;
+  else if(r<45) baby=`관계 45 이상 필요 (지금 ${Math.round(r)})`;
+  sheet(`<h2>${a.name} → ${b.name}</h2><div class="sub">지금 관계: ${relLabel(a,b)} (${Math.round(r)}) · ${b.trait}</div>
+    ${sleeping?`<div class="sub" style="margin:0">${ga(a.sleeping?a.name:b.name)} 자고 있어서 교류할 수 없어요.</div>`:""}
+    <div class="acts">
+      ${act("hi","인사하기","코 인사 킁킁",!sleeping)}
+      ${act("groom","그루밍 해주기","친할수록 성공해요",!sleeping)}
+      ${act("play","같이 뛰어놀기","즐거움 +, 기운 −",!sleeping&&a.needs.energy>10&&b.needs.energy>10)}
+      ${act("tease","꼬리 장난치기","운에 따라 좋거나 나빠요",!sleeping)}
+      ${act("confess","고백하기 💌",confess||"연인이 될 수 있을까?",!sleeping&&!confess,"love")}
+      ${act("baby","아기 갖기 🍼",baby||"새 식구가 생길지도!",!sleeping&&!baby,"love")}
+      ${partners?act("break","헤어지기","관계가 크게 나빠져요",!sleeping):""}
+      ${act("select",`${eul(b.name)} 선택`,"이 고양이를 돌보기",true)}
+    </div><button class="btn" data-close>닫기</button>`,root=>{
+    root.querySelectorAll("[data-a]").forEach(btn=>btn.onclick=()=>{closeSheet();
+      if(btn.dataset.a==="select"){S.sel=b.id;render();return;}
+      social(a,b,btn.dataset.a);});
+  });
+}
+function social(a,b,type,auto=false){
+  const r=getRel(a,b);
+  const charm=(a.trait==="애교쟁이"?.15:0)-(b.trait==="새침데기"?.15:0);
+  const soc=(x,v)=>x.needs.social=clamp(x.needs.social+v);
+  a.perch=null;b.perch=null;b.x=Math.max(6,Math.min(94,a.x+(a.x<50?14:-14)));
+  let msg="";
+  if(type==="hi"){addRel(a,b,4+charm*10);soc(a,10);soc(b,8);say(a,"안녕 냥!");setTimeout(()=>say(b,"냥~"),700);msg=`${ga(a.name)} ${b.name}에게 코 인사를 했어요`;}
+  if(type==="groom"){
+    if(Math.random()<.5+r/200+charm){addRel(a,b,9);soc(a,12);soc(b,12);b.needs.clean=clamp(b.needs.clean+8);fx(b,"💕",2);say(a,"핥핥");setTimeout(()=>say(b,"골골골…"),700);msg=`${ga(a.name)} ${eul(b.name)} 그루밍해 줬어요`;}
+    else{addRel(a,b,-6);soc(a,4);say(a,"가만있어 봐!");setTimeout(()=>say(b,"하악!"),600);fx(b,"💢",1);msg=`${neun(b.name)} 그루밍이 싫었나 봐요`;}
+  }
+  if(type==="play"){addRel(a,b,8+charm*10);[a,b].forEach(x=>{x.needs.fun=clamp(x.needs.fun+16);x.needs.energy=clamp(x.needs.energy-8);soc(x,12);});
+    bounce(a);setTimeout(()=>bounce(b),250);fx(a,"🎾",1);say(a,"잡아 봐라냥!");msg=`${wa(a.name)} ${ga(b.name)} 신나게 뛰어놀았어요`;}
+  if(type==="tease"){
+    if(Math.random()<.55+charm){addRel(a,b,6);[a,b].forEach(x=>x.needs.fun=clamp(x.needs.fun+10));say(b,"냥하하!");fx(b,"😹",1);msg=`${neun(b.name)} 장난을 재밌어했어요`;}
+    else{addRel(a,b,-9);b.needs.fun=clamp(b.needs.fun-6);say(b,"뭐 하는 거냥!");fx(b,"💢",2);msg=`${ga(b.name)} 화가 났어요`;}
+  }
+  if(type==="confess"){
+    say(a,"나… 너 좋아한다냥");
+    const ok=Math.random()<.6+(r-30)/60+charm;
+    setTimeout(()=>{
+      if(ok){a.partner=b.id;b.partner=a.id;addRel(a,b,15);say(b,"나도 좋아냥 💕");fx(a,"💞",4);fx(b,"💖",4);log(`💞 ${wa(a.name)} ${ga(b.name)} 연인이 되었어요!`);}
+      else{addRel(a,b,-12);a.needs.social=clamp(a.needs.social-15);say(b,"우린 친구로 지내자냥…");fx(a,"💔",2);log(`${neun(b.name)} 아직 마음이 없나 봐요…`);}
+      save();render();
+    },1200);
+  }
+  if(type==="baby"){
+    say(a,"우리 아기 갖자냥 🍼");
+    setTimeout(()=>{
+      if(Math.random()<.92){const mom=a.sex==="f"?a:b,dad=mom===a?b:a;mom.preg=Date.now()+PREG;mom.pregBy=dad.id;addRel(a,b,8);
+        fx(mom,"🍼",3);say(b,"좋아냥!");log(`🤰 ${ga(mom.name)} 아기를 가졌어요! 15초 뒤에 태어나요`);}
+      else{say(b,"아직은 때가 아닌 것 같다냥");log("이번엔 소식이 없어요. 조금 뒤에 다시 해 보세요");}
+      save();render();
+    },1200);
+  }
+  if(type==="break"){a.partner=null;b.partner=null;addRel(a,b,-35);say(a,"우리 그만하자냥…");setTimeout(()=>{say(b,"흑…");fx(b,"💔",2);},700);msg=`💔 ${wa(a.name)} ${ga(b.name)} 헤어졌어요`;}
+  if(msg) log(msg);
+  if(!auto){S.coins+=1;save();render();}
+}
+
+/* ===== birth & growth ===== */
+function birth(mom){
+  const dad=byId(mom.pregBy)||mom;
+  mom.preg=null;mom.pregBy=null;
+  const room=MAX-S.cats.length;
+  if(room<=0){log("집이 꽉 차서 아기가 이웃집으로 입양 갔어요");return;}
+  const n=Math.min(room,1+(Math.random()<.55?1:0)+(Math.random()<.25?1:0));
+  const kids=[];
+  for(let i=0;i<n;i++){
+    const k=newCat({name:freeName(),fur:babyFur(mom.fur,dad.fur),trait:Math.random()<.5?pick([mom.trait,dad.trait]):undefined,
+      parents:[mom.id,dad.id],x:Math.min(92,mom.x+8+i*8),needs:{hunger:80,fun:80,clean:90,energy:90,social:70}});
+    S.cats.push(k);addRel(k,mom,60);addRel(k,dad,50);
+    S.cats.forEach(o=>{if(o!==k&&o!==mom&&o!==dad)addRel(k,o,kids.includes(o)?40:10);});
+    kids.push(k);
+  }
+  mom.perch=null;
+  log(`🐣 ${wa(mom.name)} ${dad.name}의 아기 ${n}마리가 태어났어요!`);
+  save();render();
+  if(W) return;
+  const nameNext=i=>{if(i>=kids.length)return;const k=kids[i];
+    nameSheet(k,n>1?`아기 ${i+1}/${n}마리째 이름 짓기`:"아기 고양이가 태어났어요!",`${mom.name} ♀ × ${dad.name} ♂ · ${k.sex==="m"?"♂ 수컷":"♀ 암컷"} · ${PAT_NAME[k.fur.pattern]} · ${k.trait}`,()=>nameNext(i+1));};
+  nameNext(0);
+}
+
+/* ===== walk ===== */
+const FAR=["🏠","🌳","🏪","🏡","🌲","🏫","🏘️","🌳","⛪","🏡"];
+const NEAR=["🌷","🪨","🌿","🌼","🚏","🌳","🌱","🍄","🪵","🌻"];
+function buildLayer(el,arr){const s=arr.map(x=>`<span>${x}</span>`).join("");el.innerHTML=s+s;el._w=0;}
+function startWalk(){
+  const c=sel();
+  if(c.sleeping) return;
+  if(c.needs.energy<20){say(c,"너무 피곤해서 못 나가겠다냥…");return;}
+  if(V)return;
+  c.perch=null;if(DM.on)setDecoMode(false);
+  W={id:c.id,dist:0,off:0,next:Date.now()+3500,paused:false,buddies:[],t:performance.now()};
+  $("room").hidden=true;$("walk").hidden=false;
+  buildLayer($("far"),FAR);buildLayer($("near"),NEAR);
+  $("npcs").innerHTML="";
+  const wk=$("walker");wk.className="walker moving";wk.style.left="42%";wk.innerHTML=`<div class="say"></div>${catSide(c)}`;
+  log(`${ga(c.name)} 산책을 나왔어요`);
+  say(c,pick(["산책이다냥!","바깥 공기 좋다냥~","출발!"]));
+  render();requestAnimationFrame(walkFrame);
+}
+function walkFrame(t){
+  if(!W) return;
+  const dt=Math.min(.05,(t-W.t)/1000);W.t=t;
+  if(!W.paused){W.off+=dt*70;W.dist+=dt*1.4;}
+  [["far",.35],["near",1]].forEach(([id,sp])=>{const el=$(id);if(!el._w)el._w=el.scrollWidth/2;if(el._w)el.style.transform=`translateX(${-((W.off*sp)%el._w)}px)`;});
+  $("dist").textContent=Math.floor(W.dist)+"m";
+  requestAnimationFrame(walkFrame);
+}
+function setMoving(on){W.paused=!on;$("walker").classList.toggle("moving",on);document.querySelectorAll(".npc.buddy").forEach(n=>n.classList.toggle("moving",on));}
+function ecard(title,text,buttons){
+  const d=document.createElement("div");d.className="ecard";d.id="ecard";
+  d.innerHTML=`<h3>${title}</h3><p>${text}</p><div class="row">${buttons.map((b,i)=>`<button class="btn ${b.pri?"pri":""}" data-i="${i}" ${b.dis?"disabled":""}>${b.t}</button>`).join("")}</div>`;
+  $("walk").appendChild(d);
+  d.querySelectorAll("button").forEach(btn=>btn.onclick=()=>{d.remove();buttons[+btn.dataset.i].f();save();render();});
+}
+function npc(html,cls=""){const n=document.createElement("div");n.className="npc "+cls;n.style.left="115%";n.innerHTML=html;$("npcs").appendChild(n);requestAnimationFrame(()=>requestAnimationFrame(()=>n.style.left="70%"));return n;}
+function leave(n){n.style.transition="left 2s linear";n.style.left="130%";setTimeout(()=>n.remove(),2100);}
+function resume(){setMoving(true);W.next=Date.now()+4000+Math.random()*4000;}
+function walkEvent(){
+  const c=byId(W.id);
+  const roll=Math.random();
+  setMoving(false);
+  if(roll<.4){ // stray
+    const s=newCat({name:freeName(),fur:randomFur(),adult:true,needs:{hunger:30,fun:45,clean:35,energy:60,social:40}});
+    const n=npc(`<div class="say"></div>${catSide(s)}`,"flip moving");
+    setTimeout(()=>{n.classList.remove("moving");
+      const full=S.cats.length>=MAX;
+      ecard("길고양이를 만났어요!",`${s.sex==="m"?"♂":"♀"} ${PAT_NAME[s.fur.pattern]} 무늬, 성격은 ${s.trait}. 배가 고파 보여요.${full?` 집이 꽉 찼어요 (최대 ${MAX}마리).`:""}`,[
+        {t:"냥줍하기 🏠",pri:true,dis:full,f:()=>{S.cats.push(s);W.buddies.push(s.id);addRel(c,s,15);addLove(s,5);
+          n.classList.remove("flip");n.classList.add("buddy","moving");n.style.transition="left 1.4s ease-out";n.style.left="20%";
+          fx(c,"💕",2);log(`🏠 ${neun(s.name)} 이제 우리 식구예요! (이름은 집에서 바꿀 수 있어요)`);resume();}},
+        {t:"츄르만 주기",dis:!S.churu,f:()=>{S.churu--;addLove(c,2);c.needs.social=clamp(c.needs.social+10);log(`${s.name}에게 츄르를 줬어요. 고맙다고 하네요`);leave(n);resume();}},
+        {t:"지나가기",f:()=>{leave(n);resume();}},
+      ]);
+    },1700);
+  } else if(roll<.5){
+    const g=10+Math.floor(Math.random()*16);S.coins+=g;W.coin=(W.coin||0)+g;fx(c,"🪙",3);say(c,"반짝이는 게 있다냥!");
+    ecard("동전 주머니를 주웠어요",`🪙 +${g} 코인. 캣타워 꾸미기에 쓸 수 있어요`,[{t:"챙기기",pri:true,f:resume}]);
+  } else if(roll<.6){
+    S.churu++;fx(c,"🍬",2);say(c,"이게 뭐다냥?");
+    ecard("길에서 츄르를 주웠어요","아무도 안 뜯은 새 거예요. 츄르 +1",[{t:"챙기기",pri:true,f:resume}]);
+  } else if(roll<.72){
+    fx(c,"🦋",3);say(c,"나비다냥!!");c.needs.fun=clamp(c.needs.fun+15);c.needs.energy=clamp(c.needs.energy-4);
+    ecard("나비를 쫓아다녔어요","즐거움 +15",[{t:"계속 걷기",pri:true,f:resume}]);
+  } else if(roll<.84){
+    const n=npc(`<div style="font-size:64px;line-height:1;transform:scaleX(-1)">🐕</div>`);
+    setTimeout(()=>ecard("이웃집 강아지가 다가와요","꼬리를 흔들고 있어요. 어떻게 할까요?",[
+      {t:"인사하기",pri:true,f:()=>{if(Math.random()<.55){c.needs.social=clamp(c.needs.social+15);say(c,"멍멍이 친구다냥");log("강아지와 친구가 되었어요");}
+        else{c.needs.fun=clamp(c.needs.fun-8);say(c,"하악! 무섭다냥");fx(c,"💦",2);log("강아지가 너무 반가워해서 깜짝 놀랐어요");}leave(n);resume();}},
+      {t:"도망가기",f:()=>{c.needs.energy=clamp(c.needs.energy-6);say(c,"후다닥!");leave(n);resume();}},
+    ]),1300);
+  } else if(roll<.93){
+    c.needs.clean=clamp(c.needs.clean-15);fx(c,"💧",3);say(c,"으앗 첨벙!");
+    ecard("웅덩이를 밟았어요","발이 젖었어요. 청결 −15",[{t:"털고 가기",pri:true,f:resume}]);
+  } else {
+    c.needs.hunger=clamp(c.needs.hunger+20);c.needs.social=clamp(c.needs.social+12);fx(c,"🐟",2);say(c,"할머니 최고다냥");
+    ecard("동네 할머니를 만났어요","간식을 나눠 주셨어요. 배부름 +20, 사교 +12",[{t:"고맙다냥",pri:true,f:resume}]);
+  }
+}
+function endWalk(){
+  if(!W) return;
+  const c=byId(W.id),d=Math.floor(W.dist),n=W.buddies.length,coin=Math.floor(d/4)+(W.coin||0);S.coins+=Math.floor(d/4);
+  W=null;$("walk").hidden=true;$("room").hidden=false;$("ecard")?.remove();
+  c.x=50;
+  log(`🏠 ${ga(c.name)} ${d}m 산책하고 돌아왔어요 · 🪙 +${coin}${n?` · 새 식구 ${n}마리!`:""}`);
+  render();save();
+}
+$("bHome").onclick=endWalk;
+$("bChuruW").onclick=()=>{if(W)useChuru(byId(W.id));};
+
+
+/* ===== cat tower & furniture ===== */
+const WD="#c99a6b",WD2="#9c7046",SI="#dcc58f",SI2="#b39a63",FB="#7fb7c9",FB2="#4f8fa5",PK="#f2a7b8",PK2="#d97f96";
+const DECO={
+  base:{n:"타워 받침",p:20,w:110,h:22,perch:20},
+  post:{n:"스크래쳐 기둥",p:30,w:26,h:100,perch:null},
+  disc:{n:"원형 발판",p:30,w:84,h:14,perch:12},
+  shelf:{n:"벽 선반",p:35,w:96,h:14,perch:12},
+  house:{n:"숨숨집",p:50,w:84,h:66,perch:64},
+  hammock:{n:"해먹",p:60,w:100,h:44,perch:14,cozy:1},
+  cushion:{n:"방석",p:25,w:84,h:20,perch:10,cozy:1},
+  wheel:{n:"캣휠",p:150,w:124,h:130,perch:14,run:1},
+  ball:{n:"털실 공",p:10,w:30,h:30,perch:null},
+  plant:{n:"화분",p:20,w:44,h:64,perch:null},
+  bowl:{n:"밥그릇",p:15,w:46,h:20,perch:null},
+  rug:{n:"러그",p:25,w:160,h:16,perch:null,flat:1},
+};
+const DORDER=["base","post","disc","shelf","house","hammock","cushion","wheel","ball","plant","bowl","rug"];
+function decoSVG(t){
+  const d=DECO[t],w=d.w,h=d.h;let g="";
+  if(t==="base") g=`<rect x="1" y="3" width="${w-2}" height="${h-4}" rx="6" fill="${SI}" stroke="${SI2}" stroke-width="2"/><rect x="1" y="3" width="${w-2}" height="6" rx="3" fill="${FB}"/>`;
+  if(t==="post"){g=`<rect x="3" y="0" width="${w-6}" height="${h}" rx="4" fill="${SI}" stroke="${SI2}" stroke-width="2"/>`;for(let y=6;y<h;y+=7)g+=`<path d="M4 ${y} L${w-4} ${y+3}" stroke="${SI2}" stroke-width="1.6"/>`;}
+  if(t==="disc") g=`<rect x="2" y="4" width="${w-4}" height="${h-4}" rx="5" fill="${FB2}"/><ellipse cx="${w/2}" cy="5" rx="${w/2-2}" ry="5" fill="${FB}" stroke="${FB2}" stroke-width="1.5"/>`;
+  if(t==="shelf") g=`<rect x="1" y="1" width="${w-2}" height="9" rx="2" fill="${WD}" stroke="${WD2}" stroke-width="1.5"/><path d="M12 10 v4 M${w-12} 10 v4" stroke="${WD2}" stroke-width="4"/>`;
+  if(t==="house") g=`<rect x="2" y="2" width="${w-4}" height="${h-4}" rx="10" fill="${FB}" stroke="${FB2}" stroke-width="2"/><rect x="2" y="2" width="${w-4}" height="10" rx="5" fill="${SI}"/><ellipse cx="${w/2}" cy="${h-22}" rx="18" ry="17" fill="#2a2a33"/><rect x="${w/2-18}" y="${h-22}" width="36" height="18" fill="#2a2a33"/>`;
+  if(t==="hammock") g=`<path d="M6 ${h} V2 M${w-6} ${h} V2" stroke="${WD2}" stroke-width="5" stroke-linecap="round"/><path d="M6 6 Q${w/2} ${h-6} ${w-6} 6" fill="${PK}" stroke="${PK2}" stroke-width="2"/><path d="M14 9 Q${w/2} ${h-14} ${w-14} 9" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4" opacity=".7"/>`;
+  if(t==="cushion") g=`<ellipse cx="${w/2}" cy="${h/2+1}" rx="${w/2-2}" ry="${h/2-1}" fill="${PK}" stroke="${PK2}" stroke-width="2"/><ellipse cx="${w/2}" cy="${h/2-1}" rx="${w/2-14}" ry="${h/2-6}" fill="#f8c7d2"/>`;
+  if(t==="wheel"){const r=w/2-8,cy=r+4;g=`<path d="M${w/2-30} ${h} L${w/2} ${cy} L${w/2+30} ${h}" stroke="${WD2}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="${w/2}" cy="${cy}" r="${r}" fill="none" stroke="${WD}" stroke-width="12"/><circle cx="${w/2}" cy="${cy}" r="${r-8}" fill="none" stroke="${SI2}" stroke-width="2" stroke-dasharray="3 7"/>`;}
+  if(t==="ball") g=`<circle cx="15" cy="15" r="13" fill="#e2647a"/><path d="M5 10 q10 6 20 0 M4 17 q11 6 22 0 M10 4 q-2 12 6 24" stroke="#f6b3c0" stroke-width="2" fill="none"/>`;
+  if(t==="plant") g=`<path d="M10 ${h-26} h24 l-3 26 h-18z" fill="#c8754c"/><path d="M22 ${h-26} q-18 -12 -16 -34 q12 8 16 34 q2 -30 14 -36 q4 22 -14 36" fill="#5fae6a"/>`;
+  if(t==="bowl") g=`<path d="M3 6 h40 q-4 14 -20 14 q-16 0 -20 -14z" fill="#e88a5c" stroke="#b9603a" stroke-width="1.5"/><ellipse cx="23" cy="6" rx="18" ry="4" fill="#8a5a3b"/>`;
+  if(t==="rug") g=`<ellipse cx="${w/2}" cy="${h/2}" rx="${w/2-2}" ry="${h/2-1}" fill="${FB}"/><ellipse cx="${w/2}" cy="${h/2}" rx="${w/2-18}" ry="${h/2-4}" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/>`;
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${g}</svg>`;
+}
+function starterDeco(){
+  return [{id:"d1",t:"rug",x:42,y:8},{id:"d2",t:"plant",x:93,y:8},{id:"d3",t:"cushion",x:16,y:10},
+    {id:"d4",t:"base",x:74,y:8},{id:"d5",t:"post",x:74,y:28},{id:"d6",t:"disc",x:74,y:126}];
+}
+const decoById=id=>S.deco.find(d=>d.id===id);
+const DM={on:false,sel:null};
+function catPos(c){
+  const d=c.perch&&decoById(c.perch);
+  if(d) return {left:d.x,bottom:d.y+DECO[d.t].perch-6,z:300+Math.round(d.y)};
+  if(c.perch) c.perch=null;
+  return {left:c.x,bottom:8+c.y,z:100-Math.round(c.y)};
+}
+function freePerches(cozyOnly){return S.deco.filter(d=>DECO[d.t].perch!=null&&(!cozyOnly||DECO[d.t].cozy)&&!S.cats.some(o=>o.perch===d.id));}
+function renderDecos(){
+  const box=$("decos"),seen=new Set();
+  S.deco.forEach(d=>{
+    const T=DECO[d.t];seen.add(d.id);
+    let el=box.querySelector(`[data-d="${d.id}"]`);
+    if(!el){el=document.createElement("div");el.className="deco";el.dataset.d=d.id;el.innerHTML=decoSVG(d.t);el.onpointerdown=e=>decoDown(e,d.id);box.appendChild(el);}
+    el.style.width=T.w+"px";el.style.height=T.h+"px";el.style.left=d.x+"%";el.style.bottom=d.y+"px";
+    el.style.zIndex=T.flat?1:(T.perch!=null?40:30)+Math.round(d.y/10);
+    el.classList.toggle("flip",!!d.f);el.classList.toggle("dsel",DM.on&&DM.sel===d.id);
+  });
+  box.querySelectorAll(".deco").forEach(el=>{if(!seen.has(el.dataset.d))el.remove();});
+}
+let drag=null;
+function decoDown(e,id){
+  if(!DM.on) return;
+  e.preventDefault();
+  const d=decoById(id),r=$("stage").getBoundingClientRect();
+  DM.sel=id;renderDecoPad();renderDecos();
+  drag={id,dy:(r.bottom-e.clientY)-d.y,dx:e.clientX-(r.left+r.width*d.x/100),el:e.currentTarget};
+  e.currentTarget.setPointerCapture(e.pointerId);
+  e.currentTarget.onpointermove=decoMove;e.currentTarget.onpointerup=e.currentTarget.onpointercancel=decoUp;
+}
+function decoMove(e){
+  if(!drag) return;
+  const d=decoById(drag.id),T=DECO[d.t],r=$("stage").getBoundingClientRect();
+  const halfPct=T.w/2/r.width*100;
+  let x=Math.max(halfPct,Math.min(100-halfPct,(e.clientX-drag.dx-r.left)/r.width*100));
+  let y=Math.max(0,Math.min(r.height-T.h,r.bottom-e.clientY-drag.dy));
+  // snap onto tops of overlapping furniture so towers stack
+  let best=null;
+  S.deco.forEach(o=>{if(o.id===d.id||DECO[o.t].flat)return;const O=DECO[o.t];
+    const dxpx=Math.abs((o.x-x)/100*r.width);if(dxpx>(O.w+T.w)/2-6)return;
+    const top=o.y+O.h-(o.t==="disc"||o.t==="shelf"?0:2);if(Math.abs(y-top)<14&&(!best||Math.abs(y-top)<Math.abs(y-best)))best=top;});
+  if(Math.abs(y-8)<12) best=best??8;
+  if(best!=null) y=best;
+  d.x=+x.toFixed(2);d.y=Math.round(y);
+  drag.el.style.left=d.x+"%";drag.el.style.bottom=d.y+"px";
+}
+function decoUp(){if(!drag)return;drag.el.onpointermove=null;drag=null;save();render();}
+function setDecoMode(on){
+  DM.on=on;if(!on)DM.sel=null;
+  $("stage").classList.toggle("decomode",on);
+  if(on){S.cats.forEach(c=>{});log("가구를 사서 끌어다 놓아요. 발판을 기둥 위에 올리면 착 붙어요");}
+  render();
+}
+function renderDecoPad(){
+  const d=DM.sel&&decoById(DM.sel);
+  $("dtool").innerHTML=`<span class="nm">${d?`선택: ${DECO[d.t].n}`:"🪙 "+S.coins+" · 가구를 탭해 고르세요"}</span>
+    ${d?`<button class="btn" id="dFlip">↔ 뒤집기</button><button class="btn" id="dDel">치우기 (+${DECO[d.t].p})</button>`:""}
+    <button class="btn pri" id="dDone">완료</button>`;
+  if(d){$("dFlip").onclick=()=>{d.f=d.f?0:1;save();render();};
+    $("dDel").onclick=()=>{S.coins+=DECO[d.t].p;S.cats.forEach(c=>{if(c.perch===d.id)c.perch=null;});S.deco=S.deco.filter(x=>x!==d);DM.sel=null;save();render();};}
+  $("dDone").onclick=()=>setDecoMode(false);
+  const key=S.coins+"|"+S.deco.length;
+  if($("dshop").dataset.k===key) return;
+  $("dshop").dataset.k=key;
+  $("dshop").innerHTML=DORDER.map(t=>`<button class="ditem" data-t="${t}" ${S.coins<DECO[t].p?"disabled":""}><span class="th">${decoSVG(t)}</span>${DECO[t].n}<span class="pr">🪙 ${DECO[t].p}</span></button>`).join("");
+  $("dshop").querySelectorAll(".ditem").forEach(b=>b.onclick=()=>buyDeco(b.dataset.t));
+}
+function buyDeco(t){
+  const T=DECO[t];
+  if(S.coins<T.p){log("코인이 부족해요. 산책하면 모을 수 있어요");return;}
+  if(S.deco.length>=40){log("가구는 40개까지 놓을 수 있어요");return;}
+  S.coins-=T.p;
+  const d={id:"d"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),t,x:30+Math.random()*40,y:(t==="disc"||t==="shelf")?150:8};
+  S.deco.push(d);DM.sel=d.id;save();render();
+}
+$("bDeco").onclick=()=>setDecoMode(true);
+
+/* ===== save ===== */
+let cloud=null,cloudState="wait",dirty=false;
+async function cloudInit(){
+  try{
+    if(!window.claude||!window.claude.use){cloudState="off";return;}
+    const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+    const uid=user?await user.id():null;
+    if(!db||!uid){cloudState="off";return;}
+    cloud=db.doc("data/users/"+uid+"/save");
+    const snap=await cloud.get();
+    setTimeout(()=>townInit(db,uid),0);
+    cloudState="on";
+    if(snap.exists){
+      const d=snap.data();let st=null;try{st=JSON.parse(d.json);}catch(e){}
+      if(st&&st.cats&&st.cats.length&&(!S||!S.cats.length||(d.savedAt||0)>(S.savedAt||0)+3000)) adopt(st,"☁️ 클라우드에 저장된 게임을 불러왔어요");
+    }
+  }catch(e){cloudState="off";}
+}
+async function cloudSave(force){
+  if(!cloud||!S||!S.cats.length) return false;
+  if(!dirty&&!force) return true;
+  try{await cloud.set({json:JSON.stringify(S),savedAt:S.savedAt,cats:S.cats.length});dirty=false;cloudState="on";return true;}
+  catch(e){cloudState=e&&e.code==="invalid_argument"?"ro":"off";if(cloudState==="ro")T.canWrite=false;return false;}
+}
+function adopt(st,msg){
+  if(W){W=null;$("walk").hidden=true;$("room").hidden=false;}
+  if(V){if(V.room)V.room.leave().catch(()=>{});V=null;$("visit").hidden=true;$("room").hidden=false;}
+  closeSheet();DM.on=false;$("stage").classList.remove("decomode");
+  S=fixState(st);S.last=Date.now();if(!byId(S.sel))S.sel=S.cats[0].id;
+  $("cats").innerHTML="";$("decos").innerHTML="";
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+  if($("game").hidden) startGame(); else render();
+  log(msg);
+}
+const enc=t=>btoa(unescape(encodeURIComponent(t))), dec=t=>decodeURIComponent(escape(atob(t.trim())));
+const hm=t=>t?new Date(t).toLocaleString("ko-KR",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}):"아직 없음";
+function saveSheet(){
+  const cl={on:"켜짐 · 로그인한 다른 기기에서도 이어서 할 수 있어요",off:"이 기기 브라우저에 저장돼요 · 다른 기기로 옮길 땐 백업 코드를 써 주세요",ro:"이 페이지에 저장 권한이 없어요 · 백업 코드를 써 주세요",wait:"연결 중…"}[cloudState];
+  sheet(`<h2>💾 저장</h2><div class="sub">게임은 몇 초마다 이 기기에 자동으로 저장돼요.</div>
+    <dl class="kv"><dt>마지막 저장</dt><dd id="svWhen">${hm(S.savedAt)}</dd><dt>저장 위치</dt><dd>${cl}</dd></dl>
+    <button class="btn pri" id="svNow">지금 저장하기</button>
+    <div style="display:flex;gap:8px"><button class="btn" id="svCopy">백업 코드 복사</button><button class="btn" id="svLoad">백업 코드로 불러오기</button></div>
+    <textarea id="svCode" class="txt" rows="4" hidden placeholder="백업 코드를 여기에 붙여넣으세요"></textarea>
+    <button class="btn" id="svApply" hidden>이 코드로 불러오기</button>
+    <div class="sub" id="svMsg" style="margin:0"></div>
+    <button class="btn" data-close>닫기</button>`,()=>{
+    const msg=t=>$("svMsg").textContent=t;
+    $("svNow").onclick=async()=>{save();msg("저장 중…");const ok=await cloudSave(true);$("svWhen").textContent=hm(S.savedAt);
+      msg("이 기기에 저장했어요 ✅ (다른 기기로 옮기려면 백업 코드를 복사해 두세요)");};
+    $("svCopy").onclick=()=>{save();const code=enc(JSON.stringify(S));
+      const show=()=>{const ta=$("svCode");ta.hidden=false;ta.value=code;ta.focus();ta.select();msg("자동 복사가 안 돼서 코드를 아래에 띄웠어요. 길게 눌러 복사해 주세요");};
+      try{navigator.clipboard.writeText(code).then(()=>msg("백업 코드를 복사했어요. 메모장 같은 곳에 보관하세요 📋"),show);}catch(e){show();}};
+    $("svLoad").onclick=()=>{$("svCode").hidden=false;$("svCode").value="";$("svApply").hidden=false;$("svCode").focus();msg("");};
+    $("svApply").onclick=()=>{try{const st=JSON.parse(dec($("svCode").value));if(!st.cats||!st.cats.length)throw 0;
+      st.savedAt=Date.now();adopt(st,"📥 백업 코드로 불러왔어요");dirty=true;cloudSave(true);}catch(e){msg("코드를 읽지 못했어요. 처음부터 끝까지 빠짐없이 붙여넣었는지 확인해 주세요");}};
+  });
+}
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&S&&S.cats.length){save();cloudSave();}});
+
+
+/* ===== P2P network: Trystero (MIT) over public Nostr relays — no server needed ===== */
+const NET_APP="nyang-kiugi-town-public-v1";
+function trRoom(name){
+  let r=null;try{r=Trystero.joinRoom({appId:NET_APP},name);}catch(e){return null;}
+  const pr=r.makeAction("pr"),ev=r.makeAction("ev");
+  let mine={},peers={},hs=[],ons={},sendT=null;
+  const meP=()=>({peer:Trystero.selfId,by:null,isMe:true,sameTab:true,kind:"viewer",guest:false,presence:mine,updatedAt:Date.now()});
+  const list=()=>[meP(),...Object.values(peers)];
+  const fire=(j,l,u)=>{const ch={peers:list(),joined:j||[],left:l||[],updated:u||[]};hs.forEach(h=>{try{h(ch);}catch(e){}});};
+  r.onPeerJoin=id=>{pr.send(mine,{target:id}).catch(()=>{});};
+  r.onPeerLeave=id=>{const p=peers[id];delete peers[id];if(p)fire([],[p]);};
+  pr.onMessage=(d,ctx)=>{const id=ctx&&ctx.peerId;if(!id||!d||typeof d!=="object"||Array.isArray(d))return;
+    const was=peers[id];const p=Object.freeze({peer:id,by:null,isMe:false,sameTab:false,kind:"viewer",guest:false,presence:d,updatedAt:Date.now()});
+    peers[id]=p;was?fire([],[],[p]):fire([p]);};
+  ev.onMessage=(m,ctx)=>{if(!m||typeof m.t!=="string")return;(ons[m.t]||[]).forEach(f=>{try{f({topic:m.t,data:m.d,peer:ctx&&ctx.peerId,isMe:false});}catch(e){}});};
+  return {name,
+    presence(patch){for(const k in patch){if(patch[k]===null)delete mine[k];else mine[k]=patch[k];}
+      clearTimeout(sendT);sendT=setTimeout(()=>pr.send(mine).catch(()=>{}),120);return Promise.resolve();},
+    peers:list,
+    onPeers(h){hs.push(h);setTimeout(()=>{try{h({peers:list(),joined:list(),left:[],updated:[]});}catch(e){}},0);return()=>{hs=hs.filter(x=>x!==h);};},
+    emit(topic,data,opt){return ev.send({t:topic,d:data},opt&&opt.target?{target:opt.target}:undefined).catch(()=>{});},
+    on(topic,fn){(ons[topic]=ons[topic]||[]).push(fn);return()=>{ons[topic]=ons[topic].filter(x=>x!==fn);};},
+    join(n){const x=trRoom(n);return x?Promise.resolve(x):Promise.reject(new Error("join"));},
+    leave(){try{return r.leave();}catch(e){return Promise.resolve();}}};
+}
+
+/* ===== town: houses, visits, guestbook ===== */
+const T={db:null,uid:null,canWrite:null,houses:[],lobby:null,home:null,lastHouse:"",guests:[],book:[],bookSeen:0,homeSig:"",say:null,sayAt:0};
+let V=null;
+const HEX=/^#[0-9a-f]{6}$/i, EMOS=["❤️","😹","🐾"];
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clip=(t,n)=>String(t??"").replace(/[\u0000-\u001f\u007f​-‏‪-‮⁠-⁯]/g,"").trim().slice(0,n);
+function hname(uid){let a=5381,b=2166136261;for(const ch of uid){const k=ch.charCodeAt(0);a=((a*33)^k)>>>0;b=Math.imul(b^k,16777619)>>>0;}return "h-"+a.toString(36)+b.toString(36);}
+function cleanFur(f){f=f||{};const ok=v=>HEX.test(v||"");return {body:ok(f.body)?f.body:"#f0a64a",pattern:PATTERNS.includes(f.pattern)?f.pattern:"solid",eye:ok(f.eye)?f.eye:"#e8b33a",...(ok(f.spot)?{spot:f.spot}:{})};}
+function cleanCat(c){c=c||{};return {id:clip(c.id,40)||("x"+Math.random()),name:clip(c.name,8)||"냥이",sex:c.sex==="m"?"m":"f",trait:TRAITS[c.trait]?c.trait:"",fur:cleanFur(c.fur),adult:c.adult!==false};}
+function cleanDeco(d){d=d||{};if(!DECO[d.t])return null;return {id:clip(d.id,40),t:d.t,x:Math.max(0,Math.min(100,+d.x||50)),y:Math.max(0,Math.min(330,+d.y||8)),f:d.f?1:0};}
+function liteCat(c){return {id:c.id,name:c.name,sex:c.sex,trait:c.trait,fur:{body:c.fur.body,pattern:c.fur.pattern,eye:c.fur.eye,...(c.fur.spot?{spot:c.fur.spot}:{})},adult:!isKitten(c)};}
+const nickOf=()=>clip(S.nick,12)||"이름 없는 집";
+
+const HID=/^[a-z0-9]{8,24}$/;
+let noteGate={};
+async function townInit(){
+  if(T.lobby||typeof Trystero==="undefined") return;
+  if(!S.hid||!HID.test(S.hid)){S.hid=Array.from(crypto.getRandomValues(new Uint8Array(10)),b=>(b%36).toString(36)).join("");save();}
+  T.uid=S.hid;
+  const lobby=trRoom("lobby");if(!lobby) return;
+  T.lobby=lobby;
+  lobby.onPeers(()=>{refreshTown();updateOnline();});
+  lobbyPresence();
+  try{T.home=await lobby.join(hname(T.uid));
+    T.home.onPeers(onHomePeers);
+    T.home.on("note",m=>{
+      const d=m.data||{},t=clip(d.text,80);if(!t)return;
+      if(noteGate[m.peer]&&Date.now()-noteGate[m.peer]<4000)return;noteGate[m.peer]=Date.now();
+      S.book=[{id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),nick:clip(d.nick,12)||"손님",cat:clip(d.cat,8),text:t,at:Date.now()},...(S.book||[])].slice(0,50);
+      save();log(`📝 ${S.book[0].nick}님이 방명록을 남겼어요`);T.home.emit("book",S.book.slice(0,20));});
+    homePresence(true);}catch(e){}
+}
+function publishHouse(force){
+  if(!T.lobby||!S||!S.cats.length) return;
+  const sig=JSON.stringify([nickOf(),S.cats.map(liteCat),S.deco]);
+  if(!force&&sig===T.lastHouse) return;T.lastHouse=sig;lobbyPresence();
+}
+function lobbyPresence(){try{T.lobby&&S&&T.lobby.presence({hid:T.uid,nick:nickOf(),at:V?"visit":"home",visit:V?V.uid:null,count:S.cats.length,
+  cats:S.cats.slice(0,MAX).map(liteCat),deco:S.deco.slice(0,40).map(d=>({id:d.id,t:d.t,x:d.x,y:d.y,f:d.f?1:0}))});}catch(e){}}
+function homePresence(force){
+  if(!T.home||!S) return;
+  const c=sel();const p={role:"host",nick:nickOf(),selId:c.id,away:!!(V||W),say:T.say,sayAt:T.sayAt};
+  const sig=JSON.stringify(p);if(!force&&sig===T.homeSig)return;T.homeSig=sig;
+  T.home.presence(p).catch(()=>{});
+}
+function updateOnline(){
+  if(!T.lobby){$("onlineN").textContent="";return;}
+  const ids=new Set(T.lobby.peers().filter(p=>!p.isMe&&p.kind==="viewer").map(p=>p.by||p.peer));
+  $("onlineN").textContent=ids.size?`· ${ids.size}명 접속 중`:"";
+}
+/* remote cats (guests at my house, or everyone while visiting) */
+const bub={};
+function bubbleFor(key,say,sayAt,upd){
+  if(!say) return null;
+  const k=say+"|"+sayAt,b=bub[key]||(bub[key]={});
+  if(b.k!==k){b.k=k;b.until=(Date.now()-(upd||0)<8000)?Date.now()+5500:0;}
+  return b.until>Date.now()?say:null;
+}
+function peerRemote(p){
+  const pr=p.presence||{};if(!pr.cat||pr.role!=="guest") return null;
+  return {key:p.peer,cat:cleanCat(pr.cat),nick:clip(pr.nick,12)||"손님",x:Math.max(5,Math.min(95,+pr.x||50)),
+    say:clip(pr.say,40),sayAt:+pr.sayAt||0,emote:EMOS.includes(pr.emote)?pr.emote:null,emoteAt:+pr.emoteAt||0,upd:p.updatedAt,me:p.isMe&&p.sameTab};
+}
+function renderRemote(box,list){
+  const seen=new Set();
+  list.forEach((p,i)=>{
+    seen.add(p.key);let el=box.querySelector(`[data-k="${CSS.escape(p.key)}"]`);
+    if(!el){el=document.createElement("div");el.className="cat remote";el.dataset.k=p.key;el.innerHTML=`<div class="say"></div><div class="art"></div><div class="tag"></div>`;box.appendChild(el);}
+    const sig=JSON.stringify(p.cat);if(el.dataset.sig!==sig){el.dataset.sig=sig;el.querySelector(".art").innerHTML=catFront(p.cat,{mood:"happy"});}
+    el.style.width=(p.cat.adult?88:60)+"px";el.style.left=p.x+"%";el.style.bottom=(22+(i%3)*10)+"px";el.style.zIndex=160+i;
+    el.querySelector(".tag").textContent=p.me?`나 · ${p.cat.name}`:`${p.nick} · ${p.cat.name}`;
+    const t=bubbleFor(p.key,p.say,p.sayAt,p.me?Date.now():p.upd),sy=el.querySelector(".say");
+    if(t){sy.textContent=t;sy.classList.add("show");}else sy.classList.remove("show");
+    if(p.emote&&String(p.emoteAt)!==el.dataset.em){const fresh=el.dataset.em!==undefined||(Date.now()-(p.me?Date.now():p.upd)<4000);el.dataset.em=String(p.emoteAt);if(fresh)fxAt(p.emote,el,3);}
+  });
+  box.querySelectorAll(".remote").forEach(el=>{if(!seen.has(el.dataset.k))el.remove();});
+}
+function onHomePeers(ch){
+  T.guests=ch.peers.filter(p=>!p.isMe).map(peerRemote).filter(Boolean);
+  ch.joined.forEach(p=>{const r=peerRemote(p);if(r&&!p.isMe){log(`🔔 ${r.nick}님이 ${eul(r.cat.name)} 데리고 놀러왔어요!`);T.home&&T.home.emit("book",(S.book||[]).slice(0,20),{target:p.peer});}});
+  ch.left.forEach(p=>{const r=peerRemote(p);if(r&&!p.isMe)log(`${r.nick}님이 집으로 돌아갔어요`);});
+  ch.updated.forEach(p=>{const r=peerRemote(p);if(r&&r.say&&!p.isMe&&bub[p.peer]?.k!==r.say+"|"+r.sayAt)log(`💬 ${r.nick}: ${r.say}`);});
+  if(!V&&!W) renderGuests();
+}
+function renderGuests(){
+  if(V||W){$("guests").innerHTML="";$("hostchat").hidden=true;return;}
+  renderRemote($("guests"),T.guests);$("hostchat").hidden=!T.guests.length;
+}
+function hostSay(){
+  const t=clip($("hSay").value,40);if(!t)return;$("hSay").value="";
+  T.say=t;T.sayAt=Date.now();say(sel(),t);homePresence();
+}
+$("hSayBtn").onclick=hostSay;$("hSay").onkeydown=e=>{if(e.key==="Enter")hostSay();};
+
+/* visiting */
+function visitPresence(){
+  if(!V||!V.room) return;
+  V.room.presence({role:"guest",nick:nickOf(),cat:liteCat(sel()),x:V.me.x,say:V.me.say||null,sayAt:V.me.sayAt||0,emote:V.me.emote||null,emoteAt:V.me.emoteAt||0}).catch(()=>{});
+}
+async function visit(uid){
+  drawTown();const h=T.houses.find(x=>x.uid===uid);if(!h||uid===T.uid) return;
+  closeSheet();if(W)endWalk();if(DM.on)setDecoMode(false);
+  const cats=(Array.isArray(h.cats)?h.cats:[]).slice(0,MAX).map(c=>({...cleanCat(c),x:10+Math.random()*80,y:Math.random()*40,perch:null}));
+  V={uid,nick:clip(h.nick,12)||"이름 없는 집",room:null,peers:[],cats,deco:(Array.isArray(h.deco)?h.deco:[]).map(cleanDeco).filter(Boolean).slice(0,40),me:{x:50}};
+  sel().perch=null;
+  $("room").hidden=true;$("visit").hidden=false;$("vtitle").textContent=`🏠 ${V.nick}`;
+  $("vdecos").innerHTML=V.deco.map(d=>{const D=DECO[d.t];return `<div class="deco ${d.f?"flip":""}" style="width:${D.w}px;height:${D.h}px;left:${d.x}%;bottom:${d.y}px;z-index:${D.flat?1:30+Math.round(d.y/10)}">${decoSVG(d.t)}</div>`;}).join("");
+  $("vcats").innerHTML="";
+  V.cats.forEach(c=>{const el=document.createElement("div");el.className="cat";el.dataset.vid=c.id;
+    el.innerHTML=`<div class="say"></div><div class="art">${catFront(c,{mood:"happy"})}</div><div class="tag"></div>`;
+    el.querySelector(".tag").textContent=c.name;el.onclick=e=>{e.stopPropagation();petGuestCat(c,el);};$("vcats").appendChild(el);});
+  S.visits=S.visits||{};S.visits[uid]=(S.visits[uid]||0)+1;
+  log(`🚪 ${V.nick}에 ${wa(sel().name)} 함께 놀러왔어요!`);
+  lobbyPresence();homePresence();render();
+  if(T.lobby){
+    const mine=V;
+    try{const r=await T.lobby.join(hname(uid));if(V!==mine){r.leave();return;}V.room=r;
+      r.onPeers(ch=>{if(V!==mine)return;V.peers=ch.peers;
+        ch.joined.forEach(p=>{const pr=p.presence||{};if(!p.isMe&&pr.role==="host")log(`집주인 ${clip(pr.nick,12)}님이 집에 있어요! 인사해 보세요`);});},()=>{});
+      r.on("book",m=>{if(V!==mine||!Array.isArray(m.data))return;V.book=m.data.slice(0,20).map(n=>({id:clip(n&&n.id,20),nick:clip(n&&n.nick,12),cat:clip(n&&n.cat,8),text:clip(n&&n.text,80),at:+(n&&n.at)||0}));if($("bookList")&&window._drawBook)window._drawBook();});
+      visitPresence();}catch(e){log("지금은 실시간 연결이 어려워요. 잠시 뒤에 다시 놀러 와 주세요");}
+  }
+}
+function petGuestCat(c,el){
+  const me=sel();me.needs.social=clamp(me.needs.social+6);me.needs.fun=clamp(me.needs.fun+3);
+  fxAt("❤️",el,2);const sy=el.querySelector(".say");sy.textContent=pick(["골골골…","누구냥?","반갑다냥!","놀러 왔구나냥","간식 있냥?"]);sy.classList.add("show");
+  clearTimeout(el._t);el._t=setTimeout(()=>sy.classList.remove("show"),2500);
+}
+$("visit").onclick=e=>{if(!V)return;const r=$("stage").getBoundingClientRect();V.me.x=Math.max(6,Math.min(94,(e.clientX-r.left)/r.width*100));visitPresence();renderVisit();};
+function visitTick(){
+  if(!V) return;
+  const perches=V.deco.filter(d=>DECO[d.t].perch!=null);
+  V.cats.forEach(c=>{
+    if(Math.random()<.05){
+      if(c.perch){const d=V.deco.find(x=>x.id===c.perch);c.perch=null;if(d)c.x=d.x;}
+      else{const free=perches.filter(d=>!V.cats.some(o=>o.perch===d.id));if(free.length&&Math.random()<.5){const d=pick(free);c.perch=d.id;c.x=d.x;}}
+    }
+    if(!c.perch&&Math.random()<.12){c.x=Math.max(6,Math.min(94,c.x+(Math.random()*40-20)));}
+  });
+}
+function renderVisit(){
+  if(!V) return;
+  const hostP=V.peers.find(p=>!p.isMe&&(p.presence||{}).role==="host");
+  const hp=hostP?hostP.presence:{};
+  V.cats.forEach(c=>{
+    const el=$("vcats").querySelector(`[data-vid="${CSS.escape(c.id)}"]`);if(!el)return;
+    const d=c.perch&&V.deco.find(x=>x.id===c.perch);
+    el.style.width=(c.adult?92:62)+"px";el.style.left=(d?d.x:c.x)+"%";el.style.bottom=(d?d.y+DECO[d.t].perch-6:8+c.y)+"px";el.style.zIndex=d?300:100-Math.round(c.y);
+    if(hostP&&hp.selId===c.id&&!hp.away){const t=bubbleFor("host",clip(hp.say,40),+hp.sayAt||0,hostP.updatedAt);const sy=el.querySelector(".say");
+      if(t){sy.textContent=t;sy.classList.add("show");}}
+    el.querySelector(".tag").textContent=(hostP&&hp.selId===c.id&&!hp.away?"👑 ":"")+c.name;
+  });
+  const list=V.peers.filter(p=>!(p.isMe&&p.sameTab)).map(peerRemote).filter(Boolean);
+  list.unshift({key:"me",cat:liteCat(sel()),nick:nickOf(),x:V.me.x,say:V.me.say,sayAt:V.me.sayAt||0,emote:V.me.emote,emoteAt:V.me.emoteAt||0,upd:Date.now(),me:true});
+  renderRemote($("vcats"),list);
+}
+function vSay(){const t=clip($("vSay").value,40);if(!t||!V)return;$("vSay").value="";V.me.say=t;V.me.sayAt=Date.now();visitPresence();renderVisit();}
+$("vSayBtn").onclick=vSay;$("vSay").onkeydown=e=>{if(e.key==="Enter")vSay();};
+document.querySelectorAll("[data-emo]").forEach(b=>b.onclick=()=>{if(!V)return;V.me.emote=b.dataset.emo;V.me.emoteAt=Date.now();visitPresence();renderVisit();});
+function leaveVisit(){
+  if(!V) return;const n=V.nick;
+  if(V.room)V.room.leave().catch(()=>{});
+  V=null;$("visit").hidden=true;$("room").hidden=false;$("vcats").innerHTML="";
+  log(`🏠 ${n}에서 집으로 돌아왔어요`);lobbyPresence();homePresence();save();render();
+}
+$("vHome").onclick=leaveVisit;
+$("vBook").onclick=()=>{if(V)bookSheet(V.uid,V.nick);};
+
+/* guestbook — kept by each host on their own device; visitors can sign while the host is online */
+function bookSheet(uid,nick){
+  const mine=uid===T.uid;
+  const notes=()=>mine?(S.book||[]):((V&&V.book)||[]);
+  const hostOn=()=>!!(V&&V.peers.some(p=>!p.isMe&&(p.presence||{}).role==="host"));
+  const draw=()=>{const box=$("bookList");if(!box)return;const ns=notes();
+    box.innerHTML=ns.length?ns.map(n=>`<div class="note"><span>${esc(clip(n.text,80))}</span><small><span>${esc(clip(n.nick,12)||"손님")}${n.cat?` · ${esc(clip(n.cat,8))}`:""} · ${hm(+n.at)}</span>${mine?`<button data-del="${esc(n.id)}">지우기</button>`:""}</small></div>`).join("")
+      :`<div class="notice">${mine||hostOn()?"아직 방명록이 비어 있어요.":"집주인이 접속해 있을 때 방명록을 보고 남길 수 있어요."}</div>`;
+    box.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{S.book=(S.book||[]).filter(n=>n.id!==b.dataset.del);save();T.home&&T.home.emit("book",S.book.slice(0,20));draw();});
+  };
+  window._drawBook=draw;
+  sheet(`<h2>📝 ${esc(nick)} 방명록</h2>
+    ${mine?"":`<div class="chatrow"><input id="bookIn" class="txt" maxlength="80" placeholder="한마디 남기기" autocomplete="off"><button class="btn pri" id="bookBtn">남기기</button></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" data-q="🐾 발도장 꾹!">🐾 발도장</button><button class="btn" data-q="고양이들 너무 귀여워요 💕">💕 귀여워요</button><button class="btn" data-q="캣타워 멋져요! 🏗️">🏗️ 캣타워 칭찬</button></div>`}
+    <div class="hlist" id="bookList"></div><div class="sub" id="bookMsg" style="margin:0"></div>
+    <button class="btn" data-close>닫기</button>`,root=>{
+    if(!mine){
+      const write=t=>{t=clip(t,80);if(!t||!V||!V.room)return;
+        if(!hostOn()){$("bookMsg").textContent="집주인이 지금 접속해 있지 않아요. 집주인이 있을 때 다시 남겨 주세요";return;}
+        V.room.emit("note",{nick:nickOf(),cat:sel().name,text:t});
+        V.book=[{id:"me"+Date.now(),nick:nickOf(),cat:sel().name,text:t,at:Date.now()},...(V.book||[])].slice(0,20);
+        $("bookIn")&&($("bookIn").value="");S.coins+=3;$("bookMsg").textContent="방명록을 남겼어요 (🪙 +3)";draw();};
+      $("bookBtn").onclick=()=>write($("bookIn").value);
+      $("bookIn").onkeydown=e=>{if(e.key==="Enter")write($("bookIn").value);};
+      root.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>write(b.dataset.q));
+    }
+    draw();
+  });
+}
+
+/* town sheet */
+function townSheet(){
+  if(!T.lobby){
+    sheet(`<h2>🏘️ 냥이 마을</h2><div class="notice">마을에 연결하지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.</div><button class="btn" data-close>닫기</button>`);return;
+  }
+  sheet(`<h2>🏘️ 냥이 마을</h2>
+    <div><label class="sub" for="nickIn" style="display:block;margin:0 0 4px">우리 집 이름</label>
+    <div class="chatrow"><input id="nickIn" class="txt" maxlength="12" value="${esc(nickOf())}" autocomplete="off"><button class="btn" id="nickBtn">바꾸기</button></div></div>
+    <div class="notice">지금 접속해 있는 집에만 놀러 갈 수 있어요. 모르는 사람에게 이름·학교·연락처 같은 개인정보는 알려주지 마세요.</div>
+    <button class="btn" id="myBook">📝 우리 집 방명록 (${(S.book||[]).length})</button>
+    <div class="hlist" id="townList"></div>
+    <button class="btn" data-close>닫기</button>`,()=>{
+    $("nickBtn").onclick=()=>{const v=clip($("nickIn").value,12);if(!v)return;S.nick=v;save();publishHouse(true);homePresence(true);$("nickBtn").textContent="바뀌었어요 ✓";};
+    $("myBook").onclick=()=>bookSheet(T.uid,nickOf());
+    drawTown();
+  });
+}
+function drawTown(){
+  const peers=T.lobby?T.lobby.peers():[];
+  const seen=new Set();T.houses=[];
+  peers.forEach(p=>{const pr=p.presence||{};if(p.isMe||!HID.test(pr.hid||"")||pr.hid===T.uid||seen.has(pr.hid))return;seen.add(pr.hid);
+    T.houses.push({uid:pr.hid,nick:pr.nick,cats:pr.cats,deco:pr.deco,count:pr.count,updatedAt:p.updatedAt,where:pr.at,visit:pr.visit});});
+  const box=$("townList");if(!box) return;
+  const visitors=uid=>peers.filter(p=>(p.presence||{}).visit===uid).length;
+  box.innerHTML=T.houses.length?T.houses.map(h=>{
+    const cats=(Array.isArray(h.cats)?h.cats:[]).slice(0,3).map(cleanCat);
+    const v=visitors(h.uid);
+    return `<div class="hcard"><div class="faces">${cats.map(c=>catFront(c,{mood:"happy"})).join("")}</div>
+      <div style="min-width:0"><div class="hn">${esc(clip(h.nick,12)||"이름 없는 집")}</div>
+      <div class="hm"><span class="dot"></span>${h.where==="visit"?"놀러 나감":"집에 있음"} · 🐱 ${Math.min(99,+h.count||cats.length)}${v?` · 손님 ${v}명`:""}${S.visits&&S.visits[h.uid]?` · 방문 ${S.visits[h.uid]}회`:""}</div></div>
+      <button class="btn pri" data-visit="${esc(h.uid)}" style="flex:none">놀러가기</button></div>`;}).join("")
+    :`<div class="notice">지금은 접속한 이웃이 없어요. 친구에게 이 사이트 주소를 보내 같이 접속해 보세요. 연결되는 데 10~20초쯤 걸릴 수 있어요.</div>`;
+  box.querySelectorAll("[data-visit]").forEach(b=>b.onclick=()=>visit(b.dataset.visit));
+}
+function refreshTown(){drawTown();updateOnline();}
+$("townBtn").onclick=townSheet;
+
+/* ===== loop ===== */
+let tickN=0;
+function tickCat(c,dt,k){
+  const m=TRAITS[c.trait].m;
+  NEEDS.forEach(n=>{
+    if(c.sleeping&&n.k==="energy") c.needs.energy=clamp(c.needs.energy+.6*dt*k);
+    else c.needs[n.k]=clamp(c.needs[n.k]-n.r*(m[n.k]||1)*dt*k*(c.sleeping?.4:1)*(isKitten(c)?1.15:1));
+  });
+  if(S.poops.length) c.needs.clean=clamp(c.needs.clean-.02*dt*S.poops.length*k);
+}
+function loop(){
+  const now=Date.now(),dt=Math.min(5,(now-S.last)/1000);S.last=now;tickN++;
+  S.cats.forEach(c=>{
+    tickCat(c,dt,1);
+    if(W&&c.id===W.id&&!W.paused){c.needs.energy=clamp(c.needs.energy-.3*dt);c.needs.fun=clamp(c.needs.fun+.5*dt);c.needs.social=clamp(c.needs.social+.15*dt);}
+    if(!c.adult&&now-c.born>=GROW){c.adult=true;log(`🎉 ${ga(c.name)} 어른 고양이가 되었어요!`);}
+    if(c.preg&&now>=c.preg) birth(c);
+    if(!W||!awayIds().includes(c.id)){
+      if(!c.sleeping&&c.needs.energy<6){c.sleeping=true;say(c,"졸려서 쓰러졌다냥…");}
+      if(c.sleeping&&c.needs.energy>=100){c.sleeping=false;say(c,"푹 잤다냥!");}
+      const pd=c.perch&&decoById(c.perch);
+      if(pd){const T=DECO[pd.t];if(T.run&&!c.sleeping){c.needs.fun=clamp(c.needs.fun+.4*dt);c.needs.energy=clamp(c.needs.energy-.15*dt);}
+        else if(T.cozy&&c.sleeping)c.needs.energy=clamp(c.needs.energy+.35*dt);else if(!c.sleeping)c.needs.fun=clamp(c.needs.fun+.08*dt);}
+      if(!W&&!c.sleeping&&Math.random()<.05){
+        if(c.perch){const d=decoById(c.perch);c.perch=null;if(d)c.x=d.x;}
+        else{const f=freePerches();if(f.length){const d=pick(f);c.perch=d.id;c.x=d.x;if(Math.random()<.4)say(c,DECO[d.t].run?"달려라냥!":pick(["점프!","높은 곳 최고냥","여기 내 자리다냥"]));}}
+      }
+      if(!W&&c.sleeping&&!c.perch&&Math.random()<.08){const f=freePerches(true);if(f.length){const d=pick(f);c.perch=d.id;c.x=d.x;}}
+      if(!c.perch&&!c.sleeping&&!W&&Math.random()<.12){c.x=Math.max(6,Math.min(94,c.x+(Math.random()*40-20)));c.y=Math.max(0,Math.min(50,c.y+(Math.random()*20-10)));}
+      if(!c.sleeping&&!W&&mood(c)!=="sad"&&NEEDS.every(n=>c.needs[n.k]>55)) c.love+=.01*dt;
+    }
+  });
+  // autonomous socializing at home
+  if(!W&&tickN%9===0){
+    const awake=S.cats.filter(c=>!c.sleeping);
+    if(awake.length>=2){
+      const a=pick(awake),b=pick(awake.filter(x=>x!==a));
+      const r=getRel(a,b);
+      social(a,b,r>30&&Math.random()<.5?"play":r<-20?"tease":"hi",true);
+    }
+  }
+  if(W&&!W.paused&&Date.now()>=W.next&&!$("ecard")) walkEvent();
+  if(W&&!W.paused){const c=byId(W.id);if(c.needs.energy<10){setMoving(false);say(c,"다리 아프다냥…");ecard("지쳐 버렸어요","기운이 바닥났어요. 집에 가서 쉬어요.",[{t:"집으로",pri:true,f:endWalk}]);}}
+  if(tickN%5===0) save();
+  if(tickN%30===0){cloudSave();publishHouse();}
+  if(V)visitTick();
+  homePresence();
+  render();
+}
+
+/* ===== setup ===== */
+let preIdx=0, sexSel="f";
+function showSetup(){
+  $("setup").hidden=false;$("game").hidden=true;$("chips").innerHTML="";
+  $("furs").innerHTML=PRESETS.map((p,i)=>`<button class="pick ${i===preIdx?"sel":""}" data-p="${i}">${catFront({fur:p.fur},{})}${p.name}</button>`).join("");
+  $("furs").querySelectorAll(".pick").forEach(b=>b.onclick=()=>{preIdx=+b.dataset.p;$("nameIn").value=PRESETS[preIdx].name;showSetup();});
+  $("sexes").innerHTML=[["f","♀ 암컷"],["m","♂ 수컷"]].map(([k,t])=>`<button class="pick ${sexSel===k?"sel":""}" data-s="${k}">${t}</button>`).join("");
+  $("sexes").querySelectorAll(".pick").forEach(b=>b.onclick=()=>{sexSel=b.dataset.s;showSetup();});
+}
+$("goBtn").onclick=()=>{
+  S=freshState();
+  const c=newCat({name:($("nameIn").value.trim()||"냥이").slice(0,8),sex:sexSel,fur:{...PRESETS[preIdx].fur},adult:true,x:50});
+  S.cats.push(c);S.sel=c.id;S.nick=c.name+"네 집";save();startGame();
+  say(c,`안녕! 난 ${c.name}야 냥~`);log("산책하다 보면 길냥이를 만날 수 있어요 🐾");
+};
+function startGame(){
+  $("setup").hidden=true;$("game").hidden=false;
+  const away=Math.min((Date.now()-S.last)/1000,8*3600);
+  if(away>60) S.cats.forEach(c=>{tickCat(c,away,.25);});
+  S.last=Date.now();
+  S.cats.forEach(c=>{if(c.preg&&Date.now()>=c.preg)birth(c);});
+  render();
+  if(away>600) log(`${away>=3600?Math.round(away/3600)+"시간":Math.round(away/60)+"분"} 동안 다들 기다렸대요!`);
+  if(!window._loopId) window._loopId=setInterval(loop,1000);
+  setTimeout(townInit,300);
+}
+function askReset(){
+  $("resetWrap").innerHTML=`정말 처음부터 할까요? <button id="yes">네</button> <button id="no">아니요</button>`;
+  $("yes").onclick=()=>{try{localStorage.removeItem(KEY);localStorage.removeItem(OLD);}catch(e){}location.reload();};
+  $("no").onclick=()=>{$("resetWrap").innerHTML=`<button id="resetBtn">새로 시작</button>`;$("resetBtn").onclick=askReset;};
+}
+$("resetBtn").onclick=askReset;
+
+S=load()||migrate();
+if(S&&S.cats&&S.cats.length){fixState(S);if(!S.sel)S.sel=S.cats[0].id;startGame();}else{S=null;showSetup();}
+cloudState="off";
+</script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "냥이 키우기",
+  "short_name": "냥이 키우기",
+  "description": "고양이를 돌보고, 냥줍하고, 캣타워를 꾸미고, 친구 집에 놀러 가는 고양이 라이프 시뮬레이션",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e8f1ee",
+  "theme_color": "#e8f1ee",
+  "lang": "ko",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"},
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
